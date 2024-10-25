@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/light_cream"
+    android:padding="16dp">
+
+    <!-- Top Product Image -->
+    <ImageView
+        android:id="@+id/product_image_detail"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/product_image"
+        android:background="@drawable/ic_back" /> <!-- For back icon -->
+
+    <!-- Product Thumbnail Carousel -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Example thumbnails (replace with dynamic content) -->
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_thumbnail1"
+                android:background="@color/white" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_thumbnail2"
+                android:background="@color/white" />
+
+            <!-- Add more thumbnail images dynamically -->
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Product Name -->
+    <TextView
+        android:id="@+id/product_name_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Braided Aztec Bracelet"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_brown" />
+
+    <!-- Product Price -->
+    <TextView
+        android:id="@+id/product_price_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₱25 - 45"
+        android:textSize="20sp"
+        android:textColor="@color/orange"
+        android:layout_marginTop="4dp" />
+
+    <!-- Sold Information -->
+    <TextView
+        android:id="@+id/product_sold_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1 sold"
+        android:textColor="@color/gray" />
+
+    <!-- Product Description -->
+    <TextView
+        android:id="@+id/product_description_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elevate your style with our handcrafted Braided Aztec Bracelet, straight from talented artisans in the Philippines."
+        android:textSize="16sp"
+        android:textColor="@color/dark_brown"
+        android:layout_marginTop="12dp" />
+
+    <!-- Product Specifications -->
+    <TextView
+        android:id="@+id/product_specifications_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Specifications: Size 2x20 cm"
+        android:textColor="@color/dark_brown"
+        android:layout_marginTop="8dp" />
+
+    <!-- Product Category Tags -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <!-- Example category tags -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Men"
+            android:padding="4dp"
+            android:background="@drawable/category_tag_background"
+            android:textColor="@color/black"
+            android:layout_marginEnd="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Women"
+            android:padding="4dp"
+            android:background="@drawable/category_tag_background"
+            android:textColor="@color/black"
+            android:layout_marginEnd="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accessories"
+            android:padding="4dp"
+            android:background="@drawable/category_tag_background"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <!-- Seller Information Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:background="@drawable/seller_card_background">
+
+        <!-- Seller Image -->
+        <ImageView
+            android:id="@+id/seller_profile_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/seller_profile"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop" />
+
+        <!-- Seller Name -->
+        <TextView
+            android:id="@+id/seller_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yolly Handicrafts"
+            android:textSize="16sp"
+            android:textColor="@color/dark_brown"
+            android:textStyle="bold"
+            android:gravity="center_vertical" />
+
+        <!-- Visit Profile Button -->
+        <Button
+            android:id="@+id/visit_profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Visit Profile"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/dark_brown"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <!-- Add to Cart & Buy Now Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="bottom">
+
+        <!-- Add to Cart Button -->
+        <Button
+            android:id="@+id/add_to_cart_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add to cart"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/dark_brown" />
+
+        <!-- Buy Now Button -->
+        <Button
+            android:id="@+id/buy_now_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Buy Now"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/green" />
+    </LinearLayout>
+
+</LinearLayout>

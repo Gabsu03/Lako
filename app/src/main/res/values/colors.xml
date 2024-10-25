@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#EAE1D2</color>
+    <color name="textbox">#999E643D</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="darkbrown">#542910</color>
+    <color name="black">#000000</color>
+    <color name="light_brown">#D7CCC8</color>
+    <color name="dark_brown">#4E342E</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="orange">#FF9800</color>
+</resources>

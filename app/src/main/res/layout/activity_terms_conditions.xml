@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/primary"
+tools:context=".Terms_Conditions">
+
+<LinearLayout
+    android:id="@+id/linearLayout3"
+    android:layout_width="415dp"
+    android:layout_height="109dp"
+    android:background="@color/darkbrown">
+</LinearLayout>
+
+
+<TextView
+    android:id="@+id/textView2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/koho_semibold"
+    android:text="Terms and Conditions"
+    android:textAlignment="center"
+    android:textColor="@color/darkbrown"
+    android:textSize="30dp"
+    android:textStyle="normal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.204" />
+
+<ImageView
+    android:id="@+id/logo_header"
+    android:layout_width="405dp"
+    android:layout_height="200dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/lako_header_logo" />
+
+
+<ImageView
+    android:layout_width="344dp"
+    android:layout_height="550dp"
+    android:background="@drawable/rectangle_about_us"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintHorizontal_bias="0.492"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.767" />
+
+<ScrollView
+    android:layout_width="321dp"
+    android:layout_height="515dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.745">
+
+    <TextView
+        android:layout_width="321dp"
+        android:layout_height="543dp"
+        android:fontFamily="@font/jost_regular"
+        android:text="@string/terms_conditions"
+        android:textAlignment="textStart"
+        android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.826" />
+</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,4 +8,10 @@
     android:layout_height="match_parent"
     tools:context=".Logo_Page_Activity2">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark">
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.lako;
+/* package com.example.lako;
 
 import android.os.Bundle;
 
@@ -18,13 +18,13 @@ public class product_detail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_detail);
+        // setContentView(R.layout.activity_product_detail);
 
         // Initialize views
-        productImage = findViewById(R.id.product_image_detail);
-        productName = findViewById(R.id.product_name_detail);
-        productPrice = findViewById(R.id.product_price_detail);
-        productSold = findViewById(R.id.product_sold_detail);
+        // productImage = findViewById(R.id.product_image_detail);
+        // productName = findViewById(R.id.product_name_detail);
+        // productPrice = findViewById(R.id.product_price_detail);
+        /* productSold = findViewById(R.id.product_sold_detail);
         productDescription = findViewById(R.id.product_description_detail);
         productSpecifications = findViewById(R.id.product_specifications_detail);
         productCategory = findViewById(R.id.product_category_detail);
@@ -54,4 +54,4 @@ public class product_detail extends AppCompatActivity {
         productSellerName.setText(sellerName);
         sellerProfileImage.setImageResource(sellerImageResource);
     }
-}
+} */

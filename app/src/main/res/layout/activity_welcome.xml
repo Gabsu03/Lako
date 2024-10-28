@@ -27,7 +27,7 @@
             android:padding="10dp"
             android:queryHint="Type to search..." />
 
-        <!-- Cart Button -->
+        <!-- Cart Button
         <ImageView
             android:id="@+id/cart_button"
             android:layout_width="40dp"
@@ -39,13 +39,13 @@
             android:padding="5dp"
             android:scaleType="centerInside"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"/>  -->
     </LinearLayout>
 
     <!-- Shop banner -->
 
 
-    <!-- Tabs for categories -->
+    <!-- Tabs for categories
 
     <ImageView
         android:id="@+id/shop_banner"
@@ -54,7 +54,7 @@
         android:background="@drawable/bgg"
         android:contentDescription="@string/banner_image"
         android:scaleType="centerInside"
-        android:src="@drawable/Mabuhay" />
+        android:src="@drawable/Mabuhay" /> -->
 
     <HorizontalScrollView
         android:layout_width="match_parent"

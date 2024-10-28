@@ -26,4 +26,8 @@ public class sign_in extends AppCompatActivity {
         startActivity(new Intent(sign_in.this, Logo_Page_Activity2.class));
     }
 
+    public void Register(View view){
+        startActivity(new Intent(sign_in.this, sign_up.class));
+    }
+
 }

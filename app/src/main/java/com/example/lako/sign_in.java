@@ -1,7 +1,9 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -17,9 +19,11 @@ public class sign_in extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sign_in);
-
-        //Underline for Forgot Password
-        TextView textView = findViewById(R.id.Forgot_Password);
-        textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
+
+    //Back button Sign In
+    public void sign_in_back(View view) {
+        startActivity(new Intent(sign_in.this, Logo_Page_Activity2.class));
+    }
+
 }

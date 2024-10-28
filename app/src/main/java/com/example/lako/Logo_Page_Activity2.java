@@ -43,21 +43,4 @@ public class Logo_Page_Activity2 extends AppCompatActivity {
         startActivity(new Intent(Logo_Page_Activity2.this,About_Us.class));
     }
 
-    //Back button Sign In
-
-    public void sign_in_back(View view) {
-        startActivity(new Intent(Logo_Page_Activity2.this,sign_in.class));
-    }
-
-    //Back button Sign Up
-
-    public void sign_up_back(View view) {
-        startActivity(new Intent(Logo_Page_Activity2.this,sign_up.class));
-    }
-
-    //Back button about us
-
-    public void about_us_back(View view) {
-        startActivity(new Intent(Logo_Page_Activity2.this,About_Us.class));
-    }
 }

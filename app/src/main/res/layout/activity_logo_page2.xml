@@ -41,16 +41,19 @@
         android:textAllCaps="false"
         android:textColor="@color/darkbrown"
         android:textSize="15dp"
+        android:onClick="Sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.751" />
+        app:layout_constraintVertical_bias="0.751"
+        tools:ignore="OnClick" />
 
     <Button
         android:id="@+id/logo_sign_in_button"
         android:layout_width="216dp"
         android:layout_height="42dp"
+        android:onClick="Sign_In"
         android:background="@drawable/logo"
         android:elevation="17dp"
         android:fontFamily="@font/koho_regular"
@@ -70,6 +73,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/koho_bold"
         android:text="About Us"
+        android:onClick="about_us"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="12dp"
@@ -79,6 +83,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintVertical_bias="0.8"
+        tools:ignore="OnClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

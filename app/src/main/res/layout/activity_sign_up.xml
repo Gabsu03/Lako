@@ -28,13 +28,15 @@
         android:id="@+id/sign_in_back_button"
         android:layout_width="15.91dp"
         android:layout_height="21.22dp"
+        android:onClick="sign_up_back"
         android:background="@drawable/back_button_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.264" />
+        app:layout_constraintVertical_bias="0.264"
+        tools:ignore="OnClick" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -195,6 +197,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/jost_medium"
         android:text="Sign In"
+        android:onClick="Login"
         android:textAlignment="center"
         android:textColor="@color/darkbrown"
         android:textSize="16dp"
@@ -203,7 +206,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.807" />
+        app:layout_constraintVertical_bias="0.807"
+        tools:ignore="OnClick" />
 
     <TextView
         android:layout_width="wrap_content"

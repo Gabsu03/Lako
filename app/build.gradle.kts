@@ -42,4 +42,5 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation (libs.android.gif.drawable)
+    implementation (libs.library)
 }

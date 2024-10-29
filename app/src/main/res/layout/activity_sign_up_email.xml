@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sign_up">
-
+    tools:context=".Sign_up_email">
     <ImageView
         android:id="@+id/relativeLayout5"
         android:layout_width="415dp"
@@ -24,10 +22,9 @@
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout5" />
 
     <ImageView
-        android:id="@+id/sign_in_back_button"
         android:layout_width="15.91dp"
         android:layout_height="21.22dp"
-        android:onClick="sign_up_back"
+        android:onClick="sign_up_email_back"
         android:background="@drawable/back_button_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.063"
@@ -74,6 +71,7 @@
         android:fontFamily="@font/koho_medium"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/darkbrown"
+        app:hintTextAppearance="@color/darkbrown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -86,7 +84,7 @@
             android:background="@drawable/textbox"
             android:elevation="17dp"
             android:fontFamily="@font/koho_medium"
-            android:hint="Name"
+            android:hint="Email"
             android:paddingLeft="15dp"
             android:shadowColor="@color/textbox"
             android:textColor="@color/white"
@@ -121,7 +119,7 @@
             android:background="@drawable/textbox"
             android:elevation="17dp"
             android:fontFamily="@font/koho_medium"
-            android:hint="Email"
+            android:hint="Name"
             android:paddingLeft="15dp"
             android:textColor="@color/white"
             android:shadowColor="@color/textbox"
@@ -237,7 +235,7 @@
 
 
     <Button
-        android:id="@+id/Signup_email"
+        android:id="@+id/Signup_button"
         android:layout_width="216dp"
         android:layout_height="42dp"
         android:background="@drawable/button"
@@ -275,7 +273,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/jost_medium"
         android:text="Sign In"
-        android:onClick="Login"
+        android:onClick="Login_sign_up"
         android:textAlignment="center"
         android:textColor="@color/darkbrown"
         android:textSize="16dp"
@@ -286,60 +284,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.807"
         tools:ignore="OnClick" />
-
-    <TextView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:fontFamily="@font/jost_regular"
-        android:text="or"
-        android:textAlignment="center"
-        android:textColor="@color/darkbrown"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.865" />
-
-    <ImageView
-        android:layout_width="170dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="712dp"
-        android:background="@drawable/line"
-        app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="170dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="712dp"
-        android:background="@drawable/line"
-        app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/sign_in_email"
-        android:layout_width="216dp"
-        android:layout_height="42dp"
-        android:background="@drawable/button"
-        android:drawableStart="@drawable/email"
-        android:elevation="17dp"
-        android:fontFamily="@font/koho_medium"
-        android:paddingHorizontal="20dp"
-        android:text="Sign Up with Email"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

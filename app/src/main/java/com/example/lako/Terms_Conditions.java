@@ -1,6 +1,8 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,5 +17,9 @@ public class Terms_Conditions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_terms_conditions);
+    }
+
+    public void terms_back(View view) {
+        startActivity(new Intent(Terms_Conditions.this, sign_up.class));
     }
 }

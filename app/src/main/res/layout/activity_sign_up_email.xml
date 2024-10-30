@@ -64,19 +64,23 @@
 
     <!---Name-->
 
+    <!---Email-->
+
+
+    <!---Email-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/Sign_Up_name"
+        android:id="@+id/Sign_Up_Emaill"
         android:layout_width="329dp"
         android:layout_height="70dp"
         android:fontFamily="@font/koho_medium"
         android:textColorHint="@color/white"
-        app:hintTextColor="@color/darkbrown"
         app:hintTextAppearance="@color/darkbrown"
+        app:hintTextColor="@color/darkbrown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.404">
+        app:layout_constraintVertical_bias="0.399">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="329dp"
@@ -98,9 +102,10 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!---Email-->
+
+    <!---Name-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/Sign_Up_email"
+        android:id="@+id/sign_Up_email_namee"
         android:layout_width="329dp"
         android:layout_height="70dp"
         android:fontFamily="@font/koho_medium"
@@ -111,7 +116,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.474">
+        app:layout_constraintVertical_bias="0.468">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="329dp"
@@ -121,8 +126,8 @@
             android:fontFamily="@font/koho_medium"
             android:hint="Name"
             android:paddingLeft="15dp"
-            android:textColor="@color/white"
             android:shadowColor="@color/textbox"
+            android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -135,7 +140,7 @@
 
     <!---password-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signup_password"
+        android:id="@+id/signup_email_password"
         android:layout_width="329dp"
         android:layout_height="70dp"
         android:fontFamily="@font/koho_medium"
@@ -171,35 +176,35 @@
 
     <!---Retype-password-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signup_retype_password"
+        android:id="@+id/signup_email_retype_password"
         android:layout_width="329dp"
         android:layout_height="70dp"
-        app:passwordToggleEnabled="true"
         android:fontFamily="@font/koho_medium"
         android:textColorHint="@color/white"
+        app:hintTextColor="@color/darkbrown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:hintTextColor="@color/darkbrown"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.614">
+        app:layout_constraintVertical_bias="0.621"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="329dp"
             android:layout_height="40dp"
             android:background="@drawable/textbox"
             android:elevation="17dp"
-            android:textColor="@color/white"
             android:hint="Retype Password"
             android:inputType="textPassword"
             android:paddingLeft="15dp"
             android:shadowColor="@color/textbox"
+            android:textColor="@color/white"
             android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.61"/>
+            app:layout_constraintVertical_bias="0.61" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

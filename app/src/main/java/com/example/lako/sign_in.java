@@ -30,4 +30,9 @@ public class sign_in extends AppCompatActivity {
         startActivity(new Intent(sign_in.this, sign_up.class));
     }
 
+    public void Forgot_Pass(View view){
+        startActivity(new Intent(sign_in.this,
+                Forgot_Password.class));
+    }
+
 }

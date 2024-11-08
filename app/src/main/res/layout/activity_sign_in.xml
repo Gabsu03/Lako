@@ -85,6 +85,7 @@
         android:elevation="17dp"
         android:hint="Email"
         android:textSize="17dp"
+        android:inputType="textEmailAddress"
         android:textColorHint="@color/white"
         android:fontFamily="@font/koho_medium"
         android:textColor="@color/white"

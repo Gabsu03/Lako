@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Security_Question"
+            android:exported="false" />
+        <activity
             android:name=".Forgot_Password_Email"
             android:exported="false" />
         <activity

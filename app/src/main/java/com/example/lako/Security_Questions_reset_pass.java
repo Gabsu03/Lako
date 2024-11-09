@@ -10,17 +10,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Security_Question extends AppCompatActivity {
+public class Security_Questions_reset_pass extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_security_question);
+        setContentView(R.layout.activity_security_questions_reset_pass);
 
     }
 
-    public void security_back(View view) {
-        startActivity(new Intent(Security_Question.this, sign_up.class));
+    public void reset_pass_security_back(View view) {
+        startActivity(new Intent(Security_Questions_reset_pass.this, Forgot_Password.class));
     }
 }

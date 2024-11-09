@@ -24,6 +24,6 @@ public class Forgot_Password_Email extends AppCompatActivity {
         startActivity(new Intent(Forgot_Password_Email.this, sign_in.class));
     }
     public void security_question(View view) {
-        startActivity(new Intent(Forgot_Password_Email.this, sign_in.class));
+        startActivity(new Intent(Forgot_Password_Email.this, Security_Questions_reset_pass.class));
     }
 }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".Security_Question">
+    tools:context=".Update_security_questions">
 
     <ImageView
         android:id="@+id/linearLayout3"
@@ -14,19 +14,6 @@
         android:layout_height="109dp"
         android:background="@color/darkbrown"
         tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:layout_width="12dp"
-        android:layout_height="20dp"
-        android:background="@drawable/vector"
-        android:onClick="security_back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.098"
-        tools:ignore="OnClick" />
 
     <TextView
         android:id="@+id/textView8"
@@ -50,7 +37,7 @@
         android:layout_width="273dp"
         android:layout_height="20dp"
         android:fontFamily="@font/jost_bold"
-        android:text="In case you forget your password"
+        android:text="Update your security questions."
         android:textColor="@color/C35314"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -292,16 +279,32 @@
         android:id="@+id/confirm_button_security_sign_up"
         android:layout_width="119dp"
         android:layout_height="37dp"
-        android:text="Confirm"
+        android:background="@drawable/reset_email_btn"
+        android:fontFamily="@font/koho_bold"
+        android:text="Save"
         android:textColor="@color/white"
         android:textSize="15dp"
-        android:fontFamily="@font/koho_bold"
-        android:background="@drawable/reset_email_btn"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintHorizontal_bias="0.839"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/editText2"
         app:layout_constraintVertical_bias="0.491" />
 
+    <Button
+        android:layout_width="119dp"
+        android:layout_height="37dp"
+        android:background="@drawable/cancel_btn"
+        android:fontFamily="@font/koho_bold"
+        android:text="Cancel"
+        android:onClick="cancel_btn"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+        app:layout_constraintEnd_toEndOf="@+id/imageView8"
+        app:layout_constraintHorizontal_bias="0.146"
+        app:layout_constraintStart_toStartOf="@+id/imageView8"
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintVertical_bias="0.491"
+        tools:ignore="OnClick" />
 </androidx.constraintlayout.widget.ConstraintLayout>

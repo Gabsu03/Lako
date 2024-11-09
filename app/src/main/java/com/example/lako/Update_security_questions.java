@@ -10,17 +10,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Security_Question extends AppCompatActivity {
+public class Update_security_questions extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_security_question);
+        setContentView(R.layout.activity_update_security_questions);
 
     }
 
-    public void security_back(View view) {
-        startActivity(new Intent(Security_Question.this, sign_up.class));
+    public void cancel_btn(View view) {
+        startActivity(new Intent(Update_security_questions.this, sign_up.class));
     }
 }

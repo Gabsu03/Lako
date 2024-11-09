@@ -26,4 +26,7 @@ public class Sign_up_email extends AppCompatActivity {
     public void Login_sign_up(View view){
         startActivity(new Intent(Sign_up_email.this,sign_in.class));
     }
+    public void terms_email(View view){
+        startActivity(new Intent(Sign_up_email.this,Terms_Conditions.class));
+    }
 }

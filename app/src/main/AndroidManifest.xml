@@ -13,6 +13,15 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Password_Reset"
+            android:exported="false" />
+        <activity
+            android:name=".Update_security_questions"
+            android:exported="false" />
+        <activity
+            android:name=".Security_Questions_reset_pass"
+            android:exported="false" />
+        <activity
             android:name=".Security_Question"
             android:exported="false" />
         <activity

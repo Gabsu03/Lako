@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "399355508485-q8g0r5tsr58p9ofr7p0u1300cer8ohne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lako",
+            "certificate_hash": "d3e12ee9986377629c8f56ba60a68f6abe3a2f24"
+          }
+        },
+        {
           "client_id": "399355508485-au1l3mqssmrt64n7g8h4ltua4nmag26s.apps.googleusercontent.com",
           "client_type": 3
         }

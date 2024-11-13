@@ -45,4 +45,5 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation (libs.android.gif.drawable)
     implementation (libs.library)
+    implementation (libs.play.services.auth)
 }

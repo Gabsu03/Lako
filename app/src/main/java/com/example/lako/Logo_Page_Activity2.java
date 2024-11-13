@@ -18,8 +18,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Logo_Page_Activity2 extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
 
+public class Logo_Page_Activity2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +29,22 @@ public class Logo_Page_Activity2 extends AppCompatActivity {
         setContentView(R.layout.activity_logo_page2);
     }
 
-    //Sign Up
+    // Sign Up
     public void Sign_up (View view) {
-        startActivity(new Intent(Logo_Page_Activity2.this,sign_up.class));
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(Logo_Page_Activity2.this, sign_up.class));
+        finish();
     }
 
-    //Sign In
+    // Sign In
     public void Sign_In (View view) {
-        startActivity(new Intent(Logo_Page_Activity2.this,sign_in.class));
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(Logo_Page_Activity2.this, sign_in.class));
+        finish();
     }
 
-    //About Us
+    // About Us
     public void about_us (View view) {
-        startActivity(new Intent(Logo_Page_Activity2.this,About_Us.class));
+        startActivity(new Intent(Logo_Page_Activity2.this, About_Us.class));
     }
-
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "399355508485",
+    "project_id": "lako-2fc7f",
+    "storage_bucket": "lako-2fc7f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399355508485:android:5d25ef43d683df6f0b296c",
+        "android_client_info": {
+          "package_name": "com.example.lako"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399355508485-au1l3mqssmrt64n7g8h4ltua4nmag26s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB8Q9fODMtQK8S2Yiw9NqljDMu_imY_L0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399355508485-au1l3mqssmrt64n7g8h4ltua4nmag26s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

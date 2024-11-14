@@ -2,10 +2,12 @@ package com.example.lako;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,8 +29,12 @@ public class sign_up extends AppCompatActivity {
     // AUTHENTICATION
     TextInputEditText editTextname, editTextemail, editTextPassword, editTextRetype_pass;
     Button buttonReg;
+    CheckBox termsCheckbox;  // Declare the checkbox variable
 
     FirebaseAuth eAuth;
+
+    // Declare variables to store input data
+    private String name, email, password, retype_pass;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -37,11 +43,13 @@ public class sign_up extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sign_up);
 
+        // Initialize the views
         editTextname = findViewById(R.id.name_signup);
         editTextemail = findViewById(R.id.email_signup);
         editTextPassword = findViewById(R.id.password_signup);
         editTextRetype_pass = findViewById(R.id.retype_pass_signup);
         buttonReg = findViewById(R.id.Signup_btn);
+        termsCheckbox = findViewById(R.id.terms_checkbox);  // Initialize the checkbox
 
         eAuth = FirebaseAuth.getInstance();
 
@@ -50,14 +58,25 @@ public class sign_up extends AppCompatActivity {
             finish();
         }
 
+        // Load saved form data when activity is created
+        loadFormData();
+
         buttonReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = editTextname.getText().toString().trim();
-                String email = editTextemail.getText().toString().trim();
-                String password = editTextPassword.getText().toString().trim();
-                String retype_pass = editTextRetype_pass.getText().toString().trim();
+                // Get user input
+                name = editTextname.getText().toString().trim();
+                email = editTextemail.getText().toString().trim();
+                password = editTextPassword.getText().toString().trim();
+                retype_pass = editTextRetype_pass.getText().toString().trim();
 
+                // Check if the user accepted the terms
+                if (!termsCheckbox.isChecked()) {
+                    Toast.makeText(sign_up.this, "You must accept the Terms and Conditions", Toast.LENGTH_SHORT).show();
+                    return; // Prevent further processing if not accepted
+                }
+
+                // Validate other fields (same as before)
                 if (TextUtils.isEmpty(name)) {
                     Toast.makeText(sign_up.this, "Name is Required", Toast.LENGTH_SHORT).show();
                     return;
@@ -92,36 +111,44 @@ public class sign_up extends AppCompatActivity {
                     return;
                 }
 
-                // Register User
-                eAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Send email verification
-                            FirebaseUser user = eAuth.getCurrentUser();
-                            if (user != null) {
-                                user.sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    // Inform the user to verify email
-                                                    Toast.makeText(sign_up.this, "Registration Successful! Please verify your email.", Toast.LENGTH_LONG).show();
-                                                    startActivity(new Intent(getApplicationContext(), sign_in.class));
-                                                } else {
-                                                    // Handle failure to send verification email
-                                                    Toast.makeText(sign_up.this, "Error sending verification email: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                            }
-                        } else {
-                            Toast.makeText(sign_up.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                // Instead of registering directly, proceed to the security questions
+                Intent intent = new Intent(sign_up.this, Security_Question.class);
+                intent.putExtra("name", name);
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);  // Pass the password to security questions
+                startActivity(intent);
             }
         });
+    }
+
+    // Load form data from SharedPreferences when the activity is created
+    private void loadFormData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("SignUpPrefs", MODE_PRIVATE);
+
+        // Restore data from SharedPreferences
+        String name = sharedPreferences.getString("name", "");
+        String email = sharedPreferences.getString("email", "");
+        String password = sharedPreferences.getString("password", "");
+        String retype_pass = sharedPreferences.getString("retype_pass", "");
+        boolean termsChecked = sharedPreferences.getBoolean("termsChecked", false);
+
+        // Set the values to the fields
+        editTextname.setText(name);
+        editTextemail.setText(email);
+        editTextPassword.setText(password);
+        editTextRetype_pass.setText(retype_pass);
+        termsCheckbox.setChecked(termsChecked);
+    }
+
+    // Save instance state (form data) before activity is destroyed (e.g., when navigating away to another activity)
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Save user input to outState
+        outState.putString("name", editTextname.getText().toString());
+        outState.putString("email", editTextemail.getText().toString());
+        outState.putString("password", editTextPassword.getText().toString());
+        outState.putString("retype_pass", editTextRetype_pass.getText().toString());
     }
 
     // Back button Sign Up
@@ -137,3 +164,7 @@ public class sign_up extends AppCompatActivity {
         startActivity(new Intent(sign_up.this, Terms_Conditions.class));
     }
 }
+
+
+
+

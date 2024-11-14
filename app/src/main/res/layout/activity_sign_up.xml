@@ -230,6 +230,7 @@
         tools:ignore="OnClick" />
 
     <CheckBox
+        android:id="@+id/terms_checkbox"
         android:layout_width="30dp"
         android:layout_height="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

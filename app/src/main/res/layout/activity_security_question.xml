@@ -74,7 +74,7 @@
         app:layout_constraintVertical_bias="0.578" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/question1_label1"
         android:layout_width="259dp"
         android:layout_height="35dp"
         android:fontFamily="@font/jost_regular"
@@ -91,20 +91,21 @@
         app:layout_constraintVertical_bias="0.023" />
 
     <EditText
+        android:id="@+id/security_question1"
         android:layout_width="315dp"
         android:layout_height="30dp"
         android:paddingLeft="7dp"
         android:background="@drawable/box_questions"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/question1_label1"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:layout_constraintStart_toStartOf="@+id/question1_label1"
+        app:layout_constraintTop_toBottomOf="@+id/question1_label1"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/question2_label2"
         android:layout_width="300dp"
         android:layout_height="31dp"
         android:fontFamily="@font/jost_regular"
@@ -121,20 +122,22 @@
         app:layout_constraintVertical_bias="0.155" />
 
     <EditText
+        android:id="@+id/security_question2"
         android:layout_width="315dp"
         android:layout_height="30dp"
-        android:paddingLeft="7dp"
+        android:layout_marginBottom="448dp"
         android:background="@drawable/box_questions"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/textView12"
+        app:layout_constraintEnd_toEndOf="@+id/question2_label2"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/question2_label2"
+        app:layout_constraintTop_toTopOf="@+id/question2_label2"
+        app:layout_constraintVertical_bias="0.911"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/question3_label3"
         android:layout_width="300dp"
         android:layout_height="31dp"
         android:fontFamily="@font/jost_regular"
@@ -151,21 +154,22 @@
         app:layout_constraintVertical_bias="0.282" />
 
     <EditText
+        android:id="@+id/security_question3"
         android:layout_width="315dp"
         android:layout_height="30dp"
-        android:paddingLeft="7dp"
         android:background="@drawable/box_questions"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="@+id/question3_label3"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:layout_constraintStart_toStartOf="@+id/question3_label3"
+        app:layout_constraintTop_toBottomOf="@+id/question3_label3"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/question4_label4"
         android:layout_width="300dp"
         android:layout_height="31dp"
         android:fontFamily="@font/jost_regular"
@@ -182,21 +186,22 @@
         app:layout_constraintVertical_bias="0.404" />
 
     <EditText
+        android:id="@+id/security_question4"
         android:layout_width="315dp"
         android:layout_height="30dp"
-        android:paddingLeft="7dp"
         android:background="@drawable/box_questions"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/textView15"
+        app:layout_constraintEnd_toEndOf="@+id/question4_label4"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintStart_toStartOf="@+id/question4_label4"
+        app:layout_constraintTop_toBottomOf="@+id/question4_label4"
         app:layout_constraintVertical_bias="0.031"
         tools:ignore="MissingConstraints" />
 
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/question5_label"
         android:layout_width="300dp"
         android:layout_height="31dp"
         android:fontFamily="@font/jost_regular"
@@ -213,21 +218,22 @@
         app:layout_constraintVertical_bias="0.539" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/security_question5"
         android:layout_width="315dp"
         android:layout_height="30dp"
-        android:paddingLeft="7dp"
+        android:layout_marginBottom="232dp"
         android:background="@drawable/box_questions"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="@+id/question5_label"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintStart_toStartOf="@+id/question5_label"
+        app:layout_constraintTop_toBottomOf="@+id/question5_label"
         app:layout_constraintVertical_bias="0.248"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/question6_label"
         android:layout_width="300dp"
         android:layout_height="31dp"
         android:fontFamily="@font/jost_regular"
@@ -244,21 +250,21 @@
         app:layout_constraintVertical_bias="0.663" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/security_question6"
         android:layout_width="315dp"
         android:layout_height="30dp"
-        android:paddingLeft="7dp"
         android:background="@drawable/box_questions"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/textView17"
+        app:layout_constraintEnd_toEndOf="@+id/question6_label"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        app:layout_constraintStart_toStartOf="@+id/question6_label"
+        app:layout_constraintTop_toBottomOf="@+id/question6_label"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/question7_label"
         android:layout_width="300dp"
         android:layout_height="31dp"
         android:fontFamily="@font/jost_regular"
@@ -275,16 +281,16 @@
         app:layout_constraintVertical_bias="0.783" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/security_question7"
         android:layout_width="315dp"
         android:layout_height="30dp"
         android:paddingLeft="7dp"
         android:background="@drawable/box_questions"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/textView17"
+        app:layout_constraintEnd_toEndOf="@+id/question7_label"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView18"
+        app:layout_constraintStart_toStartOf="@+id/question7_label"
+        app:layout_constraintTop_toBottomOf="@+id/question7_label"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
@@ -292,16 +298,16 @@
         android:id="@+id/confirm_button_security_sign_up"
         android:layout_width="119dp"
         android:layout_height="37dp"
+        android:background="@drawable/reset_email_btn"
+        android:fontFamily="@font/koho_bold"
         android:text="Confirm"
         android:textColor="@color/white"
         android:textSize="15dp"
-        android:fontFamily="@font/koho_bold"
-        android:background="@drawable/reset_email_btn"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/security_question7"
         app:layout_constraintVertical_bias="0.491" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

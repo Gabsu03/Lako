@@ -10,18 +10,10 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,11 +22,20 @@ public class Security_Question extends AppCompatActivity {
     private EditText securityAnswer1, securityAnswer2, securityAnswer3, securityAnswer4, securityAnswer5, securityAnswer6, securityAnswer7;
     private Button button;
 
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+
+    private String name, email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_security_question);
+
+        // Initialize Firebase Auth and Firestore
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // Initialize the EditText fields and button
         securityAnswer1 = findViewById(R.id.security_question1);
@@ -45,6 +46,11 @@ public class Security_Question extends AppCompatActivity {
         securityAnswer6 = findViewById(R.id.security_question6);
         securityAnswer7 = findViewById(R.id.security_question7);
         button = findViewById(R.id.confirm_button_security_sign_up);
+
+        // Retrieve user details from the Intent
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        email = intent.getStringExtra("email");
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,10 +72,17 @@ public class Security_Question extends AppCompatActivity {
                     return; // Don't proceed further if answers are missing
                 }
 
-                // Initialize Firestore instance
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                // Ensure the user is signed in before proceeding
+                if (auth.getCurrentUser() == null) {
+                    Toast.makeText(Security_Question.this, "User not signed in. Please sign up first.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                // Create a map to hold the security question answers
+                // Create a map to hold the user details and security answers
+                Map<String, Object> userDetails = new HashMap<>();
+                userDetails.put("name", name);
+                userDetails.put("email", email);
+
                 Map<String, String> securityAnswers = new HashMap<>();
                 securityAnswers.put("question1", answer1);
                 securityAnswers.put("question2", answer2);
@@ -79,33 +92,43 @@ public class Security_Question extends AppCompatActivity {
                 securityAnswers.put("question6", answer6);
                 securityAnswers.put("question7", answer7);
 
-                // Save answers to Firestore under the current user's UID
+                userDetails.put("security_answers", securityAnswers);
+
+                // Save details to Firestore under the current user's UID
+                String uid = auth.getCurrentUser().getUid();
                 db.collection("users")
-                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .set(securityAnswers)
+                        .document(uid)
+                        .set(userDetails)
                         .addOnSuccessListener(aVoid -> {
-                            // Successfully saved answers
-                            Toast.makeText(Security_Question.this, "Security questions answered successfully!", Toast.LENGTH_SHORT).show();
+                            // Successfully saved details
+                            Toast.makeText(Security_Question.this, "Details saved successfully!", Toast.LENGTH_SHORT).show();
 
-                            // After success, navigate to the Login Activity
-                            Intent intent = new Intent(Security_Question.this, sign_in.class);
-                            startActivity(intent);
+                            // Send verification email
+                            auth.getCurrentUser().sendEmailVerification().addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(Security_Question.this, "Verification email sent. Please check your inbox.", Toast.LENGTH_SHORT).show();
 
-                            // Finish the current activity so the user can't go back to it
-                            finish();
+                                    // Navigate to the Sign-In Activity
+                                    Intent intent = new Intent(Security_Question.this, sign_in.class);
+                                    startActivity(intent);
+
+                                    // Finish the current activity so the user can't go back to it
+                                    finish();
+                                } else {
+                                    Toast.makeText(Security_Question.this, "Failed to send verification email: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         })
                         .addOnFailureListener(e -> {
                             // Handle failure
-                            Toast.makeText(Security_Question.this, "Error saving answers: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Security_Question.this, "Error saving details: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         });
             }
         });
     }
 
-    // Back button to sign-up activity
+    // Back button to navigate to Sign-In page
     public void security_back(View view) {
-        startActivity(new Intent(Security_Question.this, sign_up.class)); // Navigate back to Sign-Up page
+        startActivity(new Intent(Security_Question.this, sign_in.class)); // Navigate back to Sign-In page
     }
 }
-
-

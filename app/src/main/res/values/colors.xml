@@ -11,5 +11,9 @@
     <color name="orange">#FF9800</color>
     <color name="C35314"> #C35314 </color>
     <color name="lightbrown">#4D542910</color>
+    <color name="bar_white">#66FFFFFF</color>
     <color name="EAE1D2">#EAE1D2</color>
+    <color name="transaprent_white">#CCFFFFFF</color>
+    <color name="transparent_brown">#B3542910</color>
+
 </resources>

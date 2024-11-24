@@ -122,4 +122,16 @@ public class sign_up extends AppCompatActivity {
             }
         });
     }
+
+    public void Login(View view) {
+        startActivity(new Intent(sign_up.this, sign_in.class));
+    }
+
+    public void terms(View view) {
+        startActivity(new Intent(sign_up.this, Terms_Conditions.class));
+    }
+
+    public void  sign_up_back(View view) {
+        startActivity(new Intent(sign_up.this, Logo_Page_Activity2.class));
+    }
 }

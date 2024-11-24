@@ -14,27 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
-        <activity
-            android:name=".Wishlist_edit"
-            android:exported="false" />
-        <activity
-            android:name=".Fragments.WishList"
-            android:exported="false" />
-        <activity
-            android:name=".Fragments.Profile_User"
-            android:exported="false" />
-        <activity
-            android:name=".Fragments.Notifications"
-            android:exported="false" />
-        <activity
-            android:name=".Fragments.Message"
-            android:exported="false" />
-        <activity
-            android:name=".Fragments.Home"
-            android:exported="false" />
-        <activity
-            android:name=".Welcome"
-            android:exported="false" />
+
         <activity
             android:name=".Password_reset_link"
             android:exported="false" />
@@ -55,18 +35,6 @@
             android:exported="false" />
         <activity
             android:name=".Forgot_Password"
-            android:exported="false" />
-        <activity
-            android:name=".Sign_up_email"
-            android:exported="false" />
-        <activity
-            android:name=".Sign_email"
-            android:exported="false" />
-        <activity
-            android:name=".product_detail"
-            android:exported="false" />
-        <activity
-            android:name=".Profile"
             android:exported="false" />
         <activity
             android:name=".Terms_Conditions"

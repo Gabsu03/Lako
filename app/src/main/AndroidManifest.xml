@@ -14,7 +14,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Living_Home"
+            android:exported="false" />
+        <activity
+            android:name=".Fragments.Living_Home"
+            android:exported="false" />
+        <activity
+            android:name=".Clothing_Home"
+            android:exported="false" />
+        <activity
+            android:name=".Art_Home"
+            android:exported="false" />
+        <activity
+            android:name=".Accessories_Home"
+            android:exported="false" />
         <activity
             android:name=".Password_reset_link"
             android:exported="false" />

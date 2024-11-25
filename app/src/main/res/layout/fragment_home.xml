@@ -48,7 +48,7 @@
         app:layout_constraintVertical_bias="0.125" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/reset_security_question6"
         android:layout_width="302dp"
         android:layout_height="39dp"
         android:background="@drawable/shape"

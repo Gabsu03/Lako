@@ -200,7 +200,7 @@
         app:layout_constraintVertical_bias="0.539" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/reset_security_question5"
         android:layout_width="315dp"
         android:layout_height="30dp"
         android:paddingLeft="7dp"
@@ -231,7 +231,7 @@
         app:layout_constraintVertical_bias="0.663" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/reset_security_question6"
         android:layout_width="315dp"
         android:layout_height="30dp"
         android:paddingLeft="7dp"
@@ -262,7 +262,7 @@
         app:layout_constraintVertical_bias="0.783" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/reset_security_question7"
         android:layout_width="315dp"
         android:layout_height="30dp"
         android:paddingLeft="7dp"
@@ -288,7 +288,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintHorizontal_bias="0.839"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/reset_security_question7"
         app:layout_constraintVertical_bias="0.491" />
 
     <Button
@@ -304,7 +304,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintHorizontal_bias="0.146"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/reset_security_question7"
         app:layout_constraintVertical_bias="0.491"
         tools:ignore="OnClick" />
 </androidx.constraintlayout.widget.ConstraintLayout>

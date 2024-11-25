@@ -91,10 +91,11 @@
         app:layout_constraintVertical_bias="0.023" />
 
     <EditText
+        android:id="@+id/reset_security_question1"
         android:layout_width="315dp"
         android:layout_height="30dp"
-        android:paddingLeft="7dp"
         android:background="@drawable/box_questions"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
         app:layout_constraintEnd_toEndOf="@+id/textView11"
         app:layout_constraintHorizontal_bias="0.0"
@@ -121,10 +122,11 @@
         app:layout_constraintVertical_bias="0.155" />
 
     <EditText
+        android:id="@+id/reset_security_question2"
         android:layout_width="315dp"
         android:layout_height="30dp"
-        android:paddingLeft="7dp"
         android:background="@drawable/box_questions"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
         app:layout_constraintEnd_toEndOf="@+id/textView12"
         app:layout_constraintHorizontal_bias="0.0"
@@ -151,10 +153,11 @@
         app:layout_constraintVertical_bias="0.282" />
 
     <EditText
+        android:id="@+id/reset_security_question3"
         android:layout_width="315dp"
         android:layout_height="30dp"
-        android:paddingLeft="7dp"
         android:background="@drawable/box_questions"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
         app:layout_constraintEnd_toEndOf="@+id/textView13"
         app:layout_constraintHorizontal_bias="0.0"
@@ -182,10 +185,11 @@
         app:layout_constraintVertical_bias="0.404" />
 
     <EditText
+        android:id="@+id/reset_security_question4"
         android:layout_width="315dp"
         android:layout_height="30dp"
-        android:paddingLeft="7dp"
         android:background="@drawable/box_questions"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView8"
         app:layout_constraintEnd_toEndOf="@+id/textView15"
         app:layout_constraintHorizontal_bias="0.0"
@@ -213,7 +217,7 @@
         app:layout_constraintVertical_bias="0.539" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/reset_security_question5"
         android:layout_width="315dp"
         android:layout_height="30dp"
         android:paddingLeft="7dp"
@@ -244,7 +248,7 @@
         app:layout_constraintVertical_bias="0.663" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/reset_security_question6"
         android:layout_width="315dp"
         android:layout_height="30dp"
         android:paddingLeft="7dp"
@@ -275,7 +279,7 @@
         app:layout_constraintVertical_bias="0.783" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/reset_security_question7"
         android:layout_width="315dp"
         android:layout_height="30dp"
         android:paddingLeft="7dp"
@@ -301,6 +305,6 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/reset_security_question7"
         app:layout_constraintVertical_bias="0.491" />
 </androidx.constraintlayout.widget.ConstraintLayout>

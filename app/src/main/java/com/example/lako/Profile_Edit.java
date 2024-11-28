@@ -18,8 +18,4 @@ public class Profile_Edit extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile_edit);
     }
-    public void  save_btn_edit(View view) {
-        startActivity(new Intent(Profile_Edit.this, Loading_Screen_Profile.class));
-    }
-
 }

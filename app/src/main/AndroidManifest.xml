@@ -15,6 +15,12 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Profile_Settings_Add_Address"
+            android:exported="false" />
+        <activity
+            android:name=".Profile_Settings_Address"
+            android:exported="false" />
+        <activity
             android:name=".Loading_Screen_Profile"
             android:exported="false" />
         <activity

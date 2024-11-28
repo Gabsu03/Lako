@@ -15,13 +15,12 @@ public class Profile_Settings_information extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile_settings_information);
-
     }
 
     public void profile_back(View view) {
-        startActivity(new Intent(Profile_Settings_information.this, Profile_Settings.class));
+        // Navigate back to Profile_Settings
+        finish();  // Simply finish this activity to go back to Profile_Settings
     }
 
     public void edit_profile(View view) {

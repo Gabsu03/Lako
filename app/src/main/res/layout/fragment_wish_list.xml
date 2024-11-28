@@ -59,6 +59,7 @@
 
     <ImageView
         android:id="@+id/edit_wish_icon"
+        android:onClick="edit_wish_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/edit_wish_icon"

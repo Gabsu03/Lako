@@ -236,20 +236,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/save_edit_profile"
         android:layout_width="160dp"
         android:layout_height="48dp"
         android:layout_marginTop="712dp"
         android:background="@drawable/reset_email_btn"
         android:fontFamily="@font/koho_bold"
-        android:onClick="save_btn_edit"
         android:text="Save"
         android:textColor="@color/white"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
-        tools:ignore="MissingConstraints,OnClick" />
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

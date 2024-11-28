@@ -143,4 +143,16 @@ public class sign_in extends AppCompatActivity {
         startActivity(intent);
         finish(); // Finish the current activity to prevent going back to the login screen
     }
+
+    public void Forgot_Pass(View view) {
+        startActivity(new Intent(sign_in.this, Forgot_Password.class));
+    }
+
+    public void  Register(View view) {
+        startActivity(new Intent(sign_in.this, sign_up.class));
+    }
+
+    public void  sign_in_back(View view) {
+        startActivity(new Intent(sign_in.this, Logo_Page_Activity2.class));
+    }
 }

@@ -36,16 +36,8 @@ public class Password_reset_link extends AppCompatActivity {
         proceedButton = findViewById(R.id.proceed_reset_pass);
         resendText = findViewById(R.id.resend_link);
 
-        // Set click listeners
-        proceedButton.setOnClickListener(v -> proceedToLogin());
+        // Set click listeners proceedButton.setOnClickListener(v -> proceedToLogin());
         resendText.setOnClickListener(v -> resendLink());
-    }
-
-    private void proceedToLogin() {
-        // Navigate to login screen
-        Intent intent = new Intent(Password_reset_link.this, Password_Reset.class);
-        startActivity(intent);
-        finish();
     }
 
     private void resendLink() {

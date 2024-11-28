@@ -14,7 +14,7 @@ public class Wishlist_edit extends AppCompatActivity {
     }
 
     // This method is called when the back icon in the layout is clicked
-    public void wish_edit_back(View view) {
+    public void edit_wish_icon(View view) {
         // Finish the current activity and go back to the previous activity (WishList)
         finish();
     }

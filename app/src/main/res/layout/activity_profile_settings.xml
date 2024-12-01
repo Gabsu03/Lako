@@ -32,13 +32,14 @@
         android:fontFamily="@font/jost_regular"
         android:text="My Shop"
         android:textSize="13dp"
+        android:onClick="my_shop_btn"
         app:layout_constraintBottom_toBottomOf="@+id/imageView10"
         app:layout_constraintEnd_toEndOf="@+id/imageView10"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
         app:layout_constraintTop_toTopOf="@+id/imageView10"
         app:layout_constraintVertical_bias="0.571"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints,OnClick" />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -50,7 +51,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.268" />
+        app:layout_constraintVertical_bias="0.268"
+        tools:ignore="OnClick" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -168,13 +170,15 @@
         android:id="@+id/to_pay"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:onClick="pay_btn"
         android:background="@drawable/pay"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
         app:layout_constraintHorizontal_bias="0.139"
         app:layout_constraintStart_toStartOf="@+id/imageView6"
         app:layout_constraintTop_toTopOf="@+id/imageView6"
-        app:layout_constraintVertical_bias="0.244" />
+        app:layout_constraintVertical_bias="0.244"
+        tools:ignore="OnClick" />
 
     <TextView
         android:id="@+id/to_pay_text"
@@ -196,13 +200,15 @@
         android:id="@+id/to_ship"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:onClick="ship_btn"
         android:background="@drawable/ship"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
         app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toEndOf="@+id/to_pay"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.358" />
+        app:layout_constraintVertical_bias="0.358"
+        tools:ignore="OnClick" />
 
     <TextView
         android:id="@+id/to_ship_text"
@@ -224,13 +230,15 @@
         android:id="@+id/to_receive"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:onClick="receive_btn"
         android:background="@drawable/receive"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
         app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toEndOf="@+id/to_ship"
         app:layout_constraintTop_toTopOf="@+id/imageView6"
-        app:layout_constraintVertical_bias="0.244" />
+        app:layout_constraintVertical_bias="0.244"
+        tools:ignore="OnClick" />
 
     <TextView
         android:id="@+id/to_receive_text"
@@ -252,13 +260,15 @@
         android:id="@+id/to_review"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:onClick="reviewed_btn"
         android:background="@drawable/review"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
         app:layout_constraintHorizontal_bias="0.422"
         app:layout_constraintStart_toEndOf="@+id/to_receive"
         app:layout_constraintTop_toTopOf="@+id/imageView6"
-        app:layout_constraintVertical_bias="0.244" />
+        app:layout_constraintVertical_bias="0.244"
+        tools:ignore="OnClick" />
 
     <TextView
         android:id="@+id/to_review_text"

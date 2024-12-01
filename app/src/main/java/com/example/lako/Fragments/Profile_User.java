@@ -8,14 +8,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.lako.Profile_My_Shop_Start;
 import com.example.lako.Profile_Settings;
 import com.example.lako.Profile_Settings_Purchase;
+import com.example.lako.Profile_User_Pay;
+import com.example.lako.Profile_User_Received;
+import com.example.lako.Profile_User_Ship;
+import com.example.lako.Profile_User_To_Receive;
 import com.example.lako.R;
 
 public class Profile_User extends Fragment {
@@ -53,6 +60,49 @@ public class Profile_User extends Fragment {
         imageView4.setOnClickListener(v -> {
             // Start the Profile_Settings_Purchase activity when clicked
             startActivity(new Intent(getActivity(), Profile_Settings_Purchase.class));
+        });
+
+
+        //Linked the to pay symbol to purchase
+        Button to_pay_btn = view.findViewById(R.id.to_pay);
+
+        // Set an OnClickListener to the ImageView
+        to_pay_btn.setOnClickListener(v -> {
+            // Start the Profile_Settings_Purchase activity when clicked
+            startActivity(new Intent(getActivity(), Profile_User_Pay.class));
+        });
+
+        //Linked the to ship symbol to purchase
+        Button to_ship_btn = view.findViewById(R.id.to_ship);
+
+        // Set an OnClickListener to the ImageView
+        to_ship_btn.setOnClickListener(v -> {
+            // Start the Profile_Settings_Purchase activity when clicked
+            startActivity(new Intent(getActivity(), Profile_User_Ship.class));
+        });
+
+        //Linked the to receive symbol to purchase
+        Button to_receive_btn = view.findViewById(R.id.to_receive);
+
+        // Set an OnClickListener to the ImageView
+        to_receive_btn.setOnClickListener(v -> {
+            // Start the Profile_Settings_Purchase activity when clicked
+            startActivity(new Intent(getActivity(), Profile_User_To_Receive.class));
+        });
+
+        //Linked the RECEIVED symbol to purchase
+        Button received_btn = view.findViewById(R.id.to_review);
+
+        // Set an OnClickListener to the ImageView
+        received_btn.setOnClickListener(v -> {
+            // Start the Profile_Settings_Purchase activity when clicked
+            startActivity(new Intent(getActivity(), Profile_User_Received.class));
+        });
+
+        TextView shop_btn = view.findViewById(R.id.my_shop_profile_user);
+        shop_btn.setOnClickListener(v -> {
+            // Start the Profile_User_Received activity when clicked
+            startActivity(new Intent(getActivity(), Profile_My_Shop_Start.class));
         });
 
         return view;

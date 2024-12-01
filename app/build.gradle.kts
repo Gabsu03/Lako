@@ -46,4 +46,6 @@ dependencies {
     implementation(libs.android.gif.drawable)
     implementation(libs.library)
     implementation(libs.play.services.auth)
+    implementation (libs.material.v190)
+
 }

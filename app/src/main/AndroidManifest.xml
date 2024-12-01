@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Profile_My_Shop_Start"
+            android:exported="false" />
+        <activity
             android:name=".Profile_User_Received"
             android:exported="false" />
         <activity

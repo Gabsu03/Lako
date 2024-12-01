@@ -152,7 +152,7 @@
         android:layout_width="75dp"
         android:layout_height="23dp"
         android:fontFamily="@font/koho_bold"
-        android:text="Received"
+        android:text="Reviewed"
         android:textAlignment="center"
         android:textColor="@color/orange"
         android:textSize="15dp"

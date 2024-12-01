@@ -1,9 +1,12 @@
 package com.example.lako;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +34,42 @@ public class Profile_Settings extends AppCompatActivity {
             // Start the Profile_Settings_Purchase activity when clicked
             startActivity(new Intent(Profile_Settings.this, Profile_Settings_Purchase.class));
         });
+
+        // Linked the "to pay" button to purchase
+        Button pay_btn = findViewById(R.id.to_pay);
+        pay_btn.setOnClickListener(v -> {
+            // Start the Profile_User_Pay activity when clicked
+            startActivity(new Intent(Profile_Settings.this, Profile_User_Pay.class));
+        });
+
+        // Linked the "to ship" button to purchase
+        Button ship_btn = findViewById(R.id.to_ship);
+        ship_btn.setOnClickListener(v -> {
+            // Start the Profile_User_Ship activity when clicked
+            startActivity(new Intent(Profile_Settings.this, Profile_User_Ship.class));
+        });
+
+        // Linked the "to receive" button to purchase
+        Button receive_btn = findViewById(R.id.to_receive);
+        receive_btn.setOnClickListener(v -> {
+            // Start the Profile_User_To_Receive activity when clicked
+            startActivity(new Intent(Profile_Settings.this, Profile_User_To_Receive.class));
+        });
+
+        // Linked the "to review" button to purchase
+        Button reviewed_btn = findViewById(R.id.to_review);
+        reviewed_btn.setOnClickListener(v -> {
+            // Start the Profile_User_Received activity when clicked
+            startActivity(new Intent(Profile_Settings.this, Profile_User_Received.class));
+        });
+
+        //MY SHOP LINKED
+        TextView my_shop_btn = findViewById(R.id.my_shop_profile_settings);
+        my_shop_btn.setOnClickListener(v -> {
+            // Start the Profile_User_Received activity when clicked
+            startActivity(new Intent(Profile_Settings.this, Profile_My_Shop_Start.class));
+        });
+
     }
 
     // Handle the "up" arrow or back button
@@ -72,6 +111,7 @@ public class Profile_Settings extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
 
 
 

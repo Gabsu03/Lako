@@ -15,9 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.lako.Profile_Settings;
+import com.example.lako.Profile_Settings_Purchase;
 import com.example.lako.R;
 
-public class Profile_User extends  Fragment {
+public class Profile_User extends Fragment {
 
     private boolean isDropdownUp = false; // Track the state of the dropdown icon (up or down)
     private ImageView settingsDrop;
@@ -45,6 +46,15 @@ public class Profile_User extends  Fragment {
             startActivityForResult(intent, 1); // Request result back from Profile_Settings
         });
 
+        // For Purchase Part
+        ImageView imageView4 = view.findViewById(R.id.imageView4);
+
+        // Set an OnClickListener to the ImageView
+        imageView4.setOnClickListener(v -> {
+            // Start the Profile_Settings_Purchase activity when clicked
+            startActivity(new Intent(getActivity(), Profile_Settings_Purchase.class));
+        });
+
         return view;
     }
 
@@ -66,11 +76,10 @@ public class Profile_User extends  Fragment {
 
     // Method to animate the dropdown icon
     private void animateDropDown(ImageView settingsDrop) {
-        // Rotate the icon by 180 degrees
         ObjectAnimator rotate = ObjectAnimator.ofFloat(settingsDrop, "rotation", 0f, 180f);
-        rotate.setDuration(300);  // Duration of the animation
-        rotate.start();  // Start the animation
+        rotate.setDuration(300);
+        rotate.start();
     }
-
 }
+
 

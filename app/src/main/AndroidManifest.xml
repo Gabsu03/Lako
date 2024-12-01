@@ -15,6 +15,21 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Profile_User_Received"
+            android:exported="false" />
+        <activity
+            android:name=".Profile_User_To_Receive"
+            android:exported="false" />
+        <activity
+            android:name=".Profile_User_Ship"
+            android:exported="false" />
+        <activity
+            android:name=".Profile_User_Pay"
+            android:exported="false" />
+        <activity
+            android:name=".Profile_Settings_Purchase"
+            android:exported="false" />
+        <activity
             android:name=".Profile_Settings_Add_MFA"
             android:exported="false" />
         <activity

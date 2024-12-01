@@ -25,38 +25,35 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        // Setup the BottomNavigationView and default fragment
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setSelectedItemId(R.id.nav_Home);
+        bottomNav.setSelectedItemId(R.id.nav_Profile);  // Default to Profile_User when app opens
         bottomNav.setOnItemSelectedListener(navListener);
 
-        Fragment selectedFragment = new Home();
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                selectedFragment).commit();
-
+        // Set the Profile_User fragment as default when the app is launched
+        Fragment selectedFragment = new Profile_User();  // Profile_User fragment as default
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
     }
 
-    private NavigationBarView.OnItemSelectedListener navListener =
-            item -> {
-                int itemId = item.getItemId(); /* obtain the selected item ID from your source */
-                Fragment selectedFragment = null;
+    private NavigationBarView.OnItemSelectedListener navListener = item -> {
+        Fragment selectedFragment = null;
 
-                if (itemId == R.id.nav_Wishlist) {
-                    selectedFragment = new WishList();
-                } else if (itemId == R.id.nav_Notification) {
-                    selectedFragment = new Notifications();
-                } else if (itemId == R.id.nav_Home) {
-                    selectedFragment = new Home();
-                } else if (itemId == R.id.nav_Message) {
-                    selectedFragment = new Message();
-                } else if (itemId == R.id.nav_Profile) {
-                    selectedFragment = new Profile_User();
+        // Handle navigation between bottom navigation items
+        if (item.getItemId() == R.id.nav_Wishlist) {
+            selectedFragment = new WishList();
+        } else if (item.getItemId() == R.id.nav_Notification) {
+            selectedFragment = new Notifications();
+        } else if (item.getItemId() == R.id.nav_Home) {
+            selectedFragment = new Home();
+        } else if (item.getItemId() == R.id.nav_Message) {
+            selectedFragment = new Message();
+        } else if (item.getItemId() == R.id.nav_Profile) {
+            selectedFragment = new Profile_User();  // Profile_User is the fragment here
+        }
 
-                } else {
-                    selectedFragment = new Home();
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                return true;
-            };
-
+        // Replace the current fragment with the selected one
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        return true;
+    };
 }
+

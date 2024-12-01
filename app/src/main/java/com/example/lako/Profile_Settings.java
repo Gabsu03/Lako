@@ -3,6 +3,7 @@ package com.example.lako;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,15 @@ public class Profile_Settings extends AppCompatActivity {
 
         // Retrieve the dropdown state passed from another activity
         isDropdownUp = getIntent().getBooleanExtra("dropdown_state", false);
+
+        // Find the ImageView for starting Profile_Settings_Purchase activity
+        ImageView imageView4 = findViewById(R.id.imageView4);
+
+        // Set an OnClickListener to the ImageView
+        imageView4.setOnClickListener(v -> {
+            // Start the Profile_Settings_Purchase activity when clicked
+            startActivity(new Intent(Profile_Settings.this, Profile_Settings_Purchase.class));
+        });
     }
 
     // Handle the "up" arrow or back button
@@ -62,6 +72,7 @@ public class Profile_Settings extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
 
 
 

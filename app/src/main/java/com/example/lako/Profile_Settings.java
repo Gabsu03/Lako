@@ -47,5 +47,9 @@ public class Profile_Settings extends AppCompatActivity {
     public void address_settings(View view) {
         startActivity(new Intent(Profile_Settings.this, Profile_Settings_Address.class));
     }
+
+    public void payments_settings(View view) {
+        startActivity(new Intent(Profile_Settings.this, Profile_Settings_Payment.class));
+    }
 }
 

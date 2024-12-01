@@ -19,6 +19,7 @@ public class Profile_Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_settings);
 
+        // Retrieve the dropdown state passed from another activity
         isDropdownUp = getIntent().getBooleanExtra("dropdown_state", false);
     }
 
@@ -26,7 +27,7 @@ public class Profile_Settings extends AppCompatActivity {
     public void settings_drop_up(View view) {
         // Toggle the dropdown state before returning
         Intent intent = new Intent();
-        intent.putExtra("dropdown_state", !isDropdownUp);
+        intent.putExtra("dropdown_state", !isDropdownUp);  // Toggle the state
         setResult(RESULT_OK, intent);
         finish(); // Finish this activity to return to Profile_User
     }
@@ -35,11 +36,12 @@ public class Profile_Settings extends AppCompatActivity {
     public void onBackPressed() {
         // Handle the back press similarly
         Intent intent = new Intent();
-        intent.putExtra("dropdown_state", !isDropdownUp);
+        intent.putExtra("dropdown_state", !isDropdownUp);  // Toggle the state
         setResult(RESULT_OK, intent);
         super.onBackPressed(); // Finish this activity and return to the previous screen
     }
 
+    // Start other activities
     public void profile_settings(View view) {
         startActivity(new Intent(Profile_Settings.this, Profile_Settings_information.class));
     }
@@ -51,5 +53,15 @@ public class Profile_Settings extends AppCompatActivity {
     public void payments_settings(View view) {
         startActivity(new Intent(Profile_Settings.this, Profile_Settings_Payment.class));
     }
+
+    // Start Profile_Settings_MFA
+    public void MFA_btn(View view) {
+        Intent intent = new Intent(Profile_Settings.this, Profile_Settings_MFA.class);
+        // Use the flags to control the activity stack
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }
+
+
 

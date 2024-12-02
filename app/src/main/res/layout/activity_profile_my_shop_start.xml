@@ -88,6 +88,7 @@
         android:id="@+id/set_up_shop_btn"
         android:layout_width="200dp"
         android:layout_height="21dp"
+        android:onClick="set_up_shop_btn"
         android:fontFamily="@font/koho_bold"
         android:text="Setup my shop"
         android:textAlignment="center"

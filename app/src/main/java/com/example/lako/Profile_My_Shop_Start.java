@@ -26,4 +26,8 @@ public class Profile_My_Shop_Start extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void set_up_shop_btn(View view) {
+        startActivity(new Intent(Profile_My_Shop_Start.this, Profile_My_Shop_Setup.class));
+    }
 }

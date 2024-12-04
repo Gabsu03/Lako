@@ -20,6 +20,7 @@ public class Profile_Settings_Add_Payment extends AppCompatActivity {
     }
 
     public void add_payment_back(View view) {
-        startActivity(new Intent(Profile_Settings_Add_Payment.this, Profile_Settings_Payment.class));
+        // Navigate back to Profile_Settings
+        finish();  // Simply finish this activity to go back to Profile_Settings
     }
 }

@@ -41,4 +41,5 @@ public class Profile_User_To_Receive extends AppCompatActivity {
     public void Received(View view) {
         startActivity(new Intent(Profile_User_To_Receive.this, Profile_User_Received.class));
     }
+
 }

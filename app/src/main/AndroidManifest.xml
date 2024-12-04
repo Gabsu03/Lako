@@ -15,6 +15,12 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Profile_My_Shop_Facial_Recognition"
+            android:exported="false" />
+        <activity
+            android:name=".Profile_My_Shop_Verify"
+            android:exported="false" />
+        <activity
             android:name=".Profile_My_Shop_Setup"
             android:exported="false" />
         <activity

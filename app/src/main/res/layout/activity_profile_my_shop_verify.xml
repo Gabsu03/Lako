@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".Profile_My_Shop_Setup">
+    tools:context=".Profile_My_Shop_Verify">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -20,7 +20,7 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:fontFamily="@font/koho_bold"
-        android:text="My Shop"
+        android:text="Verify Shop"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="27dp"
@@ -32,19 +32,17 @@
         app:layout_constraintVertical_bias="0.833"
         tools:ignore="MissingConstraints" />
 
-
     <Button
-        android:id="@+id/button2"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/vector"
-        android:onClick="set_up_back"
+        android:onClick="verify_shop_back"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.533"
+        app:layout_constraintVertical_bias="0.4"
         tools:ignore="MissingConstraints,OnClick" />
 
     <ImageView
@@ -57,7 +55,7 @@
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.013" />
+        app:layout_constraintVertical_bias="0.021" />
 
     <ImageView
         android:id="@+id/imageView31"
@@ -82,49 +80,13 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView30"
         app:layout_constraintEnd_toEndOf="@+id/imageView30"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.029"
         app:layout_constraintStart_toEndOf="@+id/imageView31"
         app:layout_constraintTop_toTopOf="@+id/imageView30"
         app:layout_constraintVertical_bias="0.312" />
 
     <ImageView
-        android:id="@+id/imageView32"
-        android:layout_width="370dp"
-        android:layout_height="67dp"
-        android:background="@drawable/bar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.100" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/shop_name"
-        android:layout_width="350dp"
-        android:layout_height="70dp"
-        android:fontFamily="@font/jost_regular"
-        app:hintTextColor="@color/darkbrown"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView32"
-        app:layout_constraintEnd_toEndOf="@+id/imageView32"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView32"
-        app:layout_constraintTop_toTopOf="@+id/imageView32"
-        app:layout_constraintVertical_bias="0.538">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/shop__name_input"
-            android:layout_width="350dp"
-            android:layout_height="48dp"
-            android:background="@drawable/email_reset"
-            android:fontFamily="@font/jost_regular"
-            android:inputType="text"
-            android:paddingLeft="10dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ImageView
-        android:id="@+id/imageView33"
+        android:id="@+id/Shop_name_verify"
         android:layout_width="370dp"
         android:layout_height="43dp"
         android:background="@drawable/bar"
@@ -132,10 +94,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView32"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView30"
+        app:layout_constraintVertical_bias="0.017" />
+
+    <ImageView
+        android:id="@+id/imageView34"
+        android:layout_width="370dp"
+        android:layout_height="170dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView33"
+        app:layout_constraintVertical_bias="0.024" />
+
+    <ImageView
+        android:id="@+id/imageView33"
+        android:layout_width="370dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="440dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Shop_name_verify"
+        app:layout_constraintVertical_bias="0.447" />
 
     <TextView
+        android:id="@+id/textView31"
         android:layout_width="160dp"
         android:layout_height="27dp"
         android:fontFamily="@font/koho_bold"
@@ -150,58 +138,67 @@
         app:layout_constraintTop_toTopOf="@+id/imageView33"
         app:layout_constraintVertical_bias="0.562" />
 
+
     <ImageView
-        android:id="@+id/imageView34"
+        android:id="@+id/verify_ID"
         android:layout_width="370dp"
-        android:layout_height="170dp"
+        android:layout_height="43dp"
         android:background="@drawable/bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView33"
-        app:layout_constraintVertical_bias="0.030" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView34"
+        app:layout_constraintVertical_bias="0.115" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/shop_description"
-        android:layout_width="350dp"
-        android:layout_height="160dp"
-        android:fontFamily="@font/jost_regular"
-        app:hintTextColor="@color/darkbrown"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView34"
-        app:layout_constraintEnd_toEndOf="@+id/imageView34"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView34"
-        app:layout_constraintTop_toBottomOf="@+id/imageView33"
-        app:layout_constraintVertical_bias="0.538">
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="28dp"
+        android:fontFamily="@font/koho_bold"
+        android:text="Verify Shop using ID"
+        android:textAlignment="center"
+        android:textColor="@color/darkbrown"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/verify_ID"
+        app:layout_constraintEnd_toEndOf="@+id/verify_ID"
+        app:layout_constraintHorizontal_bias="0.033"
+        app:layout_constraintStart_toStartOf="@+id/verify_ID"
+        app:layout_constraintTop_toTopOf="@+id/verify_ID"
+        app:layout_constraintVertical_bias="0.562" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/shop__description_input"
-            android:layout_width="350dp"
-            android:layout_height="140dp"
-            android:background="@drawable/email_reset"
-            android:fontFamily="@font/jost_regular"
-            android:inputType="text"
-            android:paddingLeft="10dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+    <ImageView
+        android:id="@+id/verify_ID_whitebg"
+        android:layout_width="370dp"
+        android:layout_height="150dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verify_ID"
+        app:layout_constraintVertical_bias="0.064" />
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/verify_id"
+        app:layout_constraintBottom_toBottomOf="@+id/verify_ID_whitebg"
+        app:layout_constraintEnd_toEndOf="@+id/verify_ID_whitebg"
+        app:layout_constraintStart_toStartOf="@+id/verify_ID_whitebg"
+        app:layout_constraintTop_toTopOf="@+id/verify_ID_whitebg" />
 
     <Button
         android:id="@+id/verify_shop_btn"
         android:layout_width="160dp"
-        android:onClick="verify_shop_btn"
         android:layout_height="48dp"
-        android:text="Verify Shop"
-        android:textAlignment="center"
-        android:textSize="15dp"
-        android:fontFamily="@font/koho_bold"
-        android:textColor="@color/white"
         android:background="@drawable/reset_email_btn"
+        android:fontFamily="@font/koho_bold"
+        android:text="Continue"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView34"
-        app:layout_constraintStart_toStartOf="@+id/imageView34"
-        app:layout_constraintTop_toBottomOf="@+id/imageView34"
-        app:layout_constraintVertical_bias="0.064"
-        tools:ignore="OnClick" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verify_ID_whitebg" />
 </androidx.constraintlayout.widget.ConstraintLayout>

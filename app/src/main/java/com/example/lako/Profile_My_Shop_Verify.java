@@ -10,21 +10,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Profile_My_Shop_Setup extends AppCompatActivity {
+public class Profile_My_Shop_Verify extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_profile_my_shop_setup);
+        setContentView(R.layout.activity_profile_my_shop_verify);
     }
 
-    public void set_up_back(View view) {
-        startActivity(new Intent(Profile_My_Shop_Setup.this, Profile_My_Shop_Start.class));
+    public void verify_shop_back(View view) {
+        startActivity(new Intent(Profile_My_Shop_Verify.this, Profile_My_Shop_Setup.class));
     }
-
-    public void verify_shop_btn(View view) {
-        startActivity(new Intent(Profile_My_Shop_Setup.this, Profile_My_Shop_Verify.class));
-    }
-
 }

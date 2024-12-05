@@ -10,16 +10,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Profile_My_Shop_Facial_Recognition extends AppCompatActivity {
+public class Profile_My_Shop_Verify_Seller extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_profile_my_shop_facial_recognition);
+        setContentView(R.layout.activity_profile_my_shop_verify_seller);
     }
 
-    public void facial_recognition_continue(View view) {
-        startActivity(new Intent(Profile_My_Shop_Facial_Recognition.this, Profile_My_Shop_Verify_Seller.class));
+    // TEMPORARY
+    public void  create_shop_btn(View view) {
+        startActivity(new Intent(Profile_My_Shop_Verify_Seller.this, Profile_My_Shop_Loading_Screen.class));
     }
 }

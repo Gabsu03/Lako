@@ -22,4 +22,9 @@ public class Profile_My_Shop_Verify extends AppCompatActivity {
     public void verify_shop_back(View view) {
         startActivity(new Intent(Profile_My_Shop_Verify.this, Profile_My_Shop_Setup.class));
     }
+
+    //TEMPORARY
+    public void continue_verify_shop(View view) {
+        startActivity(new Intent(Profile_My_Shop_Verify.this, Profile_My_Shop_Facial_Recognition.class));
+    }
 }

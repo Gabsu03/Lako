@@ -189,6 +189,7 @@
 
     <Button
         android:id="@+id/verify_shop_btn"
+        android:onClick="continue_verify_shop"
         android:layout_width="160dp"
         android:layout_height="48dp"
         android:background="@drawable/reset_email_btn"
@@ -200,5 +201,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/verify_ID_whitebg" />
+        app:layout_constraintTop_toBottomOf="@+id/verify_ID_whitebg"
+        tools:ignore="OnClick" />
 </androidx.constraintlayout.widget.ConstraintLayout>

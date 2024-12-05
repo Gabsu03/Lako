@@ -7,4 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".Profile_My_Shop_Facial_Recognition">
 
+    <!--not include-->
+    <Button
+        android:id="@+id/facial_recognition_continue"
+        android:onClick="facial_recognition_continue"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:background="@drawable/reset_email_btn"
+        android:fontFamily="@font/koho_bold"
+        android:text="Continue"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="OnClick" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

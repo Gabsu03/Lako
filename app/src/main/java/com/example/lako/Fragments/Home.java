@@ -1,10 +1,12 @@
 package com.example.lako.Fragments;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.lako.ADD_TO_CART;
 import com.example.lako.Accessories_Home;
 import com.example.lako.Art_Home;
 import com.example.lako.Clothing_Home;
@@ -37,6 +40,9 @@ public class Home extends Fragment {
         TextView living = view.findViewById(R.id.living);
         TextView accessories = view.findViewById(R.id.accessories);
         TextView art = view.findViewById(R.id.art);
+
+        //TEMPORARYImageView cart_btn = view.findViewById(R.id.cart_btn);cart_btn.setOnClickListener(v -> {
+            // Start the CART ACTIVITYstartActivity(new Intent(getActivity(), ADD_TO_CART.class));});
 
         // Set an OnClickListener for Clothing
         clothing.setOnClickListener(v -> {

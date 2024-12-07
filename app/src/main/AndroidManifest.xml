@@ -69,9 +69,6 @@
             android:name=".Profile_Settings_Address"
             android:exported="false" />
         <activity
-            android:name=".Loading_Screen_Profile"
-            android:exported="false" />
-        <activity
             android:name=".Profile_Edit"
             android:exported="false" />
         <activity
@@ -81,22 +78,7 @@
             android:name=".Profile_Settings"
             android:exported="false" />
         <activity
-            android:name=".profile_edit"
-            android:exported="false" />
-        <activity
-            android:name=".profile_settings_information"
-            android:exported="false" />
-        <activity
-            android:name=".Loading_screen"
-            android:exported="false" />
-        <activity
-            android:name=".Profile_Setting"
-            android:exported="false" />
-        <activity
             android:name=".Living_Home"
-            android:exported="false" />
-        <activity
-            android:name=".Fragments.Living_Home"
             android:exported="false" />
         <activity
             android:name=".Clothing_Home"

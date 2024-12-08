@@ -17,5 +17,7 @@
     <color name="transparent_brown">#B3542910</color>
     <color name="lightblue">#A2D9E5</color>
     <color name="BF9A7E">#BF9A7E</color>
-
+    <color name="FF5C01">#FF5C01</color>
+    <color name="green">#306C7A</color>
+    <color name="light_orange">#9E643D</color>
 </resources>

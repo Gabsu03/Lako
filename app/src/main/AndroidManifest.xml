@@ -15,6 +15,24 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Main_Shop_Seller_List_Products"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Analytics"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Categories"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Orders"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Edit"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Products"
+            android:exported="false" />
+        <activity
             android:name=".ADD_TO_CART"
             android:exported="false" />
         <activity

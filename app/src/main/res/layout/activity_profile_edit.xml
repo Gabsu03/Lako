@@ -106,6 +106,7 @@
         android:background="@drawable/email_reset"
         android:fontFamily="@font/jost_medium"
         android:inputType="text"
+        android:paddingLeft="7dp"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -138,6 +139,7 @@
         android:background="@drawable/email_reset"
         android:fontFamily="@font/jost_medium"
         android:inputType="text"
+        android:paddingLeft="7dp"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -171,6 +173,7 @@
         android:background="@drawable/email_reset"
         android:fontFamily="@font/jost_medium"
         android:inputType="text"
+        android:paddingLeft="7dp"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -205,6 +208,7 @@
         android:inputType="textEmailAddress"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
+        android:paddingLeft="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -228,6 +232,7 @@
         app:layout_constraintVertical_bias="0.917" />
 
     <ProgressBar
+        android:id="@+id/progress_bar_edit_profile"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="16dp"

@@ -173,6 +173,7 @@
         app:layout_constraintVertical_bias="0.4">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phoneInput"
             android:layout_width="321dp"
             android:layout_height="40dp"
             android:background="@drawable/email_reset"
@@ -227,6 +228,7 @@
         app:layout_constraintVertical_bias="0.562">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/regionInput"
             android:layout_width="321dp"
             android:layout_height="40dp"
             android:background="@drawable/email_reset"

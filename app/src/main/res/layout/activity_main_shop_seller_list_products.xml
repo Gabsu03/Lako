@@ -5,6 +5,416 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     tools:context=".Main_Shop_Seller_List_Products">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/darkbrown"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/vector"
+        android:onClick="my_shop_list_product_back_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.687"
+        tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/koho_semibold"
+        android:text="Add Product"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="27dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.833"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView44"
+        android:layout_width="370dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.019" />
+
+    <TextView
+        android:id="@+id/textView45"
+        android:layout_width="100dp"
+        android:layout_height="22dp"
+        android:fontFamily="@font/koho_medium"
+        android:text="Product Name"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView44"
+        app:layout_constraintEnd_toEndOf="@+id/imageView44"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="@+id/imageView44"
+        app:layout_constraintTop_toTopOf="@+id/imageView44"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/imageView47"
+        android:layout_width="370dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView44"
+        app:layout_constraintVertical_bias="0.01" />
+
+    <EditText
+        android:id="@+id/product_name"
+        android:layout_width="350dp"
+        android:layout_height="33dp"
+        android:background="@drawable/email_reset"
+        android:fontFamily="@font/koho_regular"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView47"
+        app:layout_constraintEnd_toEndOf="@+id/imageView47"
+        app:layout_constraintStart_toStartOf="@+id/imageView47"
+        app:layout_constraintTop_toTopOf="@+id/imageView47" />
+
+    <ImageView
+        android:id="@+id/imageView48"
+        android:layout_width="370dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView47"
+        app:layout_constraintVertical_bias="0.019" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="22dp"
+        android:fontFamily="@font/koho_medium"
+        android:text="Product Name"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView44"
+        app:layout_constraintEnd_toEndOf="@+id/imageView44"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="@+id/imageView44"
+        app:layout_constraintTop_toTopOf="@+id/imageView44"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/add_list_product_btn"
+        android:layout_width="113dp"
+        android:layout_height="22dp"
+        android:fontFamily="@font/koho_medium"
+        android:text="@string/under"
+        android:textAlignment="textStart"
+        android:textColor="@color/C35314"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:onClick="add_list_product_click"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView44"
+        app:layout_constraintEnd_toEndOf="@+id/imageView44"
+        app:layout_constraintHorizontal_bias="0.962"
+        app:layout_constraintStart_toStartOf="@+id/imageView44"
+        app:layout_constraintTop_toTopOf="@+id/imageView44"
+        app:layout_constraintVertical_bias="0.538"
+        tools:ignore="OnClick" />
+
+    <ImageView
+        android:id="@+id/imageView49"
+        android:layout_width="370dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView48"
+        app:layout_constraintVertical_bias="0.019" />
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="135dp"
+        android:layout_height="22dp"
+        android:fontFamily="@font/koho_medium"
+        android:text="Product Description"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView48"
+        app:layout_constraintEnd_toEndOf="@+id/imageView48"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="@+id/imageView48"
+        app:layout_constraintTop_toTopOf="@+id/imageView48"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <EditText
+        android:id="@+id/product_description"
+        android:layout_width="350dp"
+        android:layout_height="90dp"
+        android:background="@drawable/email_reset"
+        android:fontFamily="@font/koho_regular"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView49"
+        app:layout_constraintEnd_toEndOf="@+id/imageView49"
+        app:layout_constraintStart_toStartOf="@+id/imageView49"
+        app:layout_constraintTop_toTopOf="@+id/imageView49" />
+
+    <ImageView
+        android:id="@+id/imageView50"
+        android:layout_width="370dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView49"
+        app:layout_constraintVertical_bias="0.019" />
+
+    <TextView
+        android:id="@+id/textView47"
+        android:layout_width="99dp"
+        android:layout_height="22dp"
+        android:fontFamily="@font/koho_medium"
+        android:text="Product Photo"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView50"
+        app:layout_constraintEnd_toEndOf="@+id/imageView50"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="@+id/imageView50"
+        app:layout_constraintTop_toTopOf="@+id/imageView50"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/imageView51"
+        android:layout_width="370dp"
+        android:layout_height="120dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView50"
+        app:layout_constraintVertical_bias="0.019" />
+
+    <TextView
+        android:id="@+id/upload_product_btn"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/jost_regular"
+        android:text="Upload Photo"
+        android:textAlignment="center"
+        android:textColor="@color/darkbrown"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView51"
+        app:layout_constraintEnd_toEndOf="@+id/imageView51"
+        app:layout_constraintStart_toStartOf="@+id/imageView51"
+        app:layout_constraintTop_toTopOf="@+id/imageView51" />
+
+
+    <ImageView
+        android:id="@+id/imageView53"
+        android:layout_width="370dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView51"
+        app:layout_constraintVertical_bias="0.041" />
+
+    <TextView
+        android:id="@+id/textView49"
+        android:layout_width="95dp"
+        android:layout_height="22dp"
+        android:fontFamily="@font/koho_medium"
+        android:text="Product Price"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView53"
+        app:layout_constraintEnd_toEndOf="@+id/imageView53"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="@+id/imageView53"
+        app:layout_constraintTop_toTopOf="@+id/imageView53"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <ImageView
+        android:id="@+id/imageView54"
+        android:layout_width="370dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView55"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView53"
+        app:layout_constraintVertical_bias="0.06" />
+
+    <EditText
+        android:id="@+id/product_price"
+        android:layout_width="350dp"
+        android:layout_height="33dp"
+        android:background="@drawable/email_reset"
+        android:fontFamily="@font/koho_regular"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView54"
+        app:layout_constraintEnd_toEndOf="@+id/imageView54"
+        app:layout_constraintStart_toStartOf="@+id/imageView54"
+        app:layout_constraintTop_toTopOf="@+id/imageView54" />
+
+    <ImageView
+        android:id="@+id/imageView55"
+        android:layout_width="370dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView53"
+        app:layout_constraintVertical_bias="0.255" />
+
+    <TextView
+        android:id="@+id/textView50"
+        android:layout_width="95dp"
+        android:layout_height="22dp"
+        android:fontFamily="@font/koho_medium"
+        android:text="Specification"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView55"
+        app:layout_constraintEnd_toEndOf="@+id/imageView55"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="@+id/imageView55"
+        app:layout_constraintTop_toTopOf="@+id/imageView55"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <ImageView
+        android:id="@+id/imageView56"
+        android:layout_width="370dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView55"
+        app:layout_constraintVertical_bias="0.12" />
+
+    <EditText
+        android:id="@+id/product_specification"
+        android:layout_width="350dp"
+        android:layout_height="33dp"
+        android:background="@drawable/email_reset"
+        android:fontFamily="@font/koho_regular"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView56"
+        app:layout_constraintEnd_toEndOf="@+id/imageView56"
+        app:layout_constraintStart_toStartOf="@+id/imageView56"
+        app:layout_constraintTop_toTopOf="@+id/imageView56" />
+
+    <ImageView
+        android:id="@+id/imageView57"
+        android:layout_width="370dp"
+        android:layout_height="35dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView56"
+        app:layout_constraintVertical_bias="0.109" />
+
+    <TextView
+        android:layout_width="35dp"
+        android:layout_height="22dp"
+        android:fontFamily="@font/koho_medium"
+        android:text="Tags"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView57"
+        app:layout_constraintEnd_toEndOf="@+id/imageView57"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="@+id/imageView57"
+        app:layout_constraintTop_toTopOf="@+id/imageView57"
+        app:layout_constraintVertical_bias="0.6" />
+
+
+    <ImageView
+        android:id="@+id/imageView58"
+        android:layout_width="370dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView57"
+        app:layout_constraintVertical_bias="0.324" />
+
+    <EditText
+        android:id="@+id/product_tags"
+        android:layout_width="350dp"
+        android:layout_height="33dp"
+        android:background="@drawable/email_reset"
+        android:fontFamily="@font/koho_regular"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView58"
+        app:layout_constraintEnd_toEndOf="@+id/imageView58"
+        app:layout_constraintStart_toStartOf="@+id/imageView58"
+        app:layout_constraintTop_toTopOf="@+id/imageView58" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

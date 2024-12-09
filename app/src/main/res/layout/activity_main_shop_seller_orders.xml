@@ -5,6 +5,174 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     tools:context=".Main_Shop_Seller_Orders">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/darkbrown"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/back_shop_seller_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/vector"
+        android:onClick="my_shop_orders_back_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.687"
+        tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/koho_semibold"
+        android:text="Orders"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="27dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.833"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/my_shop_seller_orders_btn"
+        android:layout_width="370dp"
+        android:layout_height="87dp"
+        android:onClick="my_shop_seller_orders"
+        android:background="@drawable/order_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.02"
+        tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="85dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/koho_bold"
+        android:text="ORDERS"
+        android:textAlignment="center"
+        android:textColor="@color/C35314"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/my_shop_seller_orders_btn"
+        app:layout_constraintEnd_toEndOf="@+id/my_shop_seller_orders_btn"
+        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintStart_toStartOf="@+id/my_shop_seller_orders_btn"
+        app:layout_constraintTop_toTopOf="@+id/my_shop_seller_orders_btn"
+        app:layout_constraintVertical_bias="0.157" />
+
+    <TextView
+        android:id="@+id/amount_orders"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/koho_regular"
+        android:textAlignment="textStart"
+        android:textColor="@color/C35314"
+        app:layout_constraintBottom_toBottomOf="@+id/my_shop_seller_orders_btn"
+        app:layout_constraintEnd_toEndOf="@+id/textView23"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView23"
+        app:layout_constraintTop_toBottomOf="@+id/textView23"
+        app:layout_constraintVertical_bias="0.25" />
+
+
+    <ImageButton
+        android:id="@+id/my_shop_seller_shipped_out_btn"
+        android:layout_width="370dp"
+        android:layout_height="87dp"
+        android:background="@drawable/order_background"
+        android:onClick="my_shop_seller_shipped_out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_shop_seller_orders_btn"
+        app:layout_constraintVertical_bias="0.019"
+        tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="138dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/koho_bold"
+        android:text="SHIPPED OUT"
+        android:textAlignment="center"
+        android:textColor="@color/C35314"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/my_shop_seller_shipped_out_btn"
+        app:layout_constraintEnd_toEndOf="@+id/my_shop_seller_shipped_out_btn"
+        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintStart_toStartOf="@+id/my_shop_seller_shipped_out_btn"
+        app:layout_constraintTop_toTopOf="@+id/my_shop_seller_shipped_out_btn"
+        app:layout_constraintVertical_bias="0.157" />
+
+    <TextView
+        android:id="@+id/amount_shipped_out"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/koho_regular"
+        android:textAlignment="textStart"
+        android:textColor="@color/C35314"
+        app:layout_constraintBottom_toBottomOf="@+id/my_shop_seller_shipped_out_btn"
+        app:layout_constraintEnd_toEndOf="@+id/my_shop_seller_shipped_out_btn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView39"
+        app:layout_constraintTop_toBottomOf="@+id/textView39"
+        app:layout_constraintVertical_bias="0.285" />
+
+    <ImageButton
+        android:id="@+id/my_shop_seller_completed_btn"
+        android:layout_width="370dp"
+        android:layout_height="87dp"
+        android:background="@drawable/order_background"
+        android:onClick="my_shop_seller_completed"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_shop_seller_shipped_out_btn"
+        app:layout_constraintVertical_bias="0.019"
+        tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/textView40"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/koho_bold"
+        android:text="COMPLETED"
+        android:textAlignment="center"
+        android:textColor="@color/C35314"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/my_shop_seller_completed_btn"
+        app:layout_constraintEnd_toEndOf="@+id/my_shop_seller_completed_btn"
+        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintStart_toStartOf="@+id/my_shop_seller_completed_btn"
+        app:layout_constraintTop_toTopOf="@+id/my_shop_seller_completed_btn"
+        app:layout_constraintVertical_bias="0.175" />
+
+    <TextView
+        android:id="@+id/amount_completed"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/koho_regular"
+        android:textAlignment="textStart"
+        android:textColor="@color/C35314"
+        app:layout_constraintBottom_toBottomOf="@+id/my_shop_seller_completed_btn"
+        app:layout_constraintEnd_toEndOf="@+id/my_shop_seller_shipped_out_btn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView40"
+        app:layout_constraintTop_toBottomOf="@+id/textView40"
+        app:layout_constraintVertical_bias="0.285" />
 </androidx.constraintlayout.widget.ConstraintLayout>

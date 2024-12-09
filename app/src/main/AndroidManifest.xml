@@ -15,6 +15,33 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Main_Shop_Seller_Edit_Profile_Loading_Screen"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Save_Screen"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Loading_Screen"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Completed"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Shipped_Out"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Amount_Orders"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_View_Order"
+            android:exported="false" />
+        <activity
+            android:name=".Main_Shop_Seller_Add_Categories"
+            android:exported="false" />
+        <activity
+            android:name=".TEMPORARY_ACTIVITY"
+            android:exported="false" />
+        <activity
             android:name=".Main_Shop_Seller_List_Products"
             android:exported="false" />
         <activity

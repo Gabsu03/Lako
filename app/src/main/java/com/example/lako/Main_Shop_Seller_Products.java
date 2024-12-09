@@ -45,4 +45,11 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
     public void categories_btn(View view) {
         startActivity(new Intent(Main_Shop_Seller_Products.this, Main_Shop_Seller_Categories.class));
     }
+
+
+
+    //temporary
+    public void my_shop_profile_back_btnn(View view) {
+        startActivity(new Intent(Main_Shop_Seller_Products.this, TEMPORARY_ACTIVITY.class));
+    }
 }

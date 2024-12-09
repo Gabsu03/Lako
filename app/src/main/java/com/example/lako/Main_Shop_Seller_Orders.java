@@ -1,6 +1,8 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +17,21 @@ public class Main_Shop_Seller_Orders extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_shop_seller_orders);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+    }
+
+    public void  my_shop_orders_back_btn(View view) {
+        startActivity(new Intent(Main_Shop_Seller_Orders.this, Main_Shop_Seller_Products.class));
+    }
+
+    public void my_shop_seller_orders (View view) {
+        startActivity(new Intent(Main_Shop_Seller_Orders.this, Main_Shop_Seller_Amount_Orders.class));
+    }
+
+    public void my_shop_seller_shipped_out(View view) {
+        startActivity(new Intent(Main_Shop_Seller_Orders.this, Main_Shop_Seller_Shipped_Out.class));
+    }
+
+    public void my_shop_seller_completed(View view) {
+        startActivity(new Intent(Main_Shop_Seller_Orders.this, Main_Shop_Seller_Completed.class));
     }
 }

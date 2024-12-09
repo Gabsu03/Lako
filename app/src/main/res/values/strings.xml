@@ -3,6 +3,12 @@
     <string name="web_id">AIzaSyAk17eFI8jtknqc84CLLLqpmuyZDzeWB8c</string>
     <string name="banner_image">Mabuhay Shop with Lako Banner</string>
 
+    <string name="under"><u>Add List Product</u></string>
+    <string name="password"><u>Forgot Password?</u></string>
+
+    <string name="signIn"><b><u>Sign In.</u></b></string>
+    <string name="signUp"><b><u>Sign Up.</u></b></string>
+
 
     <string name="about_us">Welcome to Lakò, your mobile platform for supporting local
         creative sellers! At Lakò, we are dedicated to bridging the gap between talented
@@ -32,5 +38,5 @@
         you have read, understood, and agree to abide by these terms and conditions. If you have any questions or concerns, please contact us for clarification before proceeding with your use of the app.
     </string>
 
-    <string name="terms">By signing up, you agree to our <b>Terms and Conditions</b></string>
+    <string name="terms">By signing up, you agree to our <b><u>Terms and Conditions.</u></b></string>
 </resources>

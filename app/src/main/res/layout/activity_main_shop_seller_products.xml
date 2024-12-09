@@ -21,7 +21,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/vector"
-        android:onClick="my_shop_profile_back_btn"
+        android:onClick="my_shop_profile_back_btnn"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.04"

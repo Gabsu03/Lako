@@ -10,21 +10,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Main_Shop_Seller_List_Products extends AppCompatActivity {
+public class TEMPORARY_ACTIVITY extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main_shop_seller_list_products);
+        setContentView(R.layout.activity_temporary);
     }
 
-    public void my_shop_list_product_back_btn (View view) {
-        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
+    public void continue_btn (View view) {
+        startActivity(new Intent(TEMPORARY_ACTIVITY.this, Main_Shop_Seller_Products.class));
     }
-
-    public void add_list_product_click (View view) {
-        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Save_Screen.class));
-    }
-
 }

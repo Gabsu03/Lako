@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context=".Main_Shop_Seller_Shipped_Out">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/darkbrown"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/vector"
+        android:onClick="my_shop_shipped_out_back_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.687"
+        tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/koho_semibold"
+        android:text="Shipped Out"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="27dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.833"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/my_shop_seller_shipped_out_btnnn"
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:background="@drawable/order_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.02"
+        android:onClick="my_shop_seller_shipped_out_button"
+        tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="85dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/koho_bold"
+        android:text="SHIPPED"
+        android:textAlignment="center"
+        android:textColor="@color/C35314"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/my_shop_seller_shipped_out_btnnn"
+        app:layout_constraintEnd_toEndOf="@+id/my_shop_seller_shipped_out_btnnn"
+        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintStart_toStartOf="@+id/my_shop_seller_shipped_out_btnnn"
+        app:layout_constraintTop_toTopOf="@+id/my_shop_seller_shipped_out_btnnn"
+        app:layout_constraintVertical_bias="0.433" />
+
+    <TextView
+        android:id="@+id/number_of_shipped_out"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/koho_regular"
+        android:textAlignment="textStart"
+        android:textColor="@color/C35314"
+        app:layout_constraintBottom_toBottomOf="@+id/my_shop_seller_shipped_out_btnnn"
+        app:layout_constraintEnd_toEndOf="@+id/my_shop_seller_shipped_out_btnnn"
+        app:layout_constraintHorizontal_bias="0.217"
+        app:layout_constraintStart_toEndOf="@+id/textView41"
+        app:layout_constraintTop_toTopOf="@+id/my_shop_seller_shipped_out_btnnn"
+        app:layout_constraintVertical_bias="0.420" />
+</androidx.constraintlayout.widget.ConstraintLayout>

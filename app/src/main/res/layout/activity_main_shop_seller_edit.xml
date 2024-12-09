@@ -135,6 +135,7 @@
 
     <ImageButton
         android:id="@+id/save_btn_profile_seller"
+        android:onClick="save_button_edit_profile_seller"
         android:layout_width="17dp"
         android:layout_height="17dp"
         android:background="@drawable/check_edit_wish"
@@ -143,7 +144,8 @@
         app:layout_constraintHorizontal_bias="0.916"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.162" />
+        app:layout_constraintVertical_bias="0.162"
+        tools:ignore="OnClick" />
 
     <ImageButton
         android:id="@+id/profile_picture_shop"

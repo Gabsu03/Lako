@@ -175,16 +175,18 @@
         tools:ignore="OnClick" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/add_categories_Button"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:onClick="add_categories_seller_btn"
         android:background="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.587" />
+        app:layout_constraintVertical_bias="0.587"
+        tools:ignore="OnClick" />
 
     <TextView
         android:layout_width="98dp"
@@ -195,9 +197,9 @@
         android:textColor="@color/darkbrown"
         android:textSize="17dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton"
-        app:layout_constraintStart_toStartOf="@+id/imageButton"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="@+id/add_categories_Button"
+        app:layout_constraintStart_toStartOf="@+id/add_categories_Button"
+        app:layout_constraintTop_toBottomOf="@+id/add_categories_Button"
         app:layout_constraintVertical_bias="0.035" />
 
 

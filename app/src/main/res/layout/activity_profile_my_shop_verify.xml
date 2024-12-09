@@ -92,6 +92,10 @@
         android:background="@drawable/bar"
         android:fontFamily="@font/koho_regular"
         android:textSize="14dp"
+        android:textStyle="bold"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,13 +105,22 @@
         app:layout_constraintVertical_bias="0.017" />
 
     <EditText
-        android:id="@+id/imageView34"
+        android:id="@+id/descriptionnn"
         android:layout_width="370dp"
         android:layout_height="150dp"
         android:background="@drawable/bar"
         android:fontFamily="@font/koho_regular"
         android:textSize="14dp"
+        android:maxLines="6"
+        android:paddingLeft="10dp"
+        android:inputType="textMultiLine"
+        android:gravity="top|start"
         android:textColor="@color/black"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
@@ -153,7 +166,7 @@
         android:background="@drawable/bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView34" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionnn" />
 
     <TextView
         android:layout_width="140dp"
@@ -179,6 +192,10 @@
         android:fontFamily="@font/koho_regular"
         android:textColor="@color/black"
         android:textSize="14dp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView39" />
@@ -192,7 +209,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView34"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionnn"
         app:layout_constraintVertical_bias="0.37" />
 
     <TextView
@@ -226,6 +243,7 @@
         android:id="@+id/imageView41"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:scaleType="centerCrop"
         android:background="@drawable/verify_id"
         app:layout_constraintBottom_toBottomOf="@+id/verify_ID_whitebg"
         app:layout_constraintEnd_toEndOf="@+id/verify_ID_whitebg"

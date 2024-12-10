@@ -24,22 +24,44 @@ import com.example.lako.Profile_User_Received;
 import com.example.lako.Profile_User_Ship;
 import com.example.lako.Profile_User_To_Receive;
 import com.example.lako.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Profile_User extends Fragment {
 
     private boolean isDropdownUp = false; // Track the state of the dropdown icon (up or down)
     private ImageView settingsDrop;
+    private TextView nameInput;  // Your TextView for displaying the user's name
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_profile_user, container, false);
 
         // Find the ImageView for the settings dropdown by its ID
         settingsDrop = view.findViewById(R.id.settings_drop);
+        nameInput = view.findViewById(R.id.nameInput);  // Initialize nameInput TextView
 
-        // Set an OnClickListener to the ImageView
+        // Fetch user data from Firebase
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DataSnapshot dataSnapshot = task.getResult();
+                    String firstName = dataSnapshot.child("firstName").getValue(String.class);
+                    String lastName = dataSnapshot.child("lastName").getValue(String.class);
+
+                    // Set the name in the TextView
+                    nameInput.setText(firstName + " " + lastName);
+                }
+            });
+        }
+
+        // Set an OnClickListener to the settings dropdown
         settingsDrop.setOnClickListener(v -> {
             // Rotate the dropdown icon (animated rotation)
             animateDropDown(settingsDrop);
@@ -55,53 +77,37 @@ public class Profile_User extends Fragment {
 
         // For Purchase Part
         ImageView imageView4 = view.findViewById(R.id.imageView4);
-
-        // Set an OnClickListener to the ImageView
         imageView4.setOnClickListener(v -> {
-            // Start the Profile_Settings_Purchase activity when clicked
             startActivity(new Intent(getActivity(), Profile_Settings_Purchase.class));
         });
 
-
-        //Linked the to pay symbol to purchase
+        // Linked the "to pay" button to purchase
         Button to_pay_btn = view.findViewById(R.id.to_pay);
-
-        // Set an OnClickListener to the ImageView
         to_pay_btn.setOnClickListener(v -> {
-            // Start the Profile_Settings_Purchase activity when clicked
             startActivity(new Intent(getActivity(), Profile_User_Pay.class));
         });
 
-        //Linked the to ship symbol to purchase
+        // Linked the "to ship" button to purchase
         Button to_ship_btn = view.findViewById(R.id.to_ship);
-
-        // Set an OnClickListener to the ImageView
         to_ship_btn.setOnClickListener(v -> {
-            // Start the Profile_Settings_Purchase activity when clicked
             startActivity(new Intent(getActivity(), Profile_User_Ship.class));
         });
 
-        //Linked the to receive symbol to purchase
+        // Linked the "to receive" button to purchase
         Button to_receive_btn = view.findViewById(R.id.to_receive);
-
-        // Set an OnClickListener to the ImageView
         to_receive_btn.setOnClickListener(v -> {
-            // Start the Profile_Settings_Purchase activity when clicked
             startActivity(new Intent(getActivity(), Profile_User_To_Receive.class));
         });
 
-        //Linked the RECEIVED symbol to purchase
+        // Linked the "to review" button to received
         Button received_btn = view.findViewById(R.id.to_review);
-
-        // Set an OnClickListener to the ImageView
         received_btn.setOnClickListener(v -> {
-            // Start the Profile_Settings_Purchase activity when clicked
             startActivity(new Intent(getActivity(), Profile_User_Received.class));
         });
 
+        // Linked the "My Shop" button to start Profile_My_Shop_Start
         TextView shop_btn = view.findViewById(R.id.my_shop_profile_user);
         shop_btn.setOnClickListener(v -> {
-            // Start the Profile_User_Received activity when clicked
             startActivity(new Intent(getActivity(), Profile_My_Shop_Start.class));
         });
 
@@ -127,9 +133,10 @@ public class Profile_User extends Fragment {
     // Method to animate the dropdown icon
     private void animateDropDown(ImageView settingsDrop) {
         ObjectAnimator rotate = ObjectAnimator.ofFloat(settingsDrop, "rotation", 0f, 180f);
-        rotate.setDuration(300);
+        rotate.setDuration(300); // Rotate over 300ms
         rotate.start();
     }
 }
+
 
 

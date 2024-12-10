@@ -14,9 +14,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Profile_Settings extends AppCompatActivity {
 
     private boolean isDropdownUp;
+    private TextView nameInput;  // TextView for displaying the user's name
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,55 +33,65 @@ public class Profile_Settings extends AppCompatActivity {
         // Retrieve the dropdown state passed from another activity
         isDropdownUp = getIntent().getBooleanExtra("dropdown_state", false);
 
+        // Initialize the TextViews
+        nameInput = findViewById(R.id.nameInput);
+
+        // Fetch user data from Firebase
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DataSnapshot dataSnapshot = task.getResult();
+                    String firstName = dataSnapshot.child("firstName").getValue(String.class);
+                    String lastName = dataSnapshot.child("lastName").getValue(String.class);
+
+                    // Set the name in both TextViews
+                    String fullName = firstName + " " + lastName;
+                    nameInput.setText(fullName);
+                }
+            });
+        }
+
         // Find the ImageView for starting Profile_Settings_Purchase activity
         ImageView imageView4 = findViewById(R.id.imageView4);
-
-        // Set an OnClickListener to the ImageView
         imageView4.setOnClickListener(v -> {
-            // Start the Profile_Settings_Purchase activity when clicked
             startActivity(new Intent(Profile_Settings.this, Profile_Settings_Purchase.class));
         });
 
         // Linked the "to pay" button to purchase
         Button pay_btn = findViewById(R.id.to_pay);
         pay_btn.setOnClickListener(v -> {
-            // Start the Profile_User_Pay activity when clicked
             startActivity(new Intent(Profile_Settings.this, Profile_User_Pay.class));
         });
 
         // Linked the "to ship" button to purchase
         Button ship_btn = findViewById(R.id.to_ship);
         ship_btn.setOnClickListener(v -> {
-            // Start the Profile_User_Ship activity when clicked
             startActivity(new Intent(Profile_Settings.this, Profile_User_Ship.class));
         });
 
         // Linked the "to receive" button to purchase
         Button receive_btn = findViewById(R.id.to_receive);
         receive_btn.setOnClickListener(v -> {
-            // Start the Profile_User_To_Receive activity when clicked
             startActivity(new Intent(Profile_Settings.this, Profile_User_To_Receive.class));
         });
 
         // Linked the "to review" button to purchase
         Button reviewed_btn = findViewById(R.id.to_review);
         reviewed_btn.setOnClickListener(v -> {
-            // Start the Profile_User_Received activity when clicked
             startActivity(new Intent(Profile_Settings.this, Profile_User_Received.class));
         });
 
-        //MY SHOP LINKED
+        // MY SHOP LINKED
         TextView my_shop_btn = findViewById(R.id.my_shop_profile_settings);
         my_shop_btn.setOnClickListener(v -> {
-            // Start the Profile_User_Received activity when clicked
             startActivity(new Intent(Profile_Settings.this, Profile_My_Shop_Start.class));
         });
-
     }
 
     // Handle the "up" arrow or back button
     public void settings_drop_up(View view) {
-        // Toggle the dropdown state before returning
         Intent intent = new Intent();
         intent.putExtra("dropdown_state", !isDropdownUp);  // Toggle the state
         setResult(RESULT_OK, intent);
@@ -106,11 +123,12 @@ public class Profile_Settings extends AppCompatActivity {
     // Start Profile_Settings_MFA
     public void MFA_btn(View view) {
         Intent intent = new Intent(Profile_Settings.this, Profile_Settings_MFA.class);
-        // Use the flags to control the activity stack
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }
+
+
 
 
 

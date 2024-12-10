@@ -11,6 +11,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,8 +24,7 @@ public class Profile_Settings_Add_Address extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_profile_settings_add_address);
+        setContentView(R.layout.activity_profile_settings_add_address); // Set the correct layout
 
         // Initialize Firebase database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -37,13 +37,14 @@ public class Profile_Settings_Add_Address extends AppCompatActivity {
         houseNumberInput = findViewById(R.id.houseNumberInput);
         streetInput = findViewById(R.id.streetInput);
         cityInput = findViewById(R.id.cityInput);
-        saveButton = findViewById(R.id.address_save_btn);
+        saveButton = findViewById(R.id.address_save_btn); // Get reference for the Save button
 
-        // Save address to Firebase on button click
+        // Save address to Firebase when the Save button is clicked
         saveButton.setOnClickListener(view -> saveAddress());
     }
 
     private void saveAddress() {
+        // Retrieve data from input fields
         String name = nameInput.getText().toString().trim();
         String label = labelInput.getText().toString().trim();
         String phone = phoneInput.getText().toString().trim();
@@ -59,22 +60,47 @@ public class Profile_Settings_Add_Address extends AppCompatActivity {
             return;
         }
 
-        // Create an address object
+        // Create an Address object
         Address address = new Address(name, label, phone, region, houseNumber, street, city);
 
-        // Store the address in Firebase
-        String userId = "USER_ID"; // Replace with the actual user ID
-        databaseReference.child(userId).child("Address").setValue(address)
-                .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Address saved successfully", Toast.LENGTH_SHORT).show();
-                    // Navigate to Profile_Settings_Address or update its UI dynamically
-                })
-                .addOnFailureListener(e -> Toast.makeText(this, "Failed to save address", Toast.LENGTH_SHORT).show());
+        // Get current user ID (make sure the user is authenticated)
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (userId == null) {
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Create a unique address ID for this address entry
+        String addressId = databaseReference.child(userId).child("Address").push().getKey();
+        if (addressId != null) {
+            // Save the address to Firebase under the generated address ID
+            databaseReference.child(userId).child("Address").child(addressId).setValue(address)
+                    .addOnSuccessListener(unused -> {
+                        Toast.makeText(this, "Address saved successfully", Toast.LENGTH_SHORT).show();
+
+                        // Return the saved address data back to Profile_Settings_Address activity
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("name", name);
+                        resultIntent.putExtra("label", label);
+                        resultIntent.putExtra("phone", phone);
+                        resultIntent.putExtra("region", region);
+                        resultIntent.putExtra("houseNumber", houseNumber);
+                        resultIntent.putExtra("street", street);
+                        resultIntent.putExtra("city", city);
+
+                        setResult(RESULT_OK, resultIntent); // Set result to return to Profile_Settings_Address
+                        finish(); // Close this activity and go back
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to save address", Toast.LENGTH_SHORT).show());
+        } else {
+            Toast.makeText(this, "Failed to generate address ID", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Address model class
     public static class Address {
         public String name, label, phone, region, houseNumber, street, city;
+        public String id;
 
         public Address() {
             // Default constructor required for calls to DataSnapshot.getValue(Address.class)
@@ -89,8 +115,5 @@ public class Profile_Settings_Add_Address extends AppCompatActivity {
             this.street = street;
             this.city = city;
         }
-    }
-    public void  address_save_btn(View view) {
-        startActivity(new Intent(Profile_Settings_Add_Address.this, Profile_Settings_Address.class));
     }
 }

@@ -96,18 +96,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
         app:layout_constraintVertical_bias="0.017" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/toggle_MFA"
-        android:layout_width="45dp"
-        android:layout_height="35dp"
-        android:track="@drawable/swtich_bg"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView24"
-        app:layout_constraintEnd_toEndOf="@+id/imageView24"
-        app:layout_constraintHorizontal_bias="0.048"
-        app:layout_constraintStart_toStartOf="@+id/imageView24"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.769"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <TextView
         android:id="@+id/textView25"
@@ -118,10 +106,10 @@
         android:textColor="@color/darkbrown"
         app:layout_constraintBottom_toBottomOf="@+id/imageView24"
         app:layout_constraintEnd_toEndOf="@+id/imageView24"
-        app:layout_constraintHorizontal_bias="0.292"
-        app:layout_constraintStart_toStartOf="@+id/toggle_MFA"
+        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintStart_toStartOf="@+id/imageView24"
         app:layout_constraintTop_toTopOf="@+id/imageView24"
-        app:layout_constraintVertical_bias="0.388" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
         android:id="@+id/MFA_drop"

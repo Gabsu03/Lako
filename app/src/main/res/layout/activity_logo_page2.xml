@@ -12,7 +12,7 @@
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
         android:layout_width="415dp"
-        android:layout_height="844dp"
+        android:layout_height="match_parent"
         android:background="@drawable/lako_welcome_gif"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

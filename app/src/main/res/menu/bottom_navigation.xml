@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_Wishlist"
         android:icon="@drawable/wishi_icon"
-        android:title="Wishlist" />
+        tools:ignore="MenuTitle" />
     <item
         android:id="@+id/nav_Notification"
         android:icon="@drawable/notif_icon"
-        android:title="Notifications" />
+        tools:ignore="MenuTitle" />
     <item
         android:id="@+id/nav_Home"
         android:icon="@drawable/homeee"
-        android:title="Home" />
+        tools:ignore="MenuTitle"/>
     <item
         android:id="@+id/nav_Message"
         android:icon="@drawable/chat_icon"
-        android:title="Messages" />
+        tools:ignore="MenuTitle"/>
     <item
         android:id="@+id/nav_Profile"
         android:icon="@drawable/profile_icon"
-        android:title="Profile" />
+        tools:ignore="MenuTitle"/>
 </menu>

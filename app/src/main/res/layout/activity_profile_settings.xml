@@ -630,6 +630,7 @@
         android:fontFamily="@font/koho_bold"
         android:text="Logout"
         android:textAlignment="center"
+        android:onClick="log_out"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView9"
         app:layout_constraintEnd_toEndOf="@+id/imageView9"

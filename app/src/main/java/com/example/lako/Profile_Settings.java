@@ -126,6 +126,9 @@ public class Profile_Settings extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+    public void log_out(View view) {
+        startActivity(new Intent(Profile_Settings.this, sign_in.class));
+    }
 }
 
 

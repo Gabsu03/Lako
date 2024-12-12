@@ -48,5 +48,7 @@ dependencies {
     implementation(libs.library)
     implementation(libs.play.services.auth)
     implementation (libs.material.v190)
+    implementation (libs.firebase.core)
+    implementation(libs.firebase.bom)
 
 }

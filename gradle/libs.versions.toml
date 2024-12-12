@@ -1,6 +1,8 @@
 [versions]
 agp = "8.7.0"
 androidGifDrawable = "1.2.29"
+firebaseAuthVersion = "21.0.3"
+firebaseBom = "33.7.0"
 firebaseDatabaseVersion = "20.1.0"
 firebaseFirestore = "25.1.1"
 googleMaterial = "1.9.0"
@@ -20,6 +22,9 @@ firebaseDatabase = "21.0.0"
 
 [libraries]
 android-gif-drawable = { module = "pl.droidsonroids.gif:android-gif-drawable", version.ref = "androidGifDrawable" }
+firebase-auth-v2103 = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuthVersion" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-core = { module = "com.google.firebase:firebase-core", version.ref = "firebaseDatabaseVersion" }
 firebase-database-v2010 = { module = "com.google.firebase:firebase-database", version.ref = "firebaseDatabaseVersion" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

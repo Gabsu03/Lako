@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS"
+        tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
 
     <application
         android:allowBackup="true"
@@ -15,13 +17,16 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Profile_My_Shop_VERIFY_OTP"
+            android:exported="false" />
+        <activity
+            android:name=".Profile_My_Shop_SEND_OTP"
+            android:exported="false" />
+        <activity
             android:name=".Main_Shop_Seller_Edit_Profile_Loading_Screen"
             android:exported="false" />
         <activity
             android:name=".Main_Shop_Seller_Save_Screen"
-            android:exported="false" />
-        <activity
-            android:name=".Main_Shop_Seller_Loading_Screen"
             android:exported="false" />
         <activity
             android:name=".Main_Shop_Seller_Completed"

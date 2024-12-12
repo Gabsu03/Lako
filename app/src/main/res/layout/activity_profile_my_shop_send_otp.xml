@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context=".Profile_My_Shop_SEND_OTP">
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@color/darkbrown"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/logo_header"
+        android:layout_width="405dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/lako_header_logo" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="344dp"
+        android:layout_height="400dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintVertical_bias="0.233" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/koho_semibold"
+        android:text="OTP Verification"
+        android:textAlignment="center"
+        android:textColor="@color/darkbrown"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.106" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/jost_medium"
+        android:text="We will send you a One Time Password on the mobile number."
+        android:textAlignment="center"
+        android:textColor="@color/darkbrown"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.101" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/jost_regular"
+        android:text="Enter Mobile Number"
+        android:textAlignment="center"
+        android:textColor="@color/darkbrown"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.167" />
+
+    <EditText
+        android:id="@+id/inputMobile"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:background="@drawable/email_reset"
+        android:fontFamily="@font/jost_regular"
+        android:hint="+63XXXXXXXXXX"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textColor="@color/darkbrown"
+        android:textColorHint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.058" />
+
+    <Button
+        android:id="@+id/get_otp_btn"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:background="@color/darkbrown"
+        android:fontFamily="@font/koho_medium"
+        android:text="Get OTP"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/inputMobile"
+        app:layout_constraintStart_toStartOf="@+id/inputMobile"
+        app:layout_constraintTop_toBottomOf="@+id/inputMobile"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_send_otp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/get_otp_btn"
+        app:layout_constraintEnd_toEndOf="@+id/get_otp_btn"
+        app:layout_constraintStart_toStartOf="@+id/get_otp_btn"
+        app:layout_constraintTop_toBottomOf="@+id/inputMobile"
+        app:layout_constraintVertical_bias="0.861" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

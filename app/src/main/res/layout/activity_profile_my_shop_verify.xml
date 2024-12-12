@@ -200,57 +200,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView39" />
 
-    <ImageView
-        android:id="@+id/verify_ID"
-        android:layout_width="370dp"
-        android:layout_height="43dp"
-        android:background="@drawable/bar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionnn"
-        app:layout_constraintVertical_bias="0.37" />
-
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="28dp"
-        android:fontFamily="@font/koho_bold"
-        android:text="Verify Shop using ID"
-        android:textAlignment="center"
-        android:textColor="@color/darkbrown"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/verify_ID"
-        app:layout_constraintEnd_toEndOf="@+id/verify_ID"
-        app:layout_constraintHorizontal_bias="0.033"
-        app:layout_constraintStart_toStartOf="@+id/verify_ID"
-        app:layout_constraintTop_toTopOf="@+id/verify_ID"
-        app:layout_constraintVertical_bias="0.562" />
-
-    <ImageView
-        android:id="@+id/verify_ID_whitebg"
-        android:layout_width="370dp"
-        android:layout_height="100dp"
-        android:background="@drawable/bar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/verify_ID"
-        app:layout_constraintVertical_bias="0.064" />
-
-    <ImageView
-        android:id="@+id/imageView41"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        android:background="@drawable/verify_id"
-        app:layout_constraintBottom_toBottomOf="@+id/verify_ID_whitebg"
-        app:layout_constraintEnd_toEndOf="@+id/verify_ID_whitebg"
-        app:layout_constraintStart_toStartOf="@+id/verify_ID_whitebg"
-        app:layout_constraintTop_toTopOf="@+id/verify_ID_whitebg"
-        app:layout_constraintVertical_bias="0.75" />
-
     <Button
         android:id="@+id/verify_shop_btn"
         android:layout_width="160dp"
@@ -266,7 +215,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView41"
-        app:layout_constraintVertical_bias="0.396"
+        app:layout_constraintTop_toBottomOf="@+id/Shop_location_verify"
+        app:layout_constraintVertical_bias="0.202"
         tools:ignore="OnClick" />
 </androidx.constraintlayout.widget.ConstraintLayout>

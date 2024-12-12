@@ -23,9 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Profile_My_Shop_Verify extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
     private EditText shopNameVerify, shopDescriptionVerify, shopLocationVerify;
-    private ImageView shopImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +36,6 @@ public class Profile_My_Shop_Verify extends AppCompatActivity {
         shopDescriptionVerify = findViewById(R.id.descriptionnn);
         shopLocationVerify = findViewById(R.id.Shop_location_verify);
 
-        // Initialize ImageView for shop image
-        shopImageView = findViewById(R.id.imageView41);
-
         // Get data from Intent
         String shopName = getIntent().getStringExtra("SHOP_NAME");
         String shopDescription = getIntent().getStringExtra("SHOP_DESCRIPTION");
@@ -51,24 +46,8 @@ public class Profile_My_Shop_Verify extends AppCompatActivity {
         if (shopDescription != null) shopDescriptionVerify.setText(shopDescription);
         if (shopLocation != null) shopLocationVerify.setText(shopLocation);
 
-        // Set up click listener for image upload
-        shopImageView.setOnClickListener(view -> openImageChooser());
     }
 
-    private void openImageChooser() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri imageUri = data.getData();
-            shopImageView.setImageURI(imageUri); // Display selected image in ImageView
-        }
-    }
 
     public void verify_shop_back(View view) {
         startActivity(new Intent(Profile_My_Shop_Verify.this, Profile_My_Shop_Setup.class));

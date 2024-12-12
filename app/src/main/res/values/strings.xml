@@ -5,6 +5,8 @@
 
     <string name="under"><u>Add List Product</u></string>
     <string name="password"><u>Forgot Password?</u></string>
+    <string name="resend_code"><u>Resend OTP</u></string>
+
 
     <string name="signIn"><b><u>Sign In.</u></b></string>
     <string name="signUp"><b><u>Sign Up.</u></b></string>

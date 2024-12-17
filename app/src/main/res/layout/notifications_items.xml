@@ -4,85 +4,65 @@
     android:layout_width="370dp"
     android:background="@drawable/bar"
     android:layout_marginBottom="8dp"
-    android:layout_height="137dp">
+    android:layout_height="86dp">
 
-
-    <TextView
-        android:id="@+id/nameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/jost_semibold"
-        android:text="Name"
-        android:textColor="@color/darkbrown"
-        android:textSize="15dp"
-        android:textAlignment="textStart"
-        android:paddingLeft="10dp"
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="67dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelTextView"
-        app:layout_constraintVertical_bias="0.03" />
-
-    <TextView
-        android:id="@+id/labelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Label"
-        android:textColor="@color/darkbrown"
-        android:textSize="15dp"
-        android:fontFamily="@font/jost_semibold"
-        android:textAlignment="textStart"
-        android:paddingLeft="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/phoneTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Phone"
-        android:textColor="@color/C35314"
-        android:fontFamily="@font/jost_regular"
-        android:textAlignment="textStart"
-        android:paddingLeft="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/nameTextView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/nameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
-
-    <TextView
-        android:id="@+id/fullAddressTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Full Address"
-        android:fontFamily="@font/jost_semibold"
-        android:textSize="15dp"
-        android:textAlignment="textStart"
-        android:paddingLeft="10dp"
-        android:textColor="@color/darkbrown"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/phoneTextView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/phoneTextView"
-        app:layout_constraintTop_toBottomOf="@+id/phoneTextView"
-        app:layout_constraintVertical_bias="0.1" />
-
-    <Button
-        android:id="@+id/deleteButton_address"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/trash"
-        android:textColor="@color/C35314"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.952"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.149" />
+        app:layout_constraintVertical_bias="0.518" />
+
+    <TextView
+        android:id="@+id/status_product"
+        android:layout_width="89dp"
+        android:layout_height="17dp"
+        android:fontFamily="@font/jost_bold"
+        android:textSize="14dp"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/C35314"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@+id/product_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.231" />
+
+    <TextView
+        android:id="@+id/description_status_product"
+        android:layout_width="89dp"
+        android:layout_height="13dp"
+        android:fontFamily="@font/jost_medium"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@+id/product_image"
+        app:layout_constraintTop_toBottomOf="@+id/status_product"
+        app:layout_constraintVertical_bias="0.205" />
+
+    <TextView
+        android:id="@+id/date_product"
+        android:layout_width="89dp"
+        android:layout_height="13dp"
+        android:fontFamily="@font/jost_regular"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="7dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@+id/product_image"
+        app:layout_constraintTop_toBottomOf="@+id/description_status_product"
+        app:layout_constraintVertical_bias="0.277" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

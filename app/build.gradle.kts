@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation (libs.firebase.firestore)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -49,6 +50,4 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation (libs.material.v190)
     implementation (libs.firebase.core)
-    implementation(libs.firebase.bom)
-
 }

@@ -157,6 +157,21 @@
         app:layout_constraintVertical_bias="0.47"
         tools:ignore="OnClick" />
 
+
+    <!-- NANGGALING ITO SA DISPLAY_PRODUCTS_ITEM_SELLER-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/products_display_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:padding="8dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/analytics_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.297" />
+
     <TextView
         android:id="@+id/categories_shop"
         android:layout_width="90dp"

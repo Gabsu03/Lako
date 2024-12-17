@@ -10,6 +10,8 @@
 
     <string name="signIn"><b><u>Sign In.</u></b></string>
     <string name="signUp"><b><u>Sign Up.</u></b></string>
+    <string name="Upload_Image"><b><u>Upload Photo</u></b></string>
+
 
 
     <string name="about_us">Welcome to Lakò, your mobile platform for supporting local

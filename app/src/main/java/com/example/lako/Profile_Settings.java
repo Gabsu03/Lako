@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +53,21 @@ public class Profile_Settings extends AppCompatActivity {
                 }
             });
         }
+
+        // Logout button
+        ImageView logoutBtn = findViewById(R.id.logout);  // Your logout ImageView
+        logoutBtn.setOnClickListener(v -> {
+            // Sign out the user from Firebase
+            FirebaseAuth.getInstance().signOut();
+
+            // Show Toast message indicating logout success
+            Toast.makeText(Profile_Settings.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+            // Redirect to Sign-In activity
+            Intent intent = new Intent(Profile_Settings.this, sign_in.class);
+            startActivity(intent);
+            finish();
+        });
 
         // Find the ImageView for starting Profile_Settings_Purchase activity
         ImageView imageView4 = findViewById(R.id.imageView4);
@@ -120,18 +136,11 @@ public class Profile_Settings extends AppCompatActivity {
         startActivity(new Intent(Profile_Settings.this, Profile_Settings_Payment.class));
     }
 
-    public void change_password(View view) {
-        startActivity(new Intent(Profile_Settings.this, Forgot_Password.class));
-    }
-
     // Start Profile_Settings_MFA
     public void MFA_btn(View view) {
         Intent intent = new Intent(Profile_Settings.this, Profile_Settings_MFA.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-    }
-    public void log_out(View view) {
-        startActivity(new Intent(Profile_Settings.this, sign_in.class));
     }
 }
 

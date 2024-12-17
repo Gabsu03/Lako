@@ -602,7 +602,7 @@
         tools:ignore="MissingConstraints,OnClick" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/logout"
         android:layout_width="370dp"
         android:layout_height="43dp"
         android:layout_marginTop="276dp"
@@ -613,30 +613,30 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <ImageView
-        android:id="@+id/logout"
+        android:id="@+id/logoutt"
         android:layout_width="17dp"
         android:layout_height="17dp"
         android:background="@drawable/logoutt"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-        app:layout_constraintEnd_toEndOf="@+id/imageView9"
+        app:layout_constraintBottom_toBottomOf="@+id/logout"
+        app:layout_constraintEnd_toEndOf="@+id/logout"
         app:layout_constraintHorizontal_bias="0.039"
-        app:layout_constraintStart_toStartOf="@+id/imageView9"
-        app:layout_constraintTop_toTopOf="@+id/imageView9"
+        app:layout_constraintStart_toStartOf="@+id/logout"
+        app:layout_constraintTop_toTopOf="@+id/logout"
         app:layout_constraintVertical_bias="0.576" />
 
     <TextView
         android:layout_width="60dp"
         android:layout_height="22dp"
         android:fontFamily="@font/koho_bold"
+        android:onClick="log_out"
         android:text="Logout"
         android:textAlignment="center"
-        android:onClick="log_out"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-        app:layout_constraintEnd_toEndOf="@+id/imageView9"
+        app:layout_constraintBottom_toBottomOf="@+id/logout"
+        app:layout_constraintEnd_toEndOf="@+id/logout"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/logout"
-        app:layout_constraintTop_toTopOf="@+id/imageView9"
+        app:layout_constraintStart_toEndOf="@+id/logoutt"
+        app:layout_constraintTop_toTopOf="@+id/logout"
         app:layout_constraintVertical_bias="0.476" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

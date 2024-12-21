@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#F6F4EE">
+
+    <!-- Chat Header -->
+
+    <!-- Suggested Questions -->
+
+    <TextView
+        android:id="@+id/chatHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8C5E34"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Mabuhay! Need Assistance?"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <Button
+        tools:ignore="MissingConstraints,OnClick"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_above="@+id/suggestedQuestionsContainer"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="379dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/vector"
+        android:onClick="chat_bot_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <HorizontalScrollView
+        android:id="@+id/suggestedQuestionsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chatHeader"
+        android:background="#FFFFFF"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/suggestedQuestions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+
+    </HorizontalScrollView>
+
+    <!-- Chat RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/suggestedQuestionsContainer"
+        android:layout_above="@id/inputContainer"
+        android:padding="10dp"/>
+
+    <!-- Input Box and Send Button -->
+    <LinearLayout
+        android:id="@+id/inputContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="#FFFFFF">
+
+        <EditText
+            android:id="@+id/messageInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Type your message..."
+            android:padding="10dp"
+            android:background="#EEE"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:backgroundTint="#8C5E34"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".Profile_My_Shop_Facial_Recognition">
 
-    <!--not include-->
+    <ImageView
+        android:id="@+id/image_lako"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray" />
+
     <Button
-        android:id="@+id/facial_recognition_continue"
-        android:onClick="facial_recognition_continue"
-        android:layout_width="160dp"
-        android:layout_height="48dp"
-        android:background="@drawable/reset_email_btn"
-        android:fontFamily="@font/koho_bold"
+        android:id="@+id/camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Capture Photo" />
+
+    <Button
+        android:id="@+id/upload_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Upload from Gallery" />
+
+    <Button
+        android:id="@+id/continue_button"
+        android:onClick="continueBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Continue"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="OnClick" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,0 +1,112 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/imageView41"
+        android:layout_width="370dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021"
+        tools:layout_editor_absoluteX="20dp" />
+
+    <ImageView
+        android:id="@+id/imageView60"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/shopp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView41"
+        app:layout_constraintEnd_toEndOf="@+id/imageView41"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toStartOf="@+id/imageView41"
+        app:layout_constraintTop_toTopOf="@+id/imageView41"
+        app:layout_constraintVertical_bias="0.533" />
+
+    <TextView
+        android:id="@+id/name_of_shop_wish"
+        android:layout_width="200dp"
+        android:layout_height="15dp"
+        android:fontFamily="@font/koho_medium"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView41"
+        app:layout_constraintEnd_toEndOf="@+id/imageView41"
+        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintStart_toEndOf="@+id/imageView60"
+        app:layout_constraintTop_toTopOf="@+id/imageView41"
+        app:layout_constraintVertical_bias="0.533" />
+
+    <ImageView
+        android:id="@+id/imageView61"
+        android:layout_width="370dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView41"
+        app:layout_constraintVertical_bias="0.018"
+        tools:layout_editor_absoluteX="20dp" />
+
+
+    <ImageView
+        android:id="@+id/picture_product"
+        android:layout_width="57dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView61"
+        app:layout_constraintEnd_toEndOf="@+id/imageView61"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="@+id/imageView61"
+        app:layout_constraintTop_toTopOf="@+id/imageView61" />
+
+    <TextView
+        android:id="@+id/name_product_wishlist"
+        android:layout_width="200dp"
+        android:layout_height="17dp"
+        android:fontFamily="@font/koho_medium"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView61"
+        app:layout_constraintEnd_toEndOf="@+id/imageView61"
+        app:layout_constraintHorizontal_bias="0.132"
+        app:layout_constraintStart_toEndOf="@+id/picture_product"
+        app:layout_constraintTop_toTopOf="@+id/imageView61"
+        app:layout_constraintVertical_bias="0.18" />
+
+
+    <TextView
+        android:id="@+id/product_price_wishlist"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/jost_medium"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/C35314"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView61"
+        app:layout_constraintEnd_toEndOf="@+id/name_product_wishlist"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/picture_product"
+        app:layout_constraintTop_toBottomOf="@+id/name_product_wishlist"
+        app:layout_constraintVertical_bias="0.464" />
+
+    <Button
+        android:id="@+id/deleteButton_wishlist"
+        android:layout_width="14dp"
+        android:layout_height="15dp"
+        android:background="@drawable/trash"
+        android:textColor="@color/C35314"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView61"
+        app:layout_constraintEnd_toEndOf="@+id/imageView61"
+        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintStart_toStartOf="@+id/imageView61"
+        app:layout_constraintTop_toTopOf="@+id/imageView61"
+        app:layout_constraintVertical_bias="0.176" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

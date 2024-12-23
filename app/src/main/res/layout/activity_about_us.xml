@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/koho_semibold"
-        android:text="About Us"
+        android:text="Ang Aming Kuwento"
         android:textAlignment="center"
         android:textColor="@color/darkbrown"
         android:textSize="30dp"
@@ -52,8 +52,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.207" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.075" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -64,25 +64,25 @@
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.828" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.134" />
 
     <me.biubiubiu.justifytext.library.JustifyTextView
         android:id="@+id/justifyTextView"
         android:layout_width="316dp"
         android:layout_height="543dp"
         android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
         android:fontFamily="@font/jost_regular"
         android:text="@string/about_us"
         android:textAlignment="center"
         android:textSize="13.7dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.835" />
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.086" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

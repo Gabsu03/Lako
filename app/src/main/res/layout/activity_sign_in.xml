@@ -214,7 +214,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:fontFamily="@font/jost_light"
-        android:text="Don't Have an Account?"
+        android:text="Wala pang Account?"
         android:textAlignment="center"
         android:textColor="@color/darkbrown"
         android:textSize="16dp"
@@ -228,6 +228,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="7dp"
         android:fontFamily="@font/jost_medium"
         android:onClick="Register"
@@ -239,6 +240,7 @@
         app:layout_constraintHorizontal_bias="0.768"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nameInput"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.768"
         tools:ignore="OnClick" />
@@ -261,14 +263,14 @@
 
     <Button
         android:id="@+id/Sign_in_email_button"
-        android:layout_width="216dp"
-        android:layout_height="42dp"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
         android:background="@drawable/button"
         android:drawableStart="@drawable/email"
         android:elevation="17dp"
         android:fontFamily="@font/koho_medium"
         android:paddingHorizontal="20dp"
-        android:text="Sign In with Email"
+        android:text="Mag Sign in gamit ang Email"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="15dp"

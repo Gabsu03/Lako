@@ -13,7 +13,7 @@
         android:id="@+id/chatHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#8C5E34"
+        android:background="@color/darkbrown"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:padding="10dp"
@@ -77,6 +77,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/jost_regular"
             android:hint="Type your message..."
             android:padding="10dp"
             android:background="#EEE"
@@ -87,6 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Send"
+            android:background="@color/darkbrown"
             android:backgroundTint="#8C5E34"
             android:textColor="#FFFFFF"/>
     </LinearLayout>

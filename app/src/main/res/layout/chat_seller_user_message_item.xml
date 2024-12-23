@@ -1,0 +1,63 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="370dp"
+    android:background="@drawable/bar"
+    android:layout_marginBottom="8dp"
+    android:layout_height="91dp">
+
+
+    <ImageView
+        android:id="@+id/picture_of_seller_shop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/image_upload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39" />
+
+    <TextView
+        android:id="@+id/name_of_shop_message"
+        android:layout_width="250dp"
+        android:layout_height="17dp"
+        android:fontFamily="@font/koho_medium"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/picture_of_seller_shop"
+        app:layout_constraintVertical_bias="0.029"
+        tools:layout_editor_absoluteX="76dp" />
+
+    <TextView
+        android:id="@+id/recent_message"
+        android:layout_width="250dp"
+        android:layout_height="17dp"
+        android:fontFamily="@font/koho_regular"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/picture_of_seller_shop"
+        app:layout_constraintVertical_bias="0.323"
+        tools:layout_editor_absoluteX="76dp" />
+
+    <Button
+        android:id="@+id/deleteButton_message_seller"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/trash"
+        android:textColor="@color/C35314"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.211" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@
     <string name="banner_image">Mabuhay Shop with Lako Banner</string>
 
     <string name="under"><u>Add List Product</u></string>
-    <string name="password"><u>Forgot Password?</u></string>
+    <string name="password"><u>Nakalimutan ang Password?</u></string>
     <string name="resend_code"><u>Resend OTP</u></string>
 
 
@@ -13,33 +13,48 @@
     <string name="Upload_Image"><b><u>Upload Photo</u></b></string>
 
 
-    <string name="about_us">Welcome to Lakò, your mobile platform for supporting local
-        creative sellers! At Lakò, we are dedicated to bridging the gap between talented
-        local artists and a broader audience by providing a centralized, curated e-commerce
-        space exclusively for showcasing handcrafted products. Our mission is to empower local
-        artisans, offering them the tools and resources needed to optimize sales, enhance customer
-        engagement, and gain the recognition they deserve.\n \nLakò was born out of the need to address the
-        challenges faced by local artists in connecting with potential customers. Traditional e-commerce platforms
-        often overshadow these artisans with established brands, limiting their visibility and sales opportunities.
-        Our platform is designed to eliminate this competition, creating a community-driven marketplace where local
-        talent can thrive. \n \nWith features like visually appealing profile showcases, direct messaging for inquiries,
-        a personalized explore feed, organized product categories, community chat, and promotional tools, Lakò ensures a
-        seamless and supportive experience for both sellers and buyers.</string>
+    <string name="about_us">Maligayang pagdating sa Lakò, ang
+        mobile platform para sa pagsuporta sa mga lokal na malikhaing nagbebenta!
+        Sa Lakò, nakatuon kami sa pagtulay ng agwat sa pagitan ng mga mahuhusay na lokal
+        na dalubhasa sa sining at ng mas malawak na madla sa pamamagitan ng pagbibigay
+        ng sentralisado, organisadong espasyo sa e-commerce na eksklusibo para sa pagpapakita
+        ng mga lokal na produktong sariling gawa. Ang aming misyon ay bigyang kakayahan ang mga
+        lokal na artisan, na nag-aalok sa kanila ng mga kagamitan at mapagkukunan na kailangan
+        para mapahusay ang mga benta, mapahusay ang pakikipag-ugnayan sa customer, at makakuha
+        ng pagkilalang nararapat sa kanila.\n \nAng Lakò ay nillikha upang matugunan ang
+        mga hamon na kinakaharap ng mga lokal na dalubhasa sa sining sa pagkonekta sa mga
+        potensyal na mamimili. Ang mga tradisyunal na platform ng e-commerce ay madalas na
+        natatabunan ang mga negosyanteng mayroong mga matatag na brand, na nililimitahan ang
+        kanilang kakayahang makita at mga pagkakataon sa pagbebenta. Ang aming platform ay
+        idinisenyo upang alisin ang kumpetisyon na ito, na lumilikha ng isang marketplace na
+        hinimok ng komunidad kung saan maaaring umunlad ang lokal na talento.</string>
 
-    <string name="terms_conditions"><b>Terms and Conditions</b> \n \n<b>Last Revised:</b> June 4, 2024 \n \n Welcome to Lako. This mobile e-commerce application is provided as a service to our users and may be used for informational and purchasing purposes only.
-        Because the Terms and Conditions contain legal obligations, please read them carefully. \n\n<b>1. Eligibility Criteria:</b> \n \nUsers must be at least 18 years old to create an account, provide accurate and complete information, and comply with all local
-        laws and regulations regarding online purchases. \n \n<b>2. Account Registration:</b> \n\nBy creating an account, you agree to provide truthful information and maintain the
-        confidentiality of your login credentials. You are responsible for all activities that occur under your account. \n \n<b>3. Product Listings and Availability:</b> \n \nProduct descriptions and availability are
-        subject to change without notice. We strive to ensure accuracy but do not guarantee that product listings, images, or other content will be error-free. \n \n <b>4. Pricing and Payment:</b> \n \nAll prices are listed in PHP and are subject to change.
-        Payment must be made at the time of purchase through the accepted payment methods. Any applicable taxes and shipping charges will be added at checkout. \n \n <b>5. Shipping and Delivery:</b> \n \nWe offer various shipping options, which will be outlined during
-        the checkout process. Delivery times are estimates and not guaranteed. We are not responsible for delays caused by shipping carriers or unforeseen circumstances. \n \n <b>6. Returns and Refunds:</b> \n \nOur return policy allows for returns within
-        30 days of purchase for most items. Items must be returned in their original condition. Refunds will be processed in accordance with our return policy, which is available on our website. \n \n <b>7. Use of Information:</b> \n \nBy using our app, you consent to the collection,
-        use, and disclosure of your personal and transactional information in accordance with our Privacy Policy. We prioritize privacy and security in compliance with applicable laws and regulations. \n \n <b>8. User Conduct:</b> \n \nUsers agree not to engage
-        in any activities that may harm Lako, its users, or third parties. This includes but is not limited to fraud, harassment, spamming, or any other illegal or harmful behavior. \n \n <b>9. Modification and Termination:</b> \n \nWe reserve the right to modify
-        or terminate these terms and conditions at any time without prior notice. Changes will be communicated to users promptly. Continued use of the app constitutes acceptance of the revised terms. \n \n <b>10. Governing Law:</b> \n \nThese terms and conditions are
-        governed by the laws of the Philippines. Any disputes arising out of or in connection with these terms and conditions shall be subject to the exclusive jurisdiction of the courts in the Philippines. \n \nBy using the Lako app, you acknowledge that
-        you have read, understood, and agree to abide by these terms and conditions. If you have any questions or concerns, please contact us for clarification before proceeding with your use of the app.
+    <string name="terms_conditions"><b>Mga Tuntunin at Kondisyon</b> \n \n<b>Huling Binago: Hunyo 4, 2024</b> \n \n
+        Maligayang pagdating sa Lako. Ang mobile e-commerce na aplikasyon na ito ay inihahandog bilang serbisyo sa aming mga
+        gumagamit at maaaring gamitin lamang para sa impormasyon at pagbili. Dahil ang Mga Tuntunin at Kondisyon ay naglalaman
+        ng mga obligasyong legal, pakiusap na mabasa nang maayos. \n\n<b>1. Mga Kwalipikasyon sa Pagiging Karapat-dapat:</b> \n \n
+        Kailangan ay may edad na 18 o mas matanda ang mga gumagamit upang makabuo ng account, magbigay ng tamang at kumpletong
+        impormasyon, at sumunod sa lahat ng lokal na mga batas at regulasyon ukol sa mga pagbili online.\n \n<b>2. Pagre-rehistro ng Account:
+        </b> \n\n  Sa paglikha ng isang account, sumasang-ayon ka na magbigay ng tapat na impormasyon at panatilihin ang lihim ng iyong mga detalyeng
+        pang-login. Ikaw ang responsable sa lahat ng mga aktibidad na nangyayari sa ilalim ng iyong account. \n \n<b>3. Mga Listahan ng Produkto at Abyas:</b> \n \n Ang mga
+        deskripsyon ng produkto at kanilang magagamit ay maaaring magbago nang hindi nabababala. Pinagsisikapan namin na tiyakin ang katumpakan ngunit hindi namin garantiyado
+        na ang mga listahan ng produkto, mga larawan, o iba pang nilalaman ay libre sa kamali. \n \n <b>4. Presyo at Pagbabayad:</b> \n \n Lahat ng presyo ay nakalista sa PHP at maaaring magbago.
+        Kailangan na bayaran ang produkto sa oras ng pagbili sa pamamagitan ng mga tinatanggap na paraan ng pagbabayad. Ang anumang mga naaangkop na buwis at mga
+        singil sa pagpapadala ay idadagdag sa pag-check out. \n \n <b>5. Pagpapadala at Pag-aabot:</b> \n \n Nag-aalok kami ng iba t ibang
+        mga opsyon sa pagpapadala, na ilalahad sa proseso ng pag-check out. Ang mga oras ng pag aabot ay mga pagtataya lamang at hindi garantiya.
+        Hindi kami responsable sa mga pagkaantala na dulot ng mga tagapagpadala o mga hindi inaasahang sitwasyon.\n \n <b>6. Mga Pagbabalik at Reimbursamento:</b> \n \n Ang aming patakaran sa
+        pagbabalik ay pinapayagan ang mga pagbabalik sa loob ng 30 araw mula sa pagbili para sa karamihan ng mga item. Kailangan ibalik ang mga item sa kanilang
+        orihinal na kalagayan. Ang mga reimberso ay ipoprocesso ayon sa aming patakaran sa pagbabalik, na makikita sa aming website. \n \n <b>7. Paggamit ng Impormasyon:</b> \n \nSa paggamit ng aming app,
+        sumasang-ayon ka sa pagkolekta, paggamit, at pagsasapubliko ng iyong personal at transaksyonal na impormasyon alinsunod sa aming Patakaran sa Privacy. Inuuna namin
+        ang privacy at seguridad sa kasuwato ng mga naaangkop na batas at regulasyon. \n \n <b>8. Pag-uugali ng Gumagamit:</b> \n \n Sumasang-ayon ang mga gumagamit na huwag makibahagi sa anumang mga
+        gawain na maaaring makasama sa Lako, sa aming mga gumagamit, o sa mga ikatlo. Kasama rito, ngunit hindi limitado sa, pandaraya, pananakot, pagpapadala ng spam, o
+        iba pang mga ilegal o nakakasamang kilos. \n \n <b>9. Modipikasyon at Pagwawakas:</b> \n \nIpinagkaloob sa amin ang karapatan na baguhin o wakasan ang mga
+        tuntunin at kondisyong ito anumang oras nang hindi kakailanganing abisuhan. Ang mga pagbabago ay ipapaalam sa mga gumagamit nang madali. Ang patuloy na
+        paggamit ng app ay nagsasaad ng pagtanggap sa mga binagong tuntunin. \n \n <b>10. Batas na Nauukol:</b> \n \nAng mga tuntunin at kondisyong ito ay nasasaklaw ng mga batas ng Pilipinas.
+        Anumang mga alitan na lumitaw mula sa o kaugnay ng mga tuntunin at kondisyong ito ay magiging paksa ng eksklusibong hurisdiksiyon ng mga korte sa Pilipinas. \n \nSa paggamit ng app ng Lako,
+        kinikilala mo na nabasa, naintindihan, at sumasang-ayon kang susunod sa mga tuntunin at kondisyong ito. Kung mayroon kang mga katanungan o mga alinlangan, pakiusap na makipag-ugnayan sa amin para sa
+        linaw bago mo ituloy ang paggamit mo sa app.
     </string>
 
-    <string name="terms">By signing up, you agree to our <b><u>Terms and Conditions.</u></b></string>
+    <string name="terms">Sa pagpaparehistro, sumasang-ayon ka sa aming mga <b><u>Tuntunin at Kondisyon.</u></b></string>
 </resources>

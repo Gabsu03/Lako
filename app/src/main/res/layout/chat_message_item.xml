@@ -9,9 +9,10 @@
         android:id="@+id/userMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFE6CC"
-        android:textColor="#000000"
+        android:background="@color/darkbrown"
+        android:textColor="@color/white"
         android:padding="10dp"
+        android:fontFamily="@font/koho_bold"
         android:layout_gravity="end"
         android:visibility="gone"/>
 
@@ -20,8 +21,9 @@
         android:id="@+id/botMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#EEEEEE"
-        android:textColor="#000000"
+        android:background="@color/transparent_brown"
+        android:textColor="@color/white"
         android:padding="10dp"
+        android:fontFamily="@font/jost_bold"
         android:visibility="gone"/>
 </LinearLayout>

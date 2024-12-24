@@ -1,31 +1,21 @@
 package com.example.lako.util;
 
 public class Product {
-    private String id;
+
     private String name;
     private String description;
     private String price;
     private String specification;
     private String tags;
-    private String imageUrl;
+    private String imageUri;
 
-    // Default constructor required for Firebase
-    public Product() {
-    }
-
-    public Product(String id, String name, String description, String price, String specification, String tags, String imageUrl) {
-        this.id = id;
+    public Product(String name, String description, String price, String specification, String tags, String imageUri) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.specification = specification;
         this.tags = tags;
-        this.imageUrl = imageUrl;
-    }
-
-    // Getters and setters (optional if not directly used)
-    public String getId() {
-        return id;
+        this.imageUri = imageUri;
     }
 
     public String getName() {
@@ -48,8 +38,9 @@ public class Product {
         return tags;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageUri() {
+        return imageUri;
     }
 }
+
 

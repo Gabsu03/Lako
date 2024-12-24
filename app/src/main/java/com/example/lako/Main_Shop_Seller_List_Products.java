@@ -1,6 +1,7 @@
 package com.example.lako;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -51,7 +52,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         productTagsEditText = findViewById(R.id.product_tags);
 
         TextView addProductButton = findViewById(R.id.add_list_product_btn);
-        addProductButton.setOnClickListener(view -> uploadProductToFirebase());
+        addProductButton.setOnClickListener(view -> saveProductLocally());
     }
 
     public void my_shop_list_product_back_btn(View view) {
@@ -74,7 +75,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         }
     }
 
-    private void uploadProductToFirebase() {
+    private void saveProductLocally() {
         // Retrieve product details
         String productName = productNameEditText.getText().toString().trim();
         String productDescription = productDescriptionEditText.getText().toString().trim();
@@ -87,40 +88,23 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
             return;
         }
 
-        // Reference for Firebase Storage
-        String imagePath = "products/" + System.currentTimeMillis() + ".jpg";
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference().child(imagePath);
+        // Save product data locally (example using SharedPreferences)
+        SharedPreferences sharedPreferences = getSharedPreferences("ProductData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("productName", productName);
+        editor.putString("productDescription", productDescription);
+        editor.putString("productPrice", productPrice);
+        editor.putString("productSpecification", productSpecification);
+        editor.putString("productTags", productTags);
+        editor.putString("productImageUri", productImageUri.toString());
+        editor.apply();
 
-        // Upload image to Firebase Storage
-        storageReference.putFile(productImageUri)
-                .addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl()
-                        .addOnSuccessListener(uri -> {
-                            String imageUrl = uri.toString();
+        Toast.makeText(this, "Product saved locally!", Toast.LENGTH_SHORT).show();
 
-                            // Save product data to Firebase Database
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference databaseReference = database.getReference("products");
-
-                            String productId = databaseReference.push().getKey(); // Generate unique product ID
-                            Product product = new Product(productId, productName, productDescription, productPrice, productSpecification, productTags, imageUrl);
-
-                            databaseReference.child(productId).setValue(product)
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(this, "Product uploaded successfully", Toast.LENGTH_SHORT).show();
-                                            // Navigate to the next activity
-                                            startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Save_Screen.class));
-                                        } else {
-                                            Toast.makeText(this, "Failed to upload product", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                        }))
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Image upload failed", Toast.LENGTH_SHORT).show();
-                });
+        // Navigate to the next activity
+        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Save_Screen.class));
     }
-
 }
+
 
 

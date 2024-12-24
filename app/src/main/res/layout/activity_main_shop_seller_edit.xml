@@ -176,7 +176,6 @@
 
 
     <Button
-        android:id="@+id/analytics_btn"
         android:layout_width="130dp"
         android:layout_height="65dp"
         android:background="@color/darkbrown"
@@ -196,7 +195,6 @@
         tools:ignore="OnClick" />
 
     <Button
-        android:id="@+id/orders_btn"
         android:layout_width="134dp"
         android:layout_height="65dp"
         android:background="@color/light_orange"
@@ -217,7 +215,6 @@
 
 
     <Button
-        android:id="@+id/list_product_btn"
         android:layout_width="144dp"
         android:layout_height="65dp"
         android:background="@color/green"

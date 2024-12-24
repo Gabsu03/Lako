@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Main_Shop_Seller_Message"
+            android:exported="false" />
         <activity
             android:name=".Chat_bot"
             android:exported="false" />
@@ -201,7 +203,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>

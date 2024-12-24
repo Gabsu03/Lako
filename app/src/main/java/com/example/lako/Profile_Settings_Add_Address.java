@@ -88,8 +88,8 @@ public class Profile_Settings_Add_Address extends AppCompatActivity {
                         resultIntent.putExtra("street", street);
                         resultIntent.putExtra("city", city);
 
-                        setResult(RESULT_OK, resultIntent); // Set result to return to Profile_Settings_Address
-                        finish(); // Close this activity and go back
+                        setResult(RESULT_OK, resultIntent);
+                        finish();
                     })
                     .addOnFailureListener(e -> Toast.makeText(this, "Failed to save address", Toast.LENGTH_SHORT).show());
         } else {

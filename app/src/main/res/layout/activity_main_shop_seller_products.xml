@@ -161,14 +161,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/products_display_recycler_vieww"
-        android:layout_width="370dp"
-        android:layout_height="400dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:padding="8dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/analytics_btn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.182" />
 
     <TextView
         android:id="@+id/categories_shop"

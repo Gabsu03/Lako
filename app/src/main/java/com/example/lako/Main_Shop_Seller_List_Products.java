@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
@@ -27,9 +28,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class Main_Shop_Seller_List_Products extends AppCompatActivity {
 
@@ -76,35 +81,43 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
     }
 
     private void saveProductLocally() {
-        // Retrieve product details
         String productName = productNameEditText.getText().toString().trim();
         String productDescription = productDescriptionEditText.getText().toString().trim();
         String productPrice = productPriceEditText.getText().toString().trim();
         String productSpecification = productSpecificationEditText.getText().toString().trim();
         String productTags = productTagsEditText.getText().toString().trim();
 
-        if (productImageUri == null || productName.isEmpty() || productPrice.isEmpty()) {
-            Toast.makeText(this, "Please fill all required fields and upload an image", Toast.LENGTH_SHORT).show();
+        if (productName.isEmpty() || productPrice.isEmpty()) {
+            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Save product data locally (example using SharedPreferences)
+        // Create a new product object
+        Product newProduct = new Product(productName, productDescription, productPrice, productSpecification, productTags, productImageUri);
+
+        // Retrieve existing products from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("ProductData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("productName", productName);
-        editor.putString("productDescription", productDescription);
-        editor.putString("productPrice", productPrice);
-        editor.putString("productSpecification", productSpecification);
-        editor.putString("productTags", productTags);
-        editor.putString("productImageUri", productImageUri.toString());
-        editor.apply();
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("products", "[]");
+        Type type = new TypeToken<List<Product>>() {}.getType();
+        List<Product> productList = gson.fromJson(json, type);
 
-        Toast.makeText(this, "Product saved locally!", Toast.LENGTH_SHORT).show();
+        // Add the new product to the list
+        productList.add(newProduct);
 
-        // Navigate to the next activity
-        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Save_Screen.class));
+        // Save the updated list back to SharedPreferences
+        String updatedJson = gson.toJson(productList);
+        sharedPreferences.edit().putString("products", updatedJson).apply();
+        Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
+
+    // Delay the navigation to the products page to allow Toast to be shown
+        new Handler().postDelayed(() -> {
+            startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
+        }, 1000);  // 1-second delay to allow the toast to show
     }
+
 }
+
 
 
 

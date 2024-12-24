@@ -51,5 +51,8 @@ dependencies {
     implementation (libs.material.v190)
     implementation (libs.firebase.core)
 
+    implementation ("com.google.code.gson:gson:2.10.1")
+
+
 
 }

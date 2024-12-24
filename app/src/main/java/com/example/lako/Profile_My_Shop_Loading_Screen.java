@@ -27,7 +27,7 @@ public class Profile_My_Shop_Loading_Screen extends AppCompatActivity {
             public void run() {
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 if(currentUser==null){
-                    startActivity(new Intent(Profile_My_Shop_Loading_Screen.this, TEMPORARY_ACTIVITY.class));
+                    startActivity(new Intent(Profile_My_Shop_Loading_Screen.this, Main_Shop_Seller_Products.class));
                 }else{
                     startActivity(new Intent(Profile_My_Shop_Loading_Screen.this,TEMPORARY_ACTIVITY.class));
                 }

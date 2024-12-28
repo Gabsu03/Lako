@@ -50,7 +50,7 @@
         android:layout_width="370dp"
         android:layout_height="40dp"
         android:fontFamily="@font/jost_bold"
-        android:text="Kung sakaling makalimutan mo ang iyong email o password."
+        android:text="Kung sakaling makalimutan mo ang iyong password."
         android:textColor="@color/C35314"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

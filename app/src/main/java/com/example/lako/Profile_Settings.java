@@ -136,6 +136,12 @@ public class Profile_Settings extends AppCompatActivity {
         startActivity(new Intent(Profile_Settings.this, Profile_Settings_Payment.class));
     }
 
+    public void change_password(View view) {
+        Intent intent = new Intent(Profile_Settings.this, Profile_Settings_Change_Password.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     // Start Profile_Settings_MFA
     public void MFA_btn(View view) {
         Intent intent = new Intent(Profile_Settings.this, Profile_Settings_MFA.class);

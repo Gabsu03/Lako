@@ -48,12 +48,7 @@ public class Security_Questions_reset_pass extends AppCompatActivity {
         securityAnswer7 = findViewById(R.id.reset_security_question7);
         button = findViewById(R.id.confirm_button_security_sign_up);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                verifySecurityAnswers();
-            }
-        });
+        button.setOnClickListener(v -> verifySecurityAnswers());
     }
 
     private void verifySecurityAnswers() {
@@ -74,15 +69,14 @@ public class Security_Questions_reset_pass extends AppCompatActivity {
             return;
         }
 
-        // Get current user's UID or email (if using Forgot Password, user may enter email first)
-        String email = getIntent().getStringExtra("email");
+        // Get the current authenticated user's email
+        String email = auth.getCurrentUser() != null ? auth.getCurrentUser().getEmail() : null;
         if (email == null || email.isEmpty()) {
-            Toast.makeText(this, "Email not provided. Cannot verify user.", Toast.LENGTH_SHORT).show();
-            Log.e("SecurityQuestions", "Email was not provided in intent.");
+            Toast.makeText(this, "No user is currently logged in", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Log.d("SecurityQuestions", "Email received: " + email);
+        Log.d("SecurityQuestions", "Email retrieved from Firebase: " + email);
 
         // Query Firestore for the user's security answers
         db.collection("users")
@@ -92,7 +86,7 @@ public class Security_Questions_reset_pass extends AppCompatActivity {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
 
-                        // Retrieve stored security answers
+                        // Retrieve stored security answers from Firestore
                         Map<String, Object> securityAnswers = (Map<String, Object>) document.get("security_answers");
 
                         if (securityAnswers == null) {
@@ -101,20 +95,21 @@ public class Security_Questions_reset_pass extends AppCompatActivity {
                         }
 
                         // Compare input answers with stored answers
-                        boolean allMatch = Objects.equals(securityAnswers.get("question1"), answer1) &&
-                                Objects.equals(securityAnswers.get("question2"), answer2) &&
-                                Objects.equals(securityAnswers.get("question3"), answer3) &&
-                                Objects.equals(securityAnswers.get("question4"), answer4) &&
-                                Objects.equals(securityAnswers.get("question5"), answer5) &&
-                                Objects.equals(securityAnswers.get("question6"), answer6) &&
-                                Objects.equals(securityAnswers.get("question7"), answer7);
+                        boolean allMatch =
+                                Objects.equals(securityAnswers.get("question1"), answer1) &&
+                                        Objects.equals(securityAnswers.get("question2"), answer2) &&
+                                        Objects.equals(securityAnswers.get("question3"), answer3) &&
+                                        Objects.equals(securityAnswers.get("question4"), answer4) &&
+                                        Objects.equals(securityAnswers.get("question5"), answer5) &&
+                                        Objects.equals(securityAnswers.get("question6"), answer6) &&
+                                        Objects.equals(securityAnswers.get("question7"), answer7);
 
                         if (allMatch) {
                             // Answers are correct, navigate to Reset Password screen
-                            Intent intent = new Intent(Security_Questions_reset_pass.this, Password_Reset.class);
+                            Intent intent = new Intent(Security_Questions_reset_pass.this, Password_Reset.class);  // Assuming this is your reset activity
                             intent.putExtra("email", email); // Pass email to the Reset_Password activity
                             startActivity(intent);
-                            finish();
+                            finish(); // Finish current activity to avoid going back to it
                         } else {
                             // Answers do not match
                             Toast.makeText(Security_Questions_reset_pass.this, "Security answers are incorrect. Please try again.", Toast.LENGTH_SHORT).show();
@@ -126,5 +121,10 @@ public class Security_Questions_reset_pass extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(Security_Questions_reset_pass.this, "Error retrieving security answers: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    // Back button for Security Questions Reset (optional)
+    public void reset_pass_security_back(View view) {
+        finish(); // Go back to previous activity
     }
 }

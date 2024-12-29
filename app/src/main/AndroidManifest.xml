@@ -20,6 +20,9 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".User_Cart"
+            android:exported="false" />
+        <activity
             android:name=".Profile_Settings_Change_Password_two"
             android:exported="false" />
         <activity

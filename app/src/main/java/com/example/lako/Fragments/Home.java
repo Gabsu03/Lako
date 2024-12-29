@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.example.lako.Art_Home;
 import com.example.lako.Clothing_Home;
 import com.example.lako.Living_Home;
 import com.example.lako.R;
+import com.example.lako.User_Cart;
 
 public class Home extends Fragment {
 
@@ -41,8 +43,12 @@ public class Home extends Fragment {
         TextView accessories = view.findViewById(R.id.accessories);
         TextView art = view.findViewById(R.id.art);
 
-        //TEMPORARYImageView cart_btn = view.findViewById(R.id.cart_btn);cart_btn.setOnClickListener(v -> {
-            // Start the CART ACTIVITYstartActivity(new Intent(getActivity(), ADD_TO_CART.class));});
+        // Find the cart button by its ID
+        Button cart_btn = view.findViewById(R.id.cart_btn);
+        cart_btn.setOnClickListener(v -> {
+            // Start the User_cart activity when clicked
+            startActivity(new Intent(getActivity(), User_Cart.class));
+        });
 
         // Set an OnClickListener for Clothing
         clothing.setOnClickListener(v -> {

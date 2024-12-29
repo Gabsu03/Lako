@@ -1,14 +1,9 @@
 package com.example.lako;
 
-
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -16,40 +11,65 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.UUID;
 
 public class Profile_My_Shop_Facial_Recognition extends AppCompatActivity {
 
-    ImageView getImageIdLako; // For ID ImageView
-    ImageView imageLako; // For Selfie ImageView
+    private ImageView getImageIdLako, imageLako;
+    private Button buttonCameraId, buttonCameraSelfie, continueButton;
 
-    Button buttonCameraId, buttonCameraSelfie;
+    private boolean isIdUploaded = false, isSelfieUploaded = false;
+    private String idImageUrl, selfieImageUrl;
+    private String sellerName; // Seller's name to be included in the file name
 
-    boolean isIdUploaded = false; // Track if ID image is uploaded
-    boolean isSelfieUploaded = false; // Track if selfie image is uploaded
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile_my_shop_facial_recognition);
 
-        // Initialize ImageViews and Buttons
-        getImageIdLako = findViewById(R.id.image_id_lako); // ID ImageView
-        imageLako = findViewById(R.id.image_lako); // Selfie ImageView
-        buttonCameraId = findViewById(R.id.camera); // Button for ID upload
-        buttonCameraSelfie = findViewById(R.id.upload_photo); // Button for Selfie
+        // Retrieve the seller's name from the intent
+        sellerName = getIntent().getStringExtra("sellerName");
+        if (sellerName == null || sellerName.isEmpty()) {
+            sellerName = "UnknownSeller"; // Default if seller's name is not provided
+        }
 
-        // Button click listeners
+        // Initialize views
+        getImageIdLako = findViewById(R.id.image_id_lako);
+        imageLako = findViewById(R.id.image_lako);
+        buttonCameraId = findViewById(R.id.camera);
+        buttonCameraSelfie = findViewById(R.id.upload_photo);
+        continueButton = findViewById(R.id.continue_button);
+
+        // Set click listeners
         buttonCameraId.setOnClickListener(v -> openCameraForID());
         buttonCameraSelfie.setOnClickListener(v -> openCameraForSelfie());
+        continueButton.setOnClickListener(this::continueBtn);
+
+        // Restore state if activity restarts
+        if (savedInstanceState != null) {
+            isIdUploaded = savedInstanceState.getBoolean("isIdUploaded", false);
+            isSelfieUploaded = savedInstanceState.getBoolean("isSelfieUploaded", false);
+            checkUploadCompletion();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("isIdUploaded", isIdUploaded);
+        outState.putBoolean("isSelfieUploaded", isSelfieUploaded);
     }
 
     private void openCameraForID() {
@@ -62,52 +82,106 @@ public class Profile_My_Shop_Facial_Recognition extends AppCompatActivity {
         cameraLauncherForSelfie.launch(intent);
     }
 
-    // Launcher for ID upload
     private final ActivityResultLauncher<Intent> cameraLauncherForID = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Bundle bundle = result.getData().getExtras();
-                    if (bundle != null) {
-                        Bitmap bitmap = (Bitmap) bundle.get("data");
-                        if (bitmap != null) {
-                            getImageIdLako.setImageBitmap(bitmap); // Set to ID ImageView
-                            isIdUploaded = true; // Mark ID as uploaded
-                        }
-                    }
-                }
-            }
-    );
+            result -> handleImageResult(result, "ID", getImageIdLako));
 
-    // Launcher for Selfie upload
     private final ActivityResultLauncher<Intent> cameraLauncherForSelfie = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Bundle bundle = result.getData().getExtras();
-                    if (bundle != null) {
-                        Bitmap bitmap = (Bitmap) bundle.get("data");
-                        if (bitmap != null) {
-                            imageLako.setImageBitmap(bitmap); // Set to Selfie ImageView
-                            isSelfieUploaded = true; // Mark Selfie as uploaded
-                        }
+            result -> handleImageResult(result, "Selfie", imageLako));
+
+    private void handleImageResult(ActivityResult result, String folderName, ImageView imageView) {
+        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+            Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
+            if (bitmap != null) {
+                Bitmap resizedBitmap = resizeBitmap(bitmap, 1024, 1024);
+                imageView.setImageBitmap(resizedBitmap);
+                uploadImageToFirebase(resizedBitmap, folderName, url -> {
+                    if (folderName.equals("ID")) {
+                        idImageUrl = url;
+                        isIdUploaded = true;
+                    } else if (folderName.equals("Selfie")) {
+                        selfieImageUrl = url;
+                        isSelfieUploaded = true;
+                    }
+                    checkUploadCompletion();
+                });
+            } else {
+                Uri imageUri = result.getData().getData();
+                if (imageUri != null) {
+                    try {
+                        Bitmap uriBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                        Bitmap resizedBitmap = resizeBitmap(uriBitmap, 1024, 1024);
+                        imageView.setImageBitmap(resizedBitmap);
+                        uploadImageToFirebase(resizedBitmap, folderName, url -> {
+                            if (folderName.equals("ID")) {
+                                idImageUrl = url;
+                                isIdUploaded = true;
+                            } else if (folderName.equals("Selfie")) {
+                                selfieImageUrl = url;
+                                isSelfieUploaded = true;
+                            }
+                            checkUploadCompletion();
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.e("Debug", "Failed to load image from URI", e);
                     }
                 }
             }
-    );
+        } else {
+            Log.e("Debug", "Failed to capture " + folderName + " image");
+        }
+    }
 
-    // Method for continue button
+    private Bitmap resizeBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxWidth;
+            height = (int) (maxWidth / bitmapRatio);
+        } else {
+            height = maxHeight;
+            width = (int) (maxHeight * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(bitmap, width, height, true);
+    }
+
+    private void uploadImageToFirebase(Bitmap bitmap, String folderName, OnImageUploadCompleteListener listener) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+        byte[] data = baos.toByteArray();
+
+        // Use the seller's name in the filename
+        String fileName = folderName + "/" + sellerName + "_" + UUID.randomUUID().toString() + ".jpg";
+        StorageReference storageRef = storage.getReference().child(fileName);
+
+        storageRef.putBytes(data)
+                .addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl()
+                        .addOnSuccessListener(uri -> listener.onComplete(uri.toString()))
+                        .addOnFailureListener(e -> Log.e("Debug", "Failed to get download URL", e)))
+                .addOnFailureListener(e -> Log.e("Debug", "Failed to upload image", e));
+    }
+
+    private void checkUploadCompletion() {
+        if (isIdUploaded && isSelfieUploaded) {
+            continueButton.setEnabled(true);
+        } else {
+            continueButton.setEnabled(false);
+        }
+    }
+
     public void continueBtn(View view) {
         if (isIdUploaded && isSelfieUploaded) {
-            // Both images are uploaded, proceed to next activity
             Intent intent = new Intent(this, Profile_My_Shop_Loading_Screen.class);
             startActivity(intent);
         } else {
-            // Show a message if either image is missing
             Toast.makeText(this, "Please upload both ID and selfie before proceeding.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private interface OnImageUploadCompleteListener {
+        void onComplete(String url);
+    }
 }
-
-
-

@@ -2,18 +2,22 @@ package com.example.lako;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,9 +40,12 @@ public class Profile_Edit extends AppCompatActivity {
     private TextView displayName; // Display name TextView
     private Button saveButton;
     private ProgressBar progressBar;
+    private ImageView uploadImage;
+    private Uri imageUri;  // To store the selected image URI
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private StorageReference mStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +60,11 @@ public class Profile_Edit extends AppCompatActivity {
         displayName = findViewById(R.id.display_name); // Initialize display_name TextView
         saveButton = findViewById(R.id.save_edit_profile);
         progressBar = findViewById(R.id.progress_bar_edit_profile);
+        uploadImage = findViewById(R.id.UploadImage);  // ImageView for profile photo
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        mStorage = FirebaseStorage.getInstance().getReference("profile_images"); // Firebase Storage path for images
 
         // Disable the email EditText as it's non-editable
         emailEditText.setEnabled(false);
@@ -72,6 +83,10 @@ public class Profile_Edit extends AppCompatActivity {
         saveButton.setOnClickListener(view -> {
             saveProfileChanges();
         });
+
+        // Set the image upload button to open image picker
+        Button imageUploadButton = findViewById(R.id.image_upload_btn);
+        imageUploadButton.setOnClickListener(v -> openImageSelector());
     }
 
     // TextWatcher to check if both first and last name fields are filled
@@ -135,6 +150,22 @@ public class Profile_Edit extends AppCompatActivity {
         }
     }
 
+    // Open image picker to choose an image
+    private void openImageSelector() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, 100); // 100 is the request code for image selection
+    }
+
+    // Handle the result of the image picker
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+            imageUri = data.getData(); // Get the selected image URI
+            uploadImage.setImageURI(imageUri); // Set the image URI to ImageView
+        }
+    }
 
     // Save the profile changes to Firebase
     private void saveProfileChanges() {
@@ -155,39 +186,65 @@ public class Profile_Edit extends AppCompatActivity {
 
         String userId = mAuth.getCurrentUser().getUid();
 
-        // Create a map for updating the user's profile data
-        Map<String, Object> userUpdates = new HashMap<>();
-        userUpdates.put("firstName", firstName);
-        userUpdates.put("lastName", lastName);
-        userUpdates.put("username", username); // Add username to the update
+        // If an image is selected, upload it to Firebase Storage
+        if (imageUri != null) {
+            // Create the filename using first and last name (or username)
+            String imageName = firstName + "_" + lastName + ".jpg"; // Example: "John_Doe.jpg"
+            StorageReference fileReference = mStorage.child(imageName); // Use the generated name for the file
 
-        // Update the user's profile in Firebase
-        mDatabase.child(userId).updateChildren(userUpdates)
-                .addOnCompleteListener(task -> {
+            fileReference.putFile(imageUri).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    fileReference.getDownloadUrl().addOnCompleteListener(urlTask -> {
+                        if (urlTask.isSuccessful()) {
+                            String imageUrl = urlTask.getResult().toString();
+
+                            // Update the user's profile with image URL
+                            updateProfileData(firstName, lastName, username, imageUrl);
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            saveButton.setEnabled(true);
+                            Toast.makeText(Profile_Edit.this, "Error getting image URL", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
                     progressBar.setVisibility(View.GONE);
-                    saveButton.setEnabled(true); // Enable save button after operation
-
-                    if (task.isSuccessful()) {
-                        Toast.makeText(Profile_Edit.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-
-                        // Update the display name on the screen
-                        updateDisplayName(firstName, lastName, username);
-
-                        // Notify other activities about the update
-                        Intent intent = new Intent();
-                        intent.putExtra("updatedFirstName", firstName);
-                        intent.putExtra("updatedLastName", lastName);
-                        intent.putExtra("updatedUsername", username); // Send updated username
-                        setResult(RESULT_OK, intent);
-                        finish();  // Finish the activity and return to the previous one
-                    } else {
-                        Toast.makeText(Profile_Edit.this, "Error updating profile", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    saveButton.setEnabled(true);
+                    Toast.makeText(Profile_Edit.this, "Error uploading image", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // No image selected, update without image URL
+            updateProfileData(firstName, lastName, username, null);
+        }
     }
 
 
+    // Method to update the profile data in Firebase
+    private void updateProfileData(String firstName, String lastName, String username, String imageUrl) {
+        String userId = mAuth.getCurrentUser().getUid();
 
+        Map<String, Object> userUpdates = new HashMap<>();
+        userUpdates.put("firstName", firstName);
+        userUpdates.put("lastName", lastName);
+        userUpdates.put("username", username);
+        if (imageUrl != null) {
+            userUpdates.put("profileImage", imageUrl); // Add image URL to the update
+        }
+
+        mDatabase.child(userId).updateChildren(userUpdates).addOnCompleteListener(task -> {
+            progressBar.setVisibility(View.GONE);
+            saveButton.setEnabled(true); // Enable save button after operation
+
+            if (task.isSuccessful()) {
+                Toast.makeText(Profile_Edit.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                updateDisplayName(firstName, lastName, username); // Update display name
+                setResult(RESULT_OK);
+                finish();  // Finish the activity and return to the previous one
+            } else {
+                Toast.makeText(Profile_Edit.this, "Error updating profile", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     // Method to generate a nickname based on the username
     private String generateNickname(String username) {
@@ -202,8 +259,7 @@ public class Profile_Edit extends AppCompatActivity {
         super.onStart();
         fetchUserData();  // Fetch the latest user data from Firebase when the activity starts
     }
-
-    }
+}
 
 
 

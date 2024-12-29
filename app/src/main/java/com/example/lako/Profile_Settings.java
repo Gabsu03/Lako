@@ -15,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,17 +27,19 @@ public class Profile_Settings extends AppCompatActivity {
 
     private boolean isDropdownUp;
     private TextView nameInput;  // TextView for displaying the user's name
+    private ShapeableImageView profileImageView; // ImageView for displaying profile image
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_settings);
 
+        // Initialize views
+        nameInput = findViewById(R.id.nameInput);
+        profileImageView = findViewById(R.id.UploadImagee); // ShapeableImageView to display profile image
+
         // Retrieve the dropdown state passed from another activity
         isDropdownUp = getIntent().getBooleanExtra("dropdown_state", false);
-
-        // Initialize the TextViews
-        nameInput = findViewById(R.id.nameInput);
 
         // Fetch user data from Firebase
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -46,10 +50,21 @@ public class Profile_Settings extends AppCompatActivity {
                     DataSnapshot dataSnapshot = task.getResult();
                     String firstName = dataSnapshot.child("firstName").getValue(String.class);
                     String lastName = dataSnapshot.child("lastName").getValue(String.class);
+                    String profileImageUrl = dataSnapshot.child("profileImage").getValue(String.class); // Get profile image URL
 
                     // Set the name in both TextViews
                     String fullName = firstName + " " + lastName;
                     nameInput.setText(fullName);
+
+                    // If profile image URL exists, load it using Glide
+                    if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                        Glide.with(Profile_Settings.this)
+                                .load(profileImageUrl)  // Load the image URL from Firebase
+                                .placeholder(R.drawable.image_upload)  // Placeholder if the image is loading
+                                .error(R.drawable.image_upload)  // Error image if loading fails
+                                .centerCrop()  // Ensure image scales properly inside the circle
+                                .into(profileImageView);  // Set image into the ImageView
+                    }
                 }
             });
         }

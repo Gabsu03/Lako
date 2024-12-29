@@ -86,8 +86,8 @@
         tools:ignore="MissingConstraints" />
 
 
-    <ImageView
-        android:id="@+id/UploadImage"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/UploadImagee"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:background="@drawable/image_upload"
@@ -96,7 +96,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.485" />
+        app:layout_constraintVertical_bias="0.485"
+        app:shapeAppearanceOverlay="@style/CircularShape"/>
 
     <TextView
         android:id="@+id/nameInput"
@@ -107,9 +108,9 @@
         android:textColor="@color/darkbrown"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="@+id/UploadImage"
-        app:layout_constraintStart_toStartOf="@+id/UploadImage"
-        app:layout_constraintTop_toBottomOf="@+id/UploadImage" />
+        app:layout_constraintEnd_toEndOf="@+id/UploadImagee"
+        app:layout_constraintStart_toStartOf="@+id/UploadImagee"
+        app:layout_constraintTop_toBottomOf="@+id/UploadImagee" />
 
     <ImageView
         android:id="@+id/imageView4"

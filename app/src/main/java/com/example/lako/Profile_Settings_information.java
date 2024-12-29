@@ -16,6 +16,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +31,9 @@ public class Profile_Settings_information extends AppCompatActivity {
 
     private TextView usernamedisplay;
     private TextView emailTextView;
+
+    private ShapeableImageView uploadImage; // Add this field
+
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -46,6 +51,8 @@ public class Profile_Settings_information extends AppCompatActivity {
         usernamedisplay = findViewById(R.id.username_information);
         usernameTextView = findViewById(R.id.username_info); // Ensure correct ID reference
         emailTextView = findViewById(R.id.email_information);
+
+        uploadImage = findViewById(R.id.UploadImage); // Initialize ShapeableImageView
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
@@ -115,25 +122,30 @@ public class Profile_Settings_information extends AppCompatActivity {
                 DataSnapshot dataSnapshot = task.getResult();
                 String firstName = dataSnapshot.child("firstName").getValue(String.class);
                 String lastName = dataSnapshot.child("lastName").getValue(String.class);
-                String username = dataSnapshot.child("username").getValue(String.class); // Fetch username
-                String email = mAuth.getCurrentUser().getEmail(); // Get email from FirebaseAuth
+                String username = dataSnapshot.child("username").getValue(String.class);
+                String email = mAuth.getCurrentUser().getEmail();
+                String profileImageUrl = dataSnapshot.child("profileImage").getValue(String.class); // Fetch profile image URL
 
                 // Update TextViews with fetched data
                 firstnameTextView.setText(firstName != null ? firstName : "N/A");
                 lastnameTextView.setText(lastName != null ? lastName : "N/A");
-                usernameTextView.setText(username != null ? username : "N/A"); // Display username
-                usernamedisplay.setText(username != null ? username : "N/A"); // Display username
+                usernameTextView.setText(username != null ? username : "N/A");
+                usernamedisplay.setText(username != null ? username : "N/A");
                 emailTextView.setText(email != null ? email : "N/A");
 
-                // Set the currentUsername to the latest value from Firebase
-                if (username != null) {
-                    currentUsername = username;
+                // Load the profile image if the URL is available
+                if (profileImageUrl != null) {
+                    Glide.with(Profile_Settings_information.this)
+                            .load(profileImageUrl) // Load image URL
+                            .circleCrop() // Make the image circular
+                            .into(uploadImage); // Set it into the ShapeableImageView
                 }
             } else {
                 Toast.makeText(Profile_Settings_information.this, "Error loading profile", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     public void edit_profile(View view) {
         // Start the Profile_Edit activity and wait for the result

@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.lako.Main_Shop_Seller_Products;
 import com.example.lako.Profile_My_Shop_Start;
 import com.example.lako.Profile_Settings;
@@ -26,6 +27,7 @@ import com.example.lako.Profile_User_Ship;
 import com.example.lako.sign_in;
 import com.example.lako.Profile_User_To_Receive;
 import com.example.lako.R;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +39,7 @@ public class Profile_User extends Fragment {
     private boolean isDropdownUp = false;
     private ImageView settingsDrop;
     private TextView nameInput;
+    private ShapeableImageView profileImageView; // For displaying the profile image
 
     @Nullable
     @Override
@@ -46,6 +49,7 @@ public class Profile_User extends Fragment {
         // Initialize views
         settingsDrop = view.findViewById(R.id.settings_drop);
         nameInput = view.findViewById(R.id.nameInput);
+        profileImageView = view.findViewById(R.id.UploadImage); // The ImageView to display the profile picture
 
         // Fetch user data from Firebase
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -56,7 +60,20 @@ public class Profile_User extends Fragment {
                     DataSnapshot dataSnapshot = task.getResult();
                     String firstName = dataSnapshot.child("firstName").getValue(String.class);
                     String lastName = dataSnapshot.child("lastName").getValue(String.class);
+                    String profileImageUrl = dataSnapshot.child("profileImage").getValue(String.class); // Get the profile image URL
+
+                    // Set the user's name in the TextView
                     nameInput.setText(firstName + " " + lastName);
+
+                    // If the profile image URL exists, load the image using Glide
+                    if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                        Glide.with(getActivity())
+                                .load(profileImageUrl) // Load the image URL
+                                .placeholder(R.drawable.image_upload) // Placeholder image if loading
+                                .error(R.drawable.image_upload) // Error image if loading fails
+                                .centerCrop() // This ensures the image scales properly within the shape
+                                .into(profileImageView); // Set the image into ShapeableImageView
+                    }
                 }
             });
         }
@@ -121,6 +138,7 @@ public class Profile_User extends Fragment {
         rotate.start();
     }
 }
+
 
 
 

@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.lako.Main_Shop_Seller_Products;
 import com.example.lako.Profile_My_Shop_Start;
 import com.example.lako.Profile_Settings;
 import com.example.lako.Profile_Settings_Purchase;
@@ -33,18 +34,18 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Profile_User extends Fragment {
 
-    private boolean isDropdownUp = false; // Track the state of the dropdown icon (up or down)
+    private boolean isDropdownUp = false;
     private ImageView settingsDrop;
-    private TextView nameInput;  // Your TextView for displaying the user's name
+    private TextView nameInput;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_user, container, false);
 
-        // Find the ImageView for the settings dropdown by its ID
+        // Initialize views
         settingsDrop = view.findViewById(R.id.settings_drop);
-        nameInput = view.findViewById(R.id.nameInput);  // Initialize nameInput TextView
+        nameInput = view.findViewById(R.id.nameInput);
 
         // Fetch user data from Firebase
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -55,89 +56,74 @@ public class Profile_User extends Fragment {
                     DataSnapshot dataSnapshot = task.getResult();
                     String firstName = dataSnapshot.child("firstName").getValue(String.class);
                     String lastName = dataSnapshot.child("lastName").getValue(String.class);
-
-                    // Set the name in the TextView
                     nameInput.setText(firstName + " " + lastName);
                 }
             });
         }
 
-        // Set an OnClickListener to the settings dropdown
+        // Settings dropdown click listener
         settingsDrop.setOnClickListener(v -> {
-            // Rotate the dropdown icon (animated rotation)
             animateDropDown(settingsDrop);
-
-            // Toggle the state of the dropdown (up or down)
             isDropdownUp = !isDropdownUp;
-
-            // Start the Profile Settings activity and pass the dropdown state
             Intent intent = new Intent(getActivity(), Profile_Settings.class);
-            intent.putExtra("dropdown_state", isDropdownUp); // Pass the state to Profile_Settings
-            startActivityForResult(intent, 1); // Request result back from Profile_Settings
+            intent.putExtra("dropdown_state", isDropdownUp);
+            startActivityForResult(intent, 1);
         });
 
-        // For Purchase Part
-        ImageView imageView4 = view.findViewById(R.id.imageView4);
-        imageView4.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), Profile_Settings_Purchase.class));
-        });
+        // Other button actions
+        setupPurchaseButtons(view);
 
-        // Linked the "to pay" button to purchase
-        Button to_pay_btn = view.findViewById(R.id.to_pay);
-        to_pay_btn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), Profile_User_Pay.class));
-        });
-
-        // Linked the "to ship" button to purchase
-        Button to_ship_btn = view.findViewById(R.id.to_ship);
-        to_ship_btn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), Profile_User_Ship.class));
-        });
-
-        // Linked the "to receive" button to purchase
-        Button to_receive_btn = view.findViewById(R.id.to_receive);
-        to_receive_btn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), Profile_User_To_Receive.class));
-        });
-
-        // Linked the "to review" button to received
-        Button received_btn = view.findViewById(R.id.to_review);
-        received_btn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), Profile_User_Received.class));
-        });
-
-        // Linked the "My Shop" button to start Profile_My_Shop_Start
-        TextView shop_btn = view.findViewById(R.id.my_shop_profile_user);
-        shop_btn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), Profile_My_Shop_Start.class));
-        });
+        // "My Shop" button to navigate based on seller account status
+        TextView shopBtn = view.findViewById(R.id.my_shop_profile_user);
+        shopBtn.setOnClickListener(v -> navigateToShop(currentUser));
 
         return view;
+    }
+
+    private void setupPurchaseButtons(View view) {
+        view.findViewById(R.id.to_pay).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_Pay.class)));
+        view.findViewById(R.id.to_ship).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_Ship.class)));
+        view.findViewById(R.id.to_receive).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_To_Receive.class)));
+        view.findViewById(R.id.to_review).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_Received.class)));
+    }
+
+    private void navigateToShop(FirebaseUser currentUser) {
+        if (currentUser != null) {
+            DatabaseReference shopRef = FirebaseDatabase.getInstance().getReference("Shops").child(currentUser.getUid());
+            shopRef.get().addOnCompleteListener(shopTask -> {
+                if (shopTask.isSuccessful()) {
+                    DataSnapshot shopSnapshot = shopTask.getResult();
+                    // Check if the user has a seller account
+                    if (shopSnapshot.exists() && Boolean.TRUE.equals(shopSnapshot.child("sellerAccount").getValue(Boolean.class))) {
+                        // Seller account exists, navigate to the seller profile
+                        startActivity(new Intent(getActivity(), Main_Shop_Seller_Products.class));
+                    } else {
+                        // No seller account, navigate to shop setup
+                        startActivity(new Intent(getActivity(), Profile_My_Shop_Start.class));
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            // Get the updated dropdown state from the result
-            isDropdownUp = data.getBooleanExtra("dropdown_state", false); // Default to down
-
-            // Update the dropdown icon based on the state
-            if (isDropdownUp) {
-                settingsDrop.setRotation(180f); // Set the "up" rotation
-            } else {
-                settingsDrop.setRotation(0f); // Set the "down" rotation
-            }
+            isDropdownUp = data.getBooleanExtra("dropdown_state", false);
+            settingsDrop.setRotation(isDropdownUp ? 180f : 0f);
         }
     }
 
-    // Method to animate the dropdown icon
     private void animateDropDown(ImageView settingsDrop) {
         ObjectAnimator rotate = ObjectAnimator.ofFloat(settingsDrop, "rotation", 0f, 180f);
-        rotate.setDuration(300); // Rotate over 300ms
+        rotate.setDuration(300);
         rotate.start();
     }
 }
+
+
+
 
 
 

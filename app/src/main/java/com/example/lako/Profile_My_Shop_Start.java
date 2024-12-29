@@ -20,14 +20,15 @@ public class Profile_My_Shop_Start extends AppCompatActivity {
     }
 
     public void my_shop_back(View view) {
-        // Instead of just finishing the activity, set the BottomNavigationView to Profile_User
-        Intent intent = new Intent(Profile_My_Shop_Start.this, MainActivity.class); // Start MainActivity
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Clear all activities above it in the stack
+        // Navigate back to MainActivity and clear the stack
+        Intent intent = new Intent(Profile_My_Shop_Start.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
 
     public void set_up_shop_btn(View view) {
+        // Navigate to shop setup activity
         startActivity(new Intent(Profile_My_Shop_Start.this, Profile_My_Shop_Setup.class));
     }
 }

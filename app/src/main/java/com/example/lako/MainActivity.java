@@ -30,9 +30,16 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.nav_Profile);  // Default to Profile_User when app opens
         bottomNav.setOnItemSelectedListener(navListener);
 
-        // Set the Profile_User fragment as default when the app is launched
-        Fragment selectedFragment = new Profile_User();  // Profile_User fragment as default
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        // Check if the showProfileUser flag is passed in the intent
+        if (getIntent().getBooleanExtra("showProfileUser", false)) {
+            // If true, display the Profile_User fragment immediately
+            Fragment selectedFragment = new Profile_User();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        } else {
+            // Otherwise, load the default fragment (Profile_User)
+            Fragment selectedFragment = new Profile_User();  // Profile_User as default
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        }
     }
 
     private NavigationBarView.OnItemSelectedListener navListener = item -> {
@@ -56,4 +63,5 @@ public class MainActivity extends AppCompatActivity {
         return true;
     };
 }
+
 

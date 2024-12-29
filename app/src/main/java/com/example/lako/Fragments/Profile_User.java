@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -105,22 +106,31 @@ public class Profile_User extends Fragment {
     }
 
     private void navigateToShop(FirebaseUser currentUser) {
-        if (currentUser != null) {
-            DatabaseReference shopRef = FirebaseDatabase.getInstance().getReference("Shops").child(currentUser.getUid());
-            shopRef.get().addOnCompleteListener(shopTask -> {
-                if (shopTask.isSuccessful()) {
-                    DataSnapshot shopSnapshot = shopTask.getResult();
-                    // Check if the user has a seller account
-                    if (shopSnapshot.exists() && Boolean.TRUE.equals(shopSnapshot.child("sellerAccount").getValue(Boolean.class))) {
-                        // Seller account exists, navigate to the seller profile
-                        startActivity(new Intent(getActivity(), Main_Shop_Seller_Products.class));
-                    } else {
-                        // No seller account, navigate to shop setup
-                        startActivity(new Intent(getActivity(), Profile_My_Shop_Start.class));
-                    }
-                }
-            });
+        if (currentUser == null) {
+            Toast.makeText(getActivity(), "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        DatabaseReference shopRef = FirebaseDatabase.getInstance().getReference("Shops").child(currentUser.getUid());
+        shopRef.get().addOnCompleteListener(shopTask -> {
+            if (shopTask.isSuccessful()) {
+                DataSnapshot shopSnapshot = shopTask.getResult();
+                boolean hasSellerAccount = shopSnapshot.exists() && Boolean.TRUE.equals(shopSnapshot.child("sellerAccount").getValue(Boolean.class));
+                Intent intent;
+                if (hasSellerAccount) {
+                    // Navigate to seller profile
+                    intent = new Intent(getActivity(), Main_Shop_Seller_Products.class);
+                } else {
+                    // Navigate to shop setup
+                    intent = new Intent(getActivity(), Profile_My_Shop_Start.class);
+                }
+                startActivity(intent);
+            } else {
+                Toast.makeText(getActivity(), "Error checking shop data", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(getActivity(), "Failed to connect to database: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        });
     }
 
     @Override

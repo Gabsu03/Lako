@@ -115,7 +115,7 @@ public class Profile_Settings extends AppCompatActivity {
         });
 
         // MY SHOP LINKED
-        TextView my_shop_btn = findViewById(R.id.my_shop_profile_settings);
+        Button my_shop_btn = findViewById(R.id.my_shop_profile_user_settings);
         my_shop_btn.setOnClickListener(v -> {
             startActivity(new Intent(Profile_Settings.this, Profile_My_Shop_Start.class));
         });

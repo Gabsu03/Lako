@@ -16,6 +16,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -84,11 +88,11 @@ public class Profile_My_Shop_Facial_Recognition extends AppCompatActivity {
 
     private final ActivityResultLauncher<Intent> cameraLauncherForID = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            result -> handleImageResult(result, "ID", getImageIdLako));
+            result -> handleImageResult(result, "Verification_ID", getImageIdLako));
 
     private final ActivityResultLauncher<Intent> cameraLauncherForSelfie = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            result -> handleImageResult(result, "Selfie", imageLako));
+            result -> handleImageResult(result, "Verification_Realtime_Selfie", imageLako));
 
     private void handleImageResult(ActivityResult result, String folderName, ImageView imageView) {
         if (result.getResultCode() == RESULT_OK && result.getData() != null) {
@@ -174,8 +178,28 @@ public class Profile_My_Shop_Facial_Recognition extends AppCompatActivity {
 
     public void continueBtn(View view) {
         if (isIdUploaded && isSelfieUploaded) {
-            Intent intent = new Intent(this, Profile_My_Shop_Loading_Screen.class);
-            startActivity(intent);
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (currentUser != null) {
+                DatabaseReference shopRef = FirebaseDatabase.getInstance().getReference("Shops").child(currentUser.getUid());
+
+                // Update Firebase with seller account information
+                shopRef.child("sellerAccount").setValue(true).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("FirebaseUpdate", "Seller account successfully created.");
+                        Toast.makeText(this, "Seller account setup completed!", Toast.LENGTH_SHORT).show();
+
+                        // Navigate to the loading screen
+                        Intent intent = new Intent(this, Profile_My_Shop_Loading_Screen.class);
+                        startActivity(intent);
+                        finish(); // End current activity
+                    } else {
+                        Log.e("FirebaseUpdate", "Failed to update seller account.", task.getException());
+                        Toast.makeText(this, "Failed to set up seller account. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(this, "User not logged in. Please log in to continue.", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(this, "Please upload both ID and selfie before proceeding.", Toast.LENGTH_SHORT).show();
         }

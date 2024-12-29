@@ -17,6 +17,7 @@ public class Profile_My_Shop_Start extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile_my_shop_start);
+
     }
 
     public void my_shop_back(View view) {

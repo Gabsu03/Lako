@@ -32,7 +32,7 @@ public class Profile_My_Shop_Facial_Recognition extends AppCompatActivity {
     private ImageView getImageIdLako, imageLako;
     private Button buttonCameraId, buttonCameraSelfie, continueButton;
 
-    private boolean isIdUploaded = false, isSelfieUploaded = false;
+    private boolean isIdUploaded = true, isSelfieUploaded = true;
     private String idImageUrl, selfieImageUrl;
     private String sellerName; // Seller's name to be included in the file name
 

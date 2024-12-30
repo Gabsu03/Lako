@@ -71,15 +71,33 @@ public class Profile_My_Shop_Setup extends AppCompatActivity {
             return;
         }
 
-        // Save data to Firebase
-        saveDataToFirebase();
+        DatabaseReference allShopsReference = FirebaseDatabase.getInstance().getReference("shops");
 
-        // Pass data to the next activity
-        Intent intent = new Intent(Profile_My_Shop_Setup.this, Profile_My_Shop_Verify.class);
-        intent.putExtra("SHOP_NAME", shopName);
-        intent.putExtra("SHOP_DESCRIPTION", shopDescription);
-        intent.putExtra("SHOP_LOCATION", shopLocation);
-        startActivity(intent);
+        // Check if the shop name already exists
+        allShopsReference.orderByChild("shopName").equalTo(shopName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Shop name already exists
+                    Toast.makeText(Profile_My_Shop_Setup.this, "Shop name already exists. Please choose another name.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Shop name is unique, proceed
+                    saveDataToFirebase();
+
+                    // Pass data to the next activity
+                    Intent intent = new Intent(Profile_My_Shop_Setup.this, Profile_My_Shop_Verify.class);
+                    intent.putExtra("SHOP_NAME", shopName);
+                    intent.putExtra("SHOP_DESCRIPTION", shopDescription);
+                    intent.putExtra("SHOP_LOCATION", shopLocation);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Profile_My_Shop_Setup.this, "Error checking shop name. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void saveDataToFirebase() {

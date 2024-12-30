@@ -1,5 +1,7 @@
 package com.example.lako.util;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +11,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.lako.Main_Shop_Seller_View_Product;
 import com.example.lako.R;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> productList;
+    private Context context;
 
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
@@ -25,6 +31,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_products_item_seller, parent, false);
+        context = parent.getContext(); // Save the context to use later
         return new ProductViewHolder(view);
     }
 
@@ -32,16 +39,27 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
 
-        // Bind product data to the views
         holder.productName.setText(product.getName());
-        holder.productDescription.setText(product.getDescription());
-        holder.productPrice.setText(product.getPrice());
-        holder.productSpecification.setText(product.getSpecification());
-        holder.productTags.setText(product.getTags());
+        holder.productPrice.setText("₱" + product.getPrice());
 
-        if (product.getImageUri() != null) {
-            holder.productImage.setImageURI(product.getImageUri());
+        if (product.getImage() != null && !product.getImage().isEmpty()) {
+            Glide.with(holder.productImage.getContext())
+                    .load(product.getImage())
+                    .placeholder(R.drawable.image_upload)
+                    .into(holder.productImage);
         }
+
+        // Set a click listener on the item
+        holder.itemView.setOnClickListener(v -> {
+            // Pass product data to the next activity
+            Intent intent = new Intent(context, Main_Shop_Seller_View_Product.class);
+            intent.putExtra("productName", product.getName());
+            intent.putExtra("productPrice", product.getPrice());
+            intent.putExtra("productImage", product.getImage());
+            intent.putExtra("productDescription", product.getDescription()); // Pass description
+            intent.putExtra("productSpecification", product.getSpecification()); // Pass specification
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -50,15 +68,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView productName, productDescription, productPrice, productSpecification, productTags;
-        ImageView productImage;
+        TextView productName, productPrice;
+        ShapeableImageView productImage;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.Name_of_products);
-            productDescription = itemView.findViewById(R.id.product_description);
             productPrice = itemView.findViewById(R.id.product_price_add_item);
-            productSpecification = itemView.findViewById(R.id.product_specification);
             productImage = itemView.findViewById(R.id.product_imageeee);
         }
     }

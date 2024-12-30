@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.lako.util.Product;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
@@ -34,19 +36,21 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main_Shop_Seller_List_Products extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView productImageView;
-    private EditText productNameEditText, productDescriptionEditText, productPriceEditText, productSpecificationEditText, productTagsEditText;
+    private EditText productNameEditText, productDescriptionEditText, productPriceEditText, productSpecificationEditText, productTagsEditText, productStockEditText;
     private Uri productImageUri;
+    private DatabaseReference productDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_shop_seller_list_products);
 
         productImageView = findViewById(R.id.imageView51);
@@ -55,13 +59,12 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         productPriceEditText = findViewById(R.id.product_price);
         productSpecificationEditText = findViewById(R.id.product_specification);
         productTagsEditText = findViewById(R.id.product_tags);
+        productStockEditText = findViewById(R.id.product_stock);
 
-        TextView addProductButton = findViewById(R.id.add_list_product_btn);
-        addProductButton.setOnClickListener(view -> saveProductLocally());
-    }
+        Button addProductButton = findViewById(R.id.add_list_product_btn);
+        productDatabase = FirebaseDatabase.getInstance().getReference("products");
 
-    public void my_shop_list_product_back_btn(View view) {
-        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
+        addProductButton.setOnClickListener(view -> saveProductToFirebase());
     }
 
     public void uploadProductImage(View view) {
@@ -71,7 +74,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
@@ -80,42 +83,66 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         }
     }
 
-    private void saveProductLocally() {
+    private void saveProductToFirebase() {
         String productName = productNameEditText.getText().toString().trim();
         String productDescription = productDescriptionEditText.getText().toString().trim();
         String productPrice = productPriceEditText.getText().toString().trim();
         String productSpecification = productSpecificationEditText.getText().toString().trim();
         String productTags = productTagsEditText.getText().toString().trim();
+        String productStock = productStockEditText.getText().toString().trim();
 
-        if (productName.isEmpty() || productPrice.isEmpty()) {
+        if (productName.isEmpty() || productPrice.isEmpty() || productStock.isEmpty()) {
             Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Create a new product object
-        Product newProduct = new Product(productName, productDescription, productPrice, productSpecification, productTags, productImageUri);
+        // Prepare data to save
+        String productId = productDatabase.push().getKey();
+        Map<String, Object> productData = new HashMap<>();
+        productData.put("id", productId);
+        productData.put("name", productName);
+        productData.put("description", productDescription);
+        productData.put("price", productPrice);
+        productData.put("specification", productSpecification);
+        productData.put("tags", productTags);
+        productData.put("stock", productStock);
 
-        // Retrieve existing products from SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("ProductData", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("products", "[]");
-        Type type = new TypeToken<List<Product>>() {}.getType();
-        List<Product> productList = gson.fromJson(json, type);
-
-        // Add the new product to the list
-        productList.add(newProduct);
-
-        // Save the updated list back to SharedPreferences
-        String updatedJson = gson.toJson(productList);
-        sharedPreferences.edit().putString("products", updatedJson).apply();
-        Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
-
-    // Delay the navigation to the products page to allow Toast to be shown
-        new Handler().postDelayed(() -> {
-            startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
-        }, 1000);  // 1-second delay to allow the toast to show
+        if (productImageUri != null) {
+            // Upload image to Firebase Storage
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("product_images").child(productId + ".jpg");
+            storageReference.putFile(productImageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Get the download URL of the uploaded image
+                        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String imageUrl = uri.toString();
+                            // Store the image URL in Firebase Realtime Database
+                            productData.put("image", imageUrl);
+                            // Save product data to Firebase Realtime Database
+                            productDatabase.child(productId).setValue(productData)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
+                                    }).addOnFailureListener(e -> {
+                                        Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            // If no image is selected, store null
+            productData.put("image", null);
+            // Save product data to Firebase Realtime Database without image
+            productDatabase.child(productId).setValue(productData)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        }
     }
-
 }
 
 

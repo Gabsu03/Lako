@@ -1,12 +1,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="181dp"
+    android:layout_width="170dp"
     android:background="@drawable/bar"
     android:layout_marginBottom="8dp"
     android:layout_height="254dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/product_imageeee"
         android:layout_width="159dp"
         android:layout_height="198dp"
@@ -14,12 +14,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
+        app:layout_constraintVertical_bias="0.125"
+        app:shapeAppearanceOverlay="@style/RoundedImage"/>
 
     <TextView
         android:id="@+id/Name_of_products"
         android:layout_width="145dp"
-        android:layout_height="15dp"
+        android:layout_height="20dp"
         android:fontFamily="@font/jost_medium"
         android:paddingLeft="10dp"
         android:textAlignment="textStart"
@@ -49,4 +50,4 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!---FOR MY_SHOP_SELLER_DISPLAY_PRODUCT-->
+    <!---FOR MY_SHOP_SELLER_DISPLAY_PRODUCT-->

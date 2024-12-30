@@ -66,7 +66,7 @@
         android:layout_width="300dp"
         android:layout_height="27dp"
         android:fontFamily="@font/koho_medium"
-        android:paddingLeft="10dp"
+        android:paddingLeft="7dp"
         android:textAlignment="textStart"
         android:textColor="@color/darkbrown"
         android:textSize="22dp"
@@ -78,8 +78,8 @@
         app:layout_constraintVertical_bias="0.196" />
 
     <TextView
-        android:id="@+id/textView51"
-        android:layout_width="45dp"
+        android:id="@+id/price"
+        android:layout_width="70dp"
         android:layout_height="28dp"
         android:fontFamily="@font/jost_medium"
         android:paddingLeft="7dp"
@@ -104,9 +104,9 @@
         android:textColor="@color/black"
         android:textSize="17dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView63"
-        app:layout_constraintEnd_toEndOf="@+id/name_of_product_display"
-        app:layout_constraintHorizontal_bias="0.038"
-        app:layout_constraintStart_toEndOf="@+id/textView51"
+        app:layout_constraintEnd_toEndOf="@+id/imageView63"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toEndOf="@+id/price"
         app:layout_constraintTop_toBottomOf="@+id/name_of_product_display"
         app:layout_constraintVertical_bias="0.538" />
 
@@ -159,10 +159,6 @@
         android:textColor="@color/black"
         android:inputType="textMultiLine"
         android:maxLines="4"
-        android:paddingStart="10dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView64"
         app:layout_constraintEnd_toEndOf="@+id/imageView64"
         app:layout_constraintHorizontal_bias="0.303"
@@ -172,10 +168,10 @@
 
     <TextView
         android:id="@+id/textView55"
-        android:layout_width="50dp"
+        android:layout_width="65dp"
         android:layout_height="15dp"
         android:fontFamily="@font/jost_regular"
-        android:text="Category"
+        android:text="Specification"
         android:textAlignment="textStart"
         android:textSize="11dp"
         android:textStyle="bold"
@@ -187,17 +183,19 @@
         app:layout_constraintVertical_bias="0.217" />
 
     <TextView
-        android:id="@+id/category_of_product"
+        android:id="@+id/specification_of_product"
         android:layout_width="57dp"
         android:layout_height="22dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/koho_medium"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textColor="@color/darkbrown"
         app:layout_constraintBottom_toBottomOf="@+id/imageView64"
         app:layout_constraintEnd_toEndOf="@+id/imageView64"
         app:layout_constraintHorizontal_bias="0.028"
         app:layout_constraintStart_toStartOf="@+id/imageView64" />
+
+
 
     <ImageView
         android:id="@+id/imageView65"

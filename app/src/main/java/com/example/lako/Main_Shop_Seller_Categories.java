@@ -65,6 +65,7 @@ public class Main_Shop_Seller_Categories extends AppCompatActivity {
                                     .load(profileImageUrl)
                                     .placeholder(R.drawable.image_upload)  // Placeholder image
                                     .error(R.drawable.image_upload)  // Error image
+                                    .centerCrop()
                                     .into(profilePictureShop);
                         }
 
@@ -114,9 +115,9 @@ public class Main_Shop_Seller_Categories extends AppCompatActivity {
     }
 
     public void my_shop_profile_category_back_btn(View view) {
-        // Navigate to shop edit activity
-        startActivity(new Intent(Main_Shop_Seller_Categories.this, Profile_User.class));
+        finish(); // Go back to previous activity
     }
+
 
     public void edit_profile_seller_categories(View view) {
         // Navigate to seller orders

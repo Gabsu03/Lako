@@ -3,18 +3,20 @@ package com.example.lako.util;
 import android.net.Uri;
 
 public class Product {
+    private String id;  // Add the ID field
     private String name;
     private String price;
     private String image;
-    private String description;  // Added description
-    private String specification; // Added specification
+    private String description;
+    private String specification;
 
     // Default constructor
     public Product() {
     }
 
-    // Constructor including description and specification
-    public Product(String name, String price, String image, String description, String specification) {
+    // Constructor including the ID, name, price, image, description, and specification
+    public Product(String id, String name, String price, String image, String description, String specification) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.image = image;
@@ -22,7 +24,16 @@ public class Product {
         this.specification = specification;
     }
 
-    // Getters and setters for name, price, image, description, and specification
+    // Getter and setter for ID
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    // Getters and setters for other fields
     public String getName() {
         return name;
     }
@@ -63,5 +74,6 @@ public class Product {
         this.specification = specification;
     }
 }
+
 
 

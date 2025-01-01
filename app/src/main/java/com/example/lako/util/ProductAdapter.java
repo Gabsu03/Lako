@@ -51,13 +51,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         // Set a click listener on the item
         holder.itemView.setOnClickListener(v -> {
-            // Pass product data to the next activity
+            // Pass product data to the next activity, including productId
             Intent intent = new Intent(context, Main_Shop_Seller_View_Product.class);
+            intent.putExtra("productId", product.getId()); // Pass the productId
             intent.putExtra("productName", product.getName());
             intent.putExtra("productPrice", product.getPrice());
             intent.putExtra("productImage", product.getImage());
-            intent.putExtra("productDescription", product.getDescription()); // Pass description
-            intent.putExtra("productSpecification", product.getSpecification()); // Pass specification
+            intent.putExtra("productDescription", product.getDescription());
+            intent.putExtra("productSpecification", product.getSpecification());
             context.startActivity(intent);
         });
     }

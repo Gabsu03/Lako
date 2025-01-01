@@ -96,8 +96,13 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
             return;
         }
 
-        // Prepare data to save
+        // Generate product ID
         String productId = productDatabase.push().getKey();
+        if (productId == null) {
+            Toast.makeText(this, "Failed to generate product ID", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Map<String, Object> productData = new HashMap<>();
         productData.put("id", productId);
         productData.put("name", productName);
@@ -115,35 +120,46 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
                         // Get the download URL of the uploaded image
                         storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
                             String imageUrl = uri.toString();
-                            // Store the image URL in Firebase Realtime Database
-                            productData.put("image", imageUrl);
+                            productData.put("image", imageUrl); // Store image URL in product data
+
                             // Save product data to Firebase Realtime Database
                             productDatabase.child(productId).setValue(productData)
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
-                                    }).addOnFailureListener(e -> {
+                                    })
+                                    .addOnFailureListener(e -> {
                                         Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     });
+                        }).addOnFailureListener(e -> {
+                            Toast.makeText(this, "Failed to get image URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         });
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         } else {
-            // If no image is selected, store null
+            // If no image is selected, store null for the image
             productData.put("image", null);
+
             // Save product data to Firebase Realtime Database without image
             productDatabase.child(productId).setValue(productData)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
-                    }).addOnFailureListener(e -> {
+                    })
+                    .addOnFailureListener(e -> {
                         Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         }
     }
+
+    public void my_shop_list_product_back_btn(View view) {
+        finish();
+    }
 }
+
+
 
 
 

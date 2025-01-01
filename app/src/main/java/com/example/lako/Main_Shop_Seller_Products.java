@@ -120,13 +120,18 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 productList.clear();
                 for (DataSnapshot productSnapshot : snapshot.getChildren()) {
+                    // Fetch product details
                     String name = productSnapshot.child("name").getValue(String.class);
                     String price = productSnapshot.child("price").getValue(String.class);
                     String image = productSnapshot.child("image").getValue(String.class);
-                    String description = productSnapshot.child("description").getValue(String.class); // Fetch description
-                    String specification = productSnapshot.child("specification").getValue(String.class); // Fetch specification
+                    String description = productSnapshot.child("description").getValue(String.class);
+                    String specification = productSnapshot.child("specification").getValue(String.class);
 
-                    Product product = new Product(name, price, image, description, specification); // Create product with all fields
+                    // Get product ID (the key in Firebase)
+                    String productId = productSnapshot.getKey();
+
+                    // Create product object with ID and other details
+                    Product product = new Product(productId, name, price, image, description, specification);
                     productList.add(product);
                 }
                 productAdapter.notifyDataSetChanged();
@@ -169,5 +174,21 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
     public void my_shop_profile_back_btnn(View view) {
         finish();
     }
+
+    // Add this onActivityResult method to handle the result after product deletion
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            boolean productDeleted = data.getBooleanExtra("productDeleted", false);
+            if (productDeleted) {
+                // If product was deleted, reload the product list
+                loadProducts(); // Refresh the product list from Firebase
+            }
+        }
+    }
 }
+
+
 

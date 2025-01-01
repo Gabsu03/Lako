@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -21,8 +22,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Main_Shop_Seller_View_Product extends AppCompatActivity {
@@ -109,7 +113,17 @@ public class Main_Shop_Seller_View_Product extends AppCompatActivity {
 
             if (itemId == R.id.edit) {
                 Toast.makeText(this, "Edit clicked", Toast.LENGTH_SHORT).show();
-                // Add your edit functionality here
+
+                // Prepare the intent to navigate to the edit screen
+                Intent intent = new Intent(Main_Shop_Seller_View_Product.this, Main_Shop_Seller_Edit_Product.class);
+                intent.putExtra("productId", productId);
+                intent.putExtra("productName", productNameTextView.getText().toString());
+                intent.putExtra("productPrice", productPriceTextView.getText().toString());
+                intent.putExtra("productImage", ""); // You can pass the image URL or file path here if necessary
+                intent.putExtra("productDescription", productDescriptionTextView.getText().toString());
+                intent.putExtra("productSpecification", productSpecificationTextView.getText().toString());
+                startActivity(intent);
+
                 return true;
             } else if (itemId == R.id.delete) {
                 showDeleteConfirmationDialog(); // Show confirmation dialog before deleting
@@ -155,7 +169,29 @@ public class Main_Shop_Seller_View_Product extends AppCompatActivity {
     public void seller_view_product_btn(View view) {
         finish(); // Close the current activity and go back
     }
+
+    // Add a method to reload product details after the image has been updated.
+    private void reloadProductDetails() {
+        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products").child(productId);
+        productRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Fetch product data
+                String updatedProductImage = snapshot.child("image").getValue(String.class);
+                Glide.with(Main_Shop_Seller_View_Product.this)
+                        .load(updatedProductImage)
+                        .placeholder(R.drawable.image_upload)
+                        .into(productImageView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Main_Shop_Seller_View_Product.this, "Failed to load product", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
+
 
 
 

@@ -99,6 +99,7 @@ public class Profile_User extends Fragment {
     }
 
     private void setupPurchaseButtons(View view) {
+        view.findViewById(R.id.imageView4).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_Settings_Purchase.class)));
         view.findViewById(R.id.to_pay).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_Pay.class)));
         view.findViewById(R.id.to_ship).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_Ship.class)));
         view.findViewById(R.id.to_receive).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_To_Receive.class)));

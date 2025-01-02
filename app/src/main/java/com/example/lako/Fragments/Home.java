@@ -29,7 +29,8 @@ import com.example.lako.User_Cart;
 
 public class Home extends Fragment {
 
-    View view;
+    private View view;
+    private TextView lastClickedTextView;
 
     @Nullable
     @Override
@@ -50,30 +51,33 @@ public class Home extends Fragment {
             startActivity(new Intent(getActivity(), User_Cart.class));
         });
 
-        // Set an OnClickListener for Clothing
-        clothing.setOnClickListener(v -> {
-            // Start the Clothing Category activity when clicked
-            startActivity(new Intent(getActivity(), Clothing_Home.class));
-        });
-
-        // Set an OnClickListener for Living
-        living.setOnClickListener(v -> {
-            // Start the Living Category activity when clicked
-            startActivity(new Intent(getActivity(), Living_Home.class));
-        });
-
-        // Set an OnClickListener for Accessories
-        accessories.setOnClickListener(v -> {
-            // Start the Accessories Category activity when clicked
-            startActivity(new Intent(getActivity(), Accessories_Home.class));
-        });
-
-        // Set an OnClickListener for Art
-        art.setOnClickListener(v -> {
-            // Start the Art Category activity when clicked
-            startActivity(new Intent(getActivity(), Art_Home.class));
-        });
+        // Set OnClickListeners for each TextView
+        setTextViewClickListener(clothing, Clothing_Home.class);
+        setTextViewClickListener(living, Living_Home.class);
+        setTextViewClickListener(accessories, Accessories_Home.class);
+        setTextViewClickListener(art, Art_Home.class);
 
         return view;
     }
+
+    private void setTextViewClickListener(TextView textView, Class<?> targetActivity) {
+        textView.setOnClickListener(v -> {
+            // Reset the color of the previously clicked TextView (if any)
+            if (lastClickedTextView != null) {
+                lastClickedTextView.setTextColor(getResources().getColor(R.color.darkbrown, null));
+            }
+
+            // Change the color of the clicked TextView
+            textView.setTextColor(getResources().getColor(R.color.selected_color, null));
+
+            // Update the reference to the last clicked TextView
+            lastClickedTextView = textView;
+
+            // Start the corresponding activity
+            startActivity(new Intent(getActivity(), targetActivity));
+        });
+    }
 }
+
+
+

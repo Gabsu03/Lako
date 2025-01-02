@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,15 +23,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private List<Product> productList;
     private Context context;
+    private boolean isSellerView; // Flag to differentiate between seller and user views
 
-    public ProductAdapter(List<Product> productList) {
+    // Constructor that accepts the product list and a flag to distinguish seller/user views
+    public ProductAdapter(List<Product> productList, boolean isSellerView) {
         this.productList = productList;
+        this.isSellerView = isSellerView; // Set flag to distinguish between views
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_products_item_seller, parent, false);
+        // Choose layout based on seller or user view
+        int layout = isSellerView ? R.layout.display_products_item_seller : R.layout.display_product_user_item;
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         context = parent.getContext(); // Save the context to use later
         return new ProductViewHolder(view);
     }
@@ -49,18 +55,27 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     .into(holder.productImage);
         }
 
-        // Set a click listener on the item
-        holder.itemView.setOnClickListener(v -> {
-            // Pass product data to the next activity, including productId
-            Intent intent = new Intent(context, Main_Shop_Seller_View_Product.class);
-            intent.putExtra("productId", product.getId()); // Pass the productId
-            intent.putExtra("productName", product.getName());
-            intent.putExtra("productPrice", product.getPrice());
-            intent.putExtra("productImage", product.getImage());
-            intent.putExtra("productDescription", product.getDescription());
-            intent.putExtra("productSpecification", product.getSpecification());
-            context.startActivity(intent);
-        });
+        // Seller view: click listener to edit/view product details
+        if (isSellerView) {
+            holder.itemView.setOnClickListener(v -> {
+                // Navigate to the product edit/view screen for the seller
+                Intent intent = new Intent(context, Main_Shop_Seller_View_Product.class);
+                intent.putExtra("productId", product.getId()); // Pass productId to the next activity
+                intent.putExtra("productName", product.getName());
+                intent.putExtra("productPrice", product.getPrice());
+                intent.putExtra("productImage", product.getImage());
+                intent.putExtra("productDescription", product.getDescription());
+                intent.putExtra("productSpecification", product.getSpecification());
+                context.startActivity(intent);
+            });
+        }
+        // User view: click listener to show product details or add to cart
+        else {
+            holder.itemView.setOnClickListener(v -> {
+                // Handle click for user (e.g., show product details or add to cart)
+                Toast.makeText(context, "Product: " + product.getName(), Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     @Override
@@ -80,3 +95,4 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
     }
 }
+

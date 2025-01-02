@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -145,7 +146,8 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        productAdapter = new ProductAdapter(productList);
+        // Pass 'true' since it's the seller view
+        productAdapter = new ProductAdapter(productList, true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         productsRecyclerView.setLayoutManager(gridLayoutManager);
         productsRecyclerView.setAdapter(productAdapter);
@@ -168,14 +170,14 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
     }
 
     public void categories_btn(View view) {
-        startActivity(new Intent(Main_Shop_Seller_Products.this, Main_Shop_Seller_Categories.class));
+        Intent intent = new Intent(Main_Shop_Seller_Products.this, Main_Shop_Seller_Categories.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); // Prevent transition animation that may cause layout changes
+        startActivity(intent);
     }
 
-    public void my_shop_profile_back_btnn(View view) {
-        finish();
-    }
 
-    // Add this onActivityResult method to handle the result after product deletion
+
+    // onActivityResult method to handle the result after product deletion
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

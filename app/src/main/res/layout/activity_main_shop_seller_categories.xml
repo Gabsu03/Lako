@@ -15,19 +15,7 @@
         android:background="@color/darkbrown"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/back_shop_seller_btn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/vector"
-        android:onClick="my_shop_profile_category_back_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.571"
-        tools:ignore="OnClick" />
+
 
     <ImageView
         android:id="@+id/imageView3"

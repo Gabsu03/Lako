@@ -126,7 +126,11 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
                             productDatabase.child(productId).setValue(productData)
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
+
+                                        // Navigate to the Main_Shop_Seller_Products and clear back stack
+                                        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class)
+                                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                        finish(); // Ensure the current activity is removed from the back stack
                                     })
                                     .addOnFailureListener(e -> {
                                         Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -146,7 +150,11 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
             productDatabase.child(productId).setValue(productData)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
+
+                        // Navigate to the Main_Shop_Seller_Products and clear back stack
+                        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish(); // Ensure the current activity is removed from the back stack
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -155,7 +163,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
     }
 
     public void my_shop_list_product_back_btn(View view) {
-        finish();
+        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
     }
 }
 

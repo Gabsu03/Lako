@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.lako.Fragments.Profile_User;
@@ -42,14 +43,14 @@ public class Main_Shop_Seller_Categories extends AppCompatActivity {
         TextView shopLocationTextView = findViewById(R.id.name_of_placee);
         TextView shopDescriptionTextView = findViewById(R.id.description_of_shopp);
 
-        // Get current user ID
+        // Get current user ID from Firebase
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
-            // Reference to the user's shop data
+            // Reference to the user's shop data in Firebase
             DatabaseReference shopRef = FirebaseDatabase.getInstance().getReference("shops").child(userId);
 
             // Fetch profile image URL and other data from Firebase
@@ -57,10 +58,10 @@ public class Main_Shop_Seller_Categories extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        // Retrieve profile image URL from snapshot
+                        // Retrieve profile image URL
                         String profileImageUrl = snapshot.child("profileImageUrl").getValue(String.class);
                         if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
-                            // Use Glide to load the profile image into the ImageView
+                            // Use Glide to load the profile image
                             Glide.with(Main_Shop_Seller_Categories.this)
                                     .load(profileImageUrl)
                                     .placeholder(R.drawable.image_upload)  // Placeholder image
@@ -90,8 +91,21 @@ public class Main_Shop_Seller_Categories extends AppCompatActivity {
         } else {
             Toast.makeText(this, "User not authenticated.", Toast.LENGTH_SHORT).show();
         }
-    }
 
+        // Ensure proper layout sizing for consistent appearance (Fix layout shifting issues)
+        View rootView = findViewById(android.R.id.content);
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Adjust layout or any necessary parameters after the layout has been drawn
+                // Example: Adjust the height of RecyclerView dynamically
+                RecyclerView categoriesRecyclerView = findViewById(R.id.categories_recycler_view);
+                if (categoriesRecyclerView != null) {
+                    categoriesRecyclerView.setVisibility(View.VISIBLE);  // Ensure RecyclerView is visible
+                }
+            }
+        });
+    }
 
     // Navigate to other sections (Product, Orders, etc.)
     public void products_btn(View view) {
@@ -114,14 +128,9 @@ public class Main_Shop_Seller_Categories extends AppCompatActivity {
         startActivity(new Intent(Main_Shop_Seller_Categories.this, Main_Shop_Seller_Add_Categories.class));
     }
 
-    public void my_shop_profile_category_back_btn(View view) {
-        finish(); // Go back to previous activity
-    }
-
-
     public void edit_profile_seller_categories(View view) {
-        // Navigate to seller orders
         startActivity(new Intent(Main_Shop_Seller_Categories.this, Main_Shop_Seller_Edit.class));
     }
 
 }
+

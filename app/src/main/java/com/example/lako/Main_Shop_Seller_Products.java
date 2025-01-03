@@ -121,15 +121,19 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 productList.clear();
                 for (DataSnapshot productSnapshot : snapshot.getChildren()) {
-                    // Fetch product details
                     String name = productSnapshot.child("name").getValue(String.class);
                     String price = productSnapshot.child("price").getValue(String.class);
                     String image = productSnapshot.child("image").getValue(String.class);
                     String description = productSnapshot.child("description").getValue(String.class);
                     String specification = productSnapshot.child("specification").getValue(String.class);
-
-                    // Get product ID (the key in Firebase)
                     String productId = productSnapshot.getKey();
+
+                    // If any data is null, set default values to avoid null showing in the UI
+                    if (name == null) name = "No Name";
+                    if (price == null) price = "No Price";
+                    if (image == null) image = ""; // Handle null image
+                    if (description == null) description = "No Description";
+                    if (specification == null) specification = "No Specification";
 
                     // Create product object with ID and other details
                     Product product = new Product(productId, name, price, image, description, specification);
@@ -144,6 +148,7 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
             }
         });
     }
+
 
     private void setupRecyclerView() {
         // Pass 'true' since it's the seller view

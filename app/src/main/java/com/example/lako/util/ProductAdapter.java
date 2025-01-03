@@ -53,6 +53,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     .load(product.getImage())
                     .placeholder(R.drawable.image_upload)
                     .into(holder.productImage);
+        } else {
+            holder.productImage.setImageResource(R.drawable.image_upload);  // Set default image if no image URL
         }
 
         // Seller view: click listener to edit/view product details
@@ -69,7 +71,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 context.startActivity(intent);
             });
         }
-        // User view: click listener to show product details or add to cart
+
+    // User view: click listener to show product details or add to cart
         else {
             holder.itemView.setOnClickListener(v -> {
                 // Handle click for user (e.g., show product details or add to cart)

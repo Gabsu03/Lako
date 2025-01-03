@@ -20,6 +20,12 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".Seller_View_Profile"
+            android:exported="false" />
+        <activity
+            android:name=".User_View_Product"
+            android:exported="false" />
+        <activity
             android:name=".Main_Shop_Seller_Edit_Product"
             android:exported="false" />
         <activity

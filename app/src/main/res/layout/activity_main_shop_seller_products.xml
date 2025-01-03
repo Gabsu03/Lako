@@ -8,10 +8,6 @@
     android:background="@color/primary"
     tools:context=".Main_Shop_Seller_Products">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <ImageView
         android:id="@+id/imageView"

@@ -25,19 +25,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private Context context;
     private boolean isSellerView; // Flag to differentiate between seller and user views
 
-    // Constructor that accepts the product list and a flag to distinguish seller/user views
+    // Constructor to accept the product list and the view type
     public ProductAdapter(List<Product> productList, boolean isSellerView) {
         this.productList = productList;
-        this.isSellerView = isSellerView; // Set flag to distinguish between views
+        this.isSellerView = isSellerView;
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Choose layout based on seller or user view
         int layout = isSellerView ? R.layout.display_products_item_seller : R.layout.display_product_user_item;
         View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
-        context = parent.getContext(); // Save the context to use later
+        context = parent.getContext(); // Save context
         return new ProductViewHolder(view);
     }
 
@@ -48,21 +47,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productName.setText(product.getName());
         holder.productPrice.setText("₱" + product.getPrice());
 
+        // Loading image with Glide
         if (product.getImage() != null && !product.getImage().isEmpty()) {
             Glide.with(holder.productImage.getContext())
                     .load(product.getImage())
                     .placeholder(R.drawable.image_upload)
                     .into(holder.productImage);
         } else {
-            holder.productImage.setImageResource(R.drawable.image_upload);  // Set default image if no image URL
+            holder.productImage.setImageResource(R.drawable.image_upload); // Default image if no URL
         }
 
-        // Seller view: click listener to edit/view product details
+        // Seller view: Navigate to product editing/viewing screen
         if (isSellerView) {
             holder.itemView.setOnClickListener(v -> {
-                // Navigate to the product edit/view screen for the seller
                 Intent intent = new Intent(context, Main_Shop_Seller_View_Product.class);
-                intent.putExtra("productId", product.getId()); // Pass productId to the next activity
+                intent.putExtra("productId", product.getId()); // Pass product ID to the next activity
                 intent.putExtra("productName", product.getName());
                 intent.putExtra("productPrice", product.getPrice());
                 intent.putExtra("productImage", product.getImage());
@@ -71,11 +70,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 context.startActivity(intent);
             });
         }
-
-    // User view: click listener to show product details or add to cart
+        // User view: Show product details or add to cart
         else {
             holder.itemView.setOnClickListener(v -> {
-                // Handle click for user (e.g., show product details or add to cart)
                 Toast.makeText(context, "Product: " + product.getName(), Toast.LENGTH_SHORT).show();
             });
         }
@@ -94,7 +91,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             super(itemView);
             productName = itemView.findViewById(R.id.Name_of_products);
             productPrice = itemView.findViewById(R.id.product_price_add_item);
-            productImage = itemView.findViewById(R.id.product_imageeee);
+            productImage = itemView.findViewById(R.id.product_image_home);
         }
     }
 }

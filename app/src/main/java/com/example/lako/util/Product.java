@@ -1,20 +1,16 @@
 package com.example.lako.util;
 
-import android.net.Uri;
-
 public class Product {
-    private String id;  // Add the ID field
+    private String id;
     private String name;
     private String price;
     private String image;
     private String description;
     private String specification;
 
-    // Default constructor
-    public Product() {
-    }
+    // Default constructor for Firebase
+    public Product() {}
 
-    // Constructor including the ID, name, price, image, description, and specification
     public Product(String id, String name, String price, String image, String description, String specification) {
         this.id = id;
         this.name = name;
@@ -24,7 +20,6 @@ public class Product {
         this.specification = specification;
     }
 
-    // Getter and setter for ID
     public String getId() {
         return id;
     }
@@ -33,7 +28,6 @@ public class Product {
         this.id = id;
     }
 
-    // Getters and setters for other fields
     public String getName() {
         return name;
     }
@@ -74,6 +68,3 @@ public class Product {
         this.specification = specification;
     }
 }
-
-
-

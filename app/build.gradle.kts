@@ -51,6 +51,9 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation (libs.material.v190)
     implementation (libs.firebase.core)
+    implementation (libs.firebase.ui.database)
+    implementation (libs.firebase.analytics)
+
 
     implementation ("com.google.code.gson:gson:2.10.1")
 

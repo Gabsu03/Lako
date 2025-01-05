@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.lako.util.Product;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
@@ -47,12 +50,14 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
     private EditText productNameEditText, productDescriptionEditText, productPriceEditText, productSpecificationEditText, productTagsEditText, productStockEditText;
     private Uri productImageUri;
     private DatabaseReference productDatabase;
+    private ProgressBar categoryProgressBar; // Declare ProgressBar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_shop_seller_list_products);
 
+        // Initialize views
         productImageView = findViewById(R.id.imageView51);
         productNameEditText = findViewById(R.id.product_name);
         productDescriptionEditText = findViewById(R.id.product_description);
@@ -60,6 +65,9 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         productSpecificationEditText = findViewById(R.id.product_specification);
         productTagsEditText = findViewById(R.id.product_tags);
         productStockEditText = findViewById(R.id.product_stock);
+
+        // Initialize ProgressBar
+        categoryProgressBar = findViewById(R.id.category_progress_bar);
 
         Button addProductButton = findViewById(R.id.add_list_product_btn);
         productDatabase = FirebaseDatabase.getInstance().getReference("products");
@@ -96,13 +104,23 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
             return;
         }
 
+        // Show ProgressBar while processing
+        categoryProgressBar.setVisibility(View.VISIBLE);
+
         // Generate product ID
         String productId = productDatabase.push().getKey();
         if (productId == null) {
             Toast.makeText(this, "Failed to generate product ID", Toast.LENGTH_SHORT).show();
+            categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
             return;
         }
 
+        // Get the current user's ID (sellerId)
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String sellerId = currentUser != null ? currentUser.getUid() : null;
+
+        // Prepare product data to save
         Map<String, Object> productData = new HashMap<>();
         productData.put("id", productId);
         productData.put("name", productName);
@@ -112,6 +130,12 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         productData.put("tags", productTags);
         productData.put("stock", productStock);
 
+        // Ensure that sellerId is added to the product data
+        if (sellerId != null) {
+            productData.put("sellerId", sellerId);
+        }
+
+        // If the product has an image, upload it and save the URL
         if (productImageUri != null) {
             // Upload image to Firebase Storage
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("product_images").child(productId + ".jpg");
@@ -126,6 +150,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
                             productDatabase.child(productId).setValue(productData)
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
+                                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
 
                                         // Navigate to the Main_Shop_Seller_Products and clear back stack
                                         startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class)
@@ -134,13 +159,16 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
                                     })
                                     .addOnFailureListener(e -> {
                                         Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
                                     });
                         }).addOnFailureListener(e -> {
                             Toast.makeText(this, "Failed to get image URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
                         });
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
                     });
         } else {
             // If no image is selected, store null for the image
@@ -150,6 +178,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
             productDatabase.child(productId).setValue(productData)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
+                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
 
                         // Navigate to the Main_Shop_Seller_Products and clear back stack
                         startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class)
@@ -158,6 +187,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
                     });
         }
     }
@@ -167,6 +197,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class));
     }
 }
+
 
 
 

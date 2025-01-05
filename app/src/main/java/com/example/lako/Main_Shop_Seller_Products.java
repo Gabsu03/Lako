@@ -114,40 +114,56 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
 
     private void loadProducts() {
         productList = new ArrayList<>();
-        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products");
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-        productRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                productList.clear();
-                for (DataSnapshot productSnapshot : snapshot.getChildren()) {
-                    String name = productSnapshot.child("name").getValue(String.class);
-                    String price = productSnapshot.child("price").getValue(String.class);
-                    String image = productSnapshot.child("image").getValue(String.class);
-                    String description = productSnapshot.child("description").getValue(String.class);
-                    String specification = productSnapshot.child("specification").getValue(String.class);
-                    String productId = productSnapshot.getKey();
+        if (currentUser != null) {
+            String sellerId = currentUser.getUid(); // Get the current user's ID
 
-                    // If any data is null, set default values to avoid null showing in the UI
-                    if (name == null) name = "No Name";
-                    if (price == null) price = "No Price";
-                    if (image == null) image = ""; // Handle null image
-                    if (description == null) description = "No Description";
-                    if (specification == null) specification = "No Specification";
+            // Reference to products in Firebase
+            DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products");
 
-                    // Create product object with ID and other details
-                    Product product = new Product(productId, name, price, image, description, specification);
-                    productList.add(product);
-                }
-                productAdapter.notifyDataSetChanged();
-            }
+            // Query to fetch products that belong to the current seller
+            productRef.orderByChild("sellerId").equalTo(sellerId)
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            productList.clear(); // Clear any previous data
+                            for (DataSnapshot productSnapshot : snapshot.getChildren()) {
+                                String name = productSnapshot.child("name").getValue(String.class);
+                                String price = productSnapshot.child("price").getValue(String.class);
+                                String image = productSnapshot.child("image").getValue(String.class);
+                                String description = productSnapshot.child("description").getValue(String.class);
+                                String specification = productSnapshot.child("specification").getValue(String.class);
+                                String productId = productSnapshot.getKey(); // Get product ID
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Main_Shop_Seller_Products.this, "Failed to load products.", Toast.LENGTH_SHORT).show();
-            }
-        });
+                                // If any data is null, set default values to avoid null showing in the UI
+                                if (name == null) name = "No Name";
+                                if (price == null) price = "No Price";
+                                if (image == null) image = ""; // Handle null image
+                                if (description == null) description = "No Description";
+                                if (specification == null) specification = "No Specification";
+
+                                // Create product object with ID and other details
+                                Product product = new Product(productId, name, price, image, description, specification);
+                                productList.add(product); // Add the product to the list
+                            }
+
+                            // Notify the adapter that the data has changed
+                            productAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(Main_Shop_Seller_Products.this, "Failed to load products.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "User not authenticated.", Toast.LENGTH_SHORT).show();
+        }
     }
+
+
 
 
     private void setupRecyclerView() {

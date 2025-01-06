@@ -1,25 +1,17 @@
 package com.example.lako;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.bumptech.glide.Glide;
-import com.example.lako.Fragments.Profile_User;
 import com.example.lako.util.Product;
 import com.example.lako.util.ProductAdapter;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -30,13 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class Main_Shop_Seller_Products extends AppCompatActivity {
 
@@ -50,9 +38,12 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_shop_seller_products);
 
-        // Initialize the ImageView for the profile picture
+        // Initialize views
         profilePictureShop = findViewById(R.id.profile_picture_shop);
         productsRecyclerView = findViewById(R.id.products_display_recycler_vieww);
+
+        // Initialize product list
+        productList = new ArrayList<>();
 
         // Load profile picture and shop data
         loadShopData();
@@ -113,43 +104,35 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
     }
 
     private void loadProducts() {
-        productList = new ArrayList<>();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser != null) {
-            String sellerId = currentUser.getUid(); // Get the current user's ID
+            String sellerId = currentUser.getUid();
 
-            // Reference to products in Firebase
             DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products");
-
-            // Query to fetch products that belong to the current seller
             productRef.orderByChild("sellerId").equalTo(sellerId)
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            productList.clear(); // Clear any previous data
+                            productList.clear(); // Clear previous data
                             for (DataSnapshot productSnapshot : snapshot.getChildren()) {
                                 String name = productSnapshot.child("name").getValue(String.class);
                                 String price = productSnapshot.child("price").getValue(String.class);
                                 String image = productSnapshot.child("image").getValue(String.class);
                                 String description = productSnapshot.child("description").getValue(String.class);
                                 String specification = productSnapshot.child("specification").getValue(String.class);
-                                String productId = productSnapshot.getKey(); // Get product ID
+                                String productId = productSnapshot.getKey();
 
-                                // If any data is null, set default values to avoid null showing in the UI
                                 if (name == null) name = "No Name";
                                 if (price == null) price = "No Price";
-                                if (image == null) image = ""; // Handle null image
+                                if (image == null) image = "";
                                 if (description == null) description = "No Description";
                                 if (specification == null) specification = "No Specification";
 
-                                // Create product object with ID and other details
                                 Product product = new Product(productId, name, price, image, description, specification);
-                                productList.add(product); // Add the product to the list
+                                productList.add(product);
                             }
-
-                            // Notify the adapter that the data has changed
                             productAdapter.notifyDataSetChanged();
                         }
 
@@ -163,12 +146,8 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
         }
     }
 
-
-
-
     private void setupRecyclerView() {
-        // Pass 'true' since it's the seller view
-        productAdapter = new ProductAdapter(productList, true);
+        productAdapter = new ProductAdapter(this, productList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         productsRecyclerView.setLayoutManager(gridLayoutManager);
         productsRecyclerView.setAdapter(productAdapter);
@@ -192,13 +171,10 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
 
     public void categories_btn(View view) {
         Intent intent = new Intent(Main_Shop_Seller_Products.this, Main_Shop_Seller_Categories.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); // Prevent transition animation that may cause layout changes
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
 
-
-
-    // onActivityResult method to handle the result after product deletion
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -206,13 +182,8 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             boolean productDeleted = data.getBooleanExtra("productDeleted", false);
             if (productDeleted) {
-                // If product was deleted, reload the product list
-                loadProducts(); // Refresh the product list from Firebase
+                loadProducts();
             }
         }
     }
-
 }
-
-
-

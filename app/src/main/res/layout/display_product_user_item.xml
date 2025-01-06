@@ -6,16 +6,16 @@ android:background="@drawable/bar"
 android:layout_marginBottom="8dp"
 android:layout_height="254dp">
 
-<com.google.android.material.imageview.ShapeableImageView
-    android:id="@+id/product_image_home"
-    android:layout_width="159dp"
-    android:layout_height="198dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.125"
-    app:shapeAppearanceOverlay="@style/RoundedImage"/>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/product_image_home"
+        android:layout_width="159dp"
+        android:layout_height="198dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.125"
+        app:shapeAppearanceOverlay="@style/RoundedImage"/>
 
 
     <TextView

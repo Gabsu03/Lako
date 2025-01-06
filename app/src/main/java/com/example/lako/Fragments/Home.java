@@ -41,7 +41,7 @@ public class Home extends Fragment {
 
         // Initialize Product List and Adapter
         productList = new ArrayList<>();
-        productAdapter = new ProductAdapter(productList, false); // 'false' for user view
+        productAdapter = new ProductAdapter(getActivity(), productList); // 'getActivity()' provides the context
         productRecyclerView.setAdapter(productAdapter);
 
         // Fetch products from database

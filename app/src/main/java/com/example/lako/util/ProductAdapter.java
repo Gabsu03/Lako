@@ -1,42 +1,35 @@
 package com.example.lako.util;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.lako.Main_Shop_Seller_View_Product;
 import com.example.lako.R;
-import com.google.android.material.imageview.ShapeableImageView;
+import com.example.lako.util.Product;
 
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
-    private List<Product> productList;
-    private Context context;
-    private boolean isSellerView; // Flag to differentiate between seller and user views
+    private final List<Product> productList;
+    private final Context context;
 
-    // Constructor to accept the product list and the view type
-    public ProductAdapter(List<Product> productList, boolean isSellerView) {
+    public ProductAdapter(Context context, List<Product> productList) {
+        this.context = context;
         this.productList = productList;
-        this.isSellerView = isSellerView;
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int layout = isSellerView ? R.layout.display_products_item_seller : R.layout.display_product_user_item;
-        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
-        context = parent.getContext(); // Save context
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_product_user_item, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -44,37 +37,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
 
+        // Bind text data
         holder.productName.setText(product.getName());
         holder.productPrice.setText("₱" + product.getPrice());
 
-        // Loading image with Glide
+        // Load image using Glide
         if (product.getImage() != null && !product.getImage().isEmpty()) {
-            Glide.with(holder.productImage.getContext())
+            Glide.with(context)
                     .load(product.getImage())
-                    .placeholder(R.drawable.image_upload)
-                    .into(holder.productImage);
+                    .placeholder(R.drawable.image_upload) // Placeholder while loading
+                    .into(holder.productImageView);
         } else {
-            holder.productImage.setImageResource(R.drawable.image_upload); // Default image if no URL
-        }
-
-        // Seller view: Navigate to product editing/viewing screen
-        if (isSellerView) {
-            holder.itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(context, Main_Shop_Seller_View_Product.class);
-                intent.putExtra("productId", product.getId()); // Pass product ID to the next activity
-                intent.putExtra("productName", product.getName());
-                intent.putExtra("productPrice", product.getPrice());
-                intent.putExtra("productImage", product.getImage());
-                intent.putExtra("productDescription", product.getDescription());
-                intent.putExtra("productSpecification", product.getSpecification());
-                context.startActivity(intent);
-            });
-        }
-        // User view: Show product details or add to cart
-        else {
-            holder.itemView.setOnClickListener(v -> {
-                Toast.makeText(context, "Product: " + product.getName(), Toast.LENGTH_SHORT).show();
-            });
+            holder.productImageView.setImageResource(R.drawable.image_upload); // Default image
         }
     }
 
@@ -85,14 +59,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView productName, productPrice;
-        ShapeableImageView productImage;
+        ImageView productImageView;
 
-        public ProductViewHolder(View itemView) {
+        public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.Name_of_products);
             productPrice = itemView.findViewById(R.id.product_price_add_item);
-            productImage = itemView.findViewById(R.id.product_image_home);
+            productImageView = itemView.findViewById(R.id.product_image_home);
         }
     }
 }
-

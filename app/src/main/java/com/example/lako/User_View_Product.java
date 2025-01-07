@@ -1,10 +1,12 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -18,6 +20,8 @@ import com.example.lako.util.Product;
 import com.example.lako.util.Productt;
 import com.example.lako.util.Seller;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +33,8 @@ public class User_View_Product extends AppCompatActivity {
     private TextView nameTextView, priceTextView, descriptionTextView, specificationTextView;
     private TextView sellerNameTextView, sellerLocationTextView;
     private ShapeableImageView sellerProfileImageView;
+    private Button wishButton;  // Add this for wishlist button
+    private boolean isWishlisted = false;  // Track the state of the wishlist button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +61,33 @@ public class User_View_Product extends AppCompatActivity {
         sellerLocationTextView = findViewById(R.id.seller_location_display_user);
         sellerProfileImageView = findViewById(R.id.profile_picture_seller_display_user);
 
+        // Initialize wishlist button
+        wishButton = findViewById(R.id.wish_product_display_user);  // Your wishlist button
+
         // Get product ID from the intent
         String productId = getIntent().getStringExtra("product_id");
 
         if (productId != null) {
             fetchProductDetails(productId);
+            checkIfProductInWishlist(productId);  // Check if the product is in the wishlist
         }
+
+        // Set up the wishlist button click listener
+        wishButton.setOnClickListener(v -> {
+            if (!isWishlisted) {
+                // Mark as wishlisted
+                wishButton.setBackgroundResource(R.drawable.wishlist_filled);  // Change to filled star
+                isWishlisted = true;
+                addToWishlist(productId);  // Add the product to wishlist in Firebase
+                Toast.makeText(User_View_Product.this, "Added to Wishlist!", Toast.LENGTH_SHORT).show();
+            } else {
+                // If already wishlisted, unmark it
+                wishButton.setBackgroundResource(R.drawable.wishlist);  // Change to unfilled star
+                isWishlisted = false;
+                removeFromWishlist(productId);  // Remove the product from wishlist in Firebase
+                Toast.makeText(User_View_Product.this, "Removed from Wishlist!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void fetchProductDetails(String productId) {
@@ -82,14 +109,9 @@ public class User_View_Product extends AppCompatActivity {
                             .into(imageView);
 
                     String sellerId = product.getSellerId();
-                    Log.d("Firebase", "Seller ID: " + sellerId);
                     if (sellerId != null) {
                         fetchSellerDetails(sellerId);
-                    } else {
-                        Log.e("Firebase", "Seller ID is null.");
                     }
-                } else {
-                    Log.e("Firebase", "Product data is null.");
                 }
             }
 
@@ -115,7 +137,7 @@ public class User_View_Product extends AppCompatActivity {
                     seller.setProfileImage(snapshot.child("profileImageUrl").getValue(String.class));
 
                     // Update UI with seller details
-                    sellerNameTextView.setText(seller.getName());
+                    sellerNameTextView.setText(seller.getName());  // Ensure this is setting the seller name properly
                     sellerLocationTextView.setText(seller.getLocation());
 
                     // Load updated profile image using Glide
@@ -138,5 +160,85 @@ public class User_View_Product extends AppCompatActivity {
     }
 
 
+    // Check if the product is already in the wishlist
+    private void checkIfProductInWishlist(String productId) {
+        DatabaseReference wishlistRef = FirebaseDatabase.getInstance().getReference("wishlists")
+                .child(getCurrentUserId()).child(productId);
+        wishlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Product is already in the wishlist
+                    wishButton.setBackgroundResource(R.drawable.wishlist_filled);  // Set filled star
+                    isWishlisted = true;
+                } else {
+                    // Product is not in the wishlist
+                    wishButton.setBackgroundResource(R.drawable.wishlist);  // Set unfilled star
+                    isWishlisted = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error checking wishlist: " + error.getMessage());
+            }
+        });
+    }
+
+    private void addToWishlist(String productId) {
+        DatabaseReference wishlistRef = FirebaseDatabase.getInstance().getReference("wishlists")
+                .child(getCurrentUserId());
+        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products").child(productId);
+
+        productRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Productt product = snapshot.getValue(Productt.class);
+                    if (product != null) {
+                        // Store the product in the user's wishlist
+                        wishlistRef.child(productId).setValue(product)
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        // Broadcast to update the WishList fragment
+                                        Intent intent = new Intent("com.yourapp.UPDATE_WISHLIST");
+                                        sendBroadcast(intent);  // Notify all registered receivers
+                                    }
+                                });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error fetching product: " + error.getMessage());
+            }
+        });
+    }
+
+    private void removeFromWishlist(String productId) {
+        DatabaseReference wishlistRef = FirebaseDatabase.getInstance().getReference("wishlists")
+                .child(getCurrentUserId());
+        wishlistRef.child(productId).removeValue()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("Firebase", "Product removed from wishlist");
+                        // Broadcast to update the WishList fragment
+                        Intent intent = new Intent("com.yourapp.UPDATE_WISHLIST");
+                        sendBroadcast(intent);
+                    } else {
+                        Log.e("Firebase", "Failed to remove product from wishlist");
+                    }
+                });
+    }
+
+    // Get current user ID
+    private String getCurrentUserId() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        return user != null ? user.getUid() : null;  // Return null if no user is logged in
+    }
 }
+
+
+
 

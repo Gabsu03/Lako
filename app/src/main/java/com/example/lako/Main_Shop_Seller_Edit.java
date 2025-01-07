@@ -82,6 +82,7 @@ public class Main_Shop_Seller_Edit extends AppCompatActivity {
                             .load(profileImageUrl)
                             .placeholder(R.drawable.image_upload)  // Placeholder image
                             .error(R.drawable.image_upload)  // Error image
+                            .centerCrop()
                             .into(profileImageView);
                 }
             } else {

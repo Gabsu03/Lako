@@ -147,11 +147,26 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        productAdapter = new ProductAdapter(this, productList);
+        productAdapter = new ProductAdapter(this, productList, new ProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Product product) {
+                // Navigate to the View Product activity
+                Intent intent = new Intent(Main_Shop_Seller_Products.this, Main_Shop_Seller_View_Product.class);
+                intent.putExtra("productId", product.getId());
+                intent.putExtra("productName", product.getName());
+                intent.putExtra("productPrice", product.getPrice());
+                intent.putExtra("productImage", product.getImage());
+                intent.putExtra("productDescription", product.getDescription());
+                intent.putExtra("productSpecification", product.getSpecification());
+                startActivity(intent);
+            }
+        });
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         productsRecyclerView.setLayoutManager(gridLayoutManager);
         productsRecyclerView.setAdapter(productAdapter);
     }
+
 
     public void edit_button_shop_seller(View view) {
         startActivity(new Intent(Main_Shop_Seller_Products.this, Main_Shop_Seller_Edit.class));

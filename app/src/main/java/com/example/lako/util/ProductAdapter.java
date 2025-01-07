@@ -20,10 +20,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private final List<Product> productList;
     private final Context context;
+    private final OnItemClickListener onItemClickListener;
 
-    public ProductAdapter(Context context, List<Product> productList) {
+    // Define the OnItemClickListener interface
+    public interface OnItemClickListener {
+        void onItemClick(Product product);
+    }
+
+    // Updated constructor with optional listener
+    public ProductAdapter(Context context, List<Product> productList, OnItemClickListener onItemClickListener) {
         this.context = context;
         this.productList = productList;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -50,6 +58,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         } else {
             holder.productImageView.setImageResource(R.drawable.image_upload); // Default image
         }
+
+        // Set item click listener if it's provided
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(product);
+            }
+        });
     }
 
     @Override
@@ -69,3 +84,4 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
     }
 }
+

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,9 +40,15 @@ public class Home extends Fragment {
         productRecyclerView = view.findViewById(R.id.user_products_display_recycler_view);
         productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        // Set GridLayoutManager with 2 columns
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        productRecyclerView.setLayoutManager(gridLayoutManager);
+
+
         // Initialize Product List and Adapter
         productList = new ArrayList<>();
-        productAdapter = new ProductAdapter(getActivity(), productList); // 'getActivity()' provides the context
+        productAdapter = new ProductAdapter(getActivity(), productList, null);
+        // 'getActivity()' provides the context
         productRecyclerView.setAdapter(productAdapter);
 
         // Fetch products from database

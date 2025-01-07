@@ -114,24 +114,6 @@
         app:layout_constraintVertical_bias="0.47"
         tools:ignore="OnClick" />
 
-    <Button
-        android:id="@+id/upload_photoo_btn"
-        android:layout_width="130dp"
-        android:layout_height="39dp"
-        android:background="@drawable/background_shop"
-        android:drawableLeft="@drawable/upload"
-        android:text="Upload Photo"
-        android:textSize="10dp"
-        android:paddingLeft="20dp"
-        android:fontFamily="@font/koho_medium"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintHorizontal_bias="0.245"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.198" />
-
 
     <Button
         android:id="@+id/save_btn_profile_seller"
@@ -161,8 +143,8 @@
         app:shapeAppearanceOverlay="@style/CircularShape"/>
 
 
-    <ImageView
-        android:id="@+id/edit_profile_seller_btn"
+    <Button
+        android:id="@+id/upload_photoo_btn"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/cameraa"

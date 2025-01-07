@@ -114,11 +114,6 @@ public class Profile_Settings extends AppCompatActivity {
             startActivity(new Intent(Profile_Settings.this, Profile_User_Received.class));
         });
 
-        // MY SHOP LINKED
-        Button my_shop_btn = findViewById(R.id.my_shop_profile_user_settings);
-        my_shop_btn.setOnClickListener(v -> {
-            startActivity(new Intent(Profile_Settings.this, Profile_My_Shop_Start.class));
-        });
     }
 
     // Handle the "up" arrow or back button

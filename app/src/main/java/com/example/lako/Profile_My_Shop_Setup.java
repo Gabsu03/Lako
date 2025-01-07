@@ -18,6 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Profile_My_Shop_Setup extends AppCompatActivity {
 
     private EditText shopNameInput, shopDescriptionInput, shopLocationInput;
@@ -73,18 +76,14 @@ public class Profile_My_Shop_Setup extends AppCompatActivity {
 
         DatabaseReference allShopsReference = FirebaseDatabase.getInstance().getReference("shops");
 
-        // Check if the shop name already exists
         allShopsReference.orderByChild("shopName").equalTo(shopName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // Shop name already exists
                     Toast.makeText(Profile_My_Shop_Setup.this, "Shop name already exists. Please choose another name.", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Shop name is unique, proceed
                     saveDataToFirebase();
 
-                    // Pass data to the next activity
                     Intent intent = new Intent(Profile_My_Shop_Setup.this, Profile_My_Shop_Verify.class);
                     intent.putExtra("SHOP_NAME", shopName);
                     intent.putExtra("SHOP_DESCRIPTION", shopDescription);
@@ -100,20 +99,35 @@ public class Profile_My_Shop_Setup extends AppCompatActivity {
         });
     }
 
+
     private void saveDataToFirebase() {
         String shopName = shopNameInput.getText().toString().trim();
         String shopDescription = shopDescriptionInput.getText().toString().trim();
         String shopLocation = shopLocationInput.getText().toString().trim();
 
         if (currentUser != null) {
-            databaseReference.child("shopName").setValue(shopName);
-            databaseReference.child("shopDescription").setValue(shopDescription);
-            databaseReference.child("shopLocation").setValue(shopLocation);
-            Toast.makeText(this, "Data saved successfully!", Toast.LENGTH_SHORT).show();
+            String userId = currentUser.getUid(); // Use UID as sellerId
+
+            // Save seller details to Firebase
+            Map<String, Object> shopDetails = new HashMap<>();
+            shopDetails.put("sellerId", userId); // Set sellerId as UID
+            shopDetails.put("shopName", shopName);
+            shopDetails.put("shopDescription", shopDescription);
+            shopDetails.put("shopLocation", shopLocation);
+
+            databaseReference.updateChildren(shopDetails)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(this, "Shop setup complete!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "Failed to save shop details. Please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         } else {
-            Toast.makeText(this, "Failed to save data. User not authenticated.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not authenticated.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void loadDataFromFirebase() {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

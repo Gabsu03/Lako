@@ -1,5 +1,6 @@
 package com.example.lako.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lako.R;
+import com.example.lako.User_View_Product;
 import com.example.lako.util.Product;
 import com.example.lako.util.ProductAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -47,11 +49,19 @@ public class Home extends Fragment {
 
         // Initialize Product List and Adapter
         productList = new ArrayList<>();
-        productAdapter = new ProductAdapter(getActivity(), productList, null);
-        // 'getActivity()' provides the context
+        productAdapter = new ProductAdapter(getActivity(), productList, new ProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Product product) {
+                // Handle product click and start User_View_Product activity
+                Intent intent = new Intent(getActivity(), User_View_Product.class);
+                intent.putExtra("product_id", product.getId());  // Pass product ID to the activity
+                startActivity(intent);
+            }
+        });
+
         productRecyclerView.setAdapter(productAdapter);
 
-        // Fetch products from database
+        // Fetch products from Firebase
         fetchProductsFromFirebase();
 
         return view;

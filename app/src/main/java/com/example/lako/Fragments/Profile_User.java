@@ -32,8 +32,10 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Profile_User extends Fragment {
 
@@ -113,26 +115,41 @@ public class Profile_User extends Fragment {
         }
 
         DatabaseReference shopRef = FirebaseDatabase.getInstance().getReference("Shops").child(currentUser.getUid());
-        shopRef.get().addOnCompleteListener(shopTask -> {
-            if (shopTask.isSuccessful()) {
-                DataSnapshot shopSnapshot = shopTask.getResult();
-                boolean hasSellerAccount = shopSnapshot.exists() && Boolean.TRUE.equals(shopSnapshot.child("sellerAccount").getValue(Boolean.class));
-                Intent intent;
-                if (hasSellerAccount) {
-                    // Navigate to seller profile
-                    intent = new Intent(getActivity(), Main_Shop_Seller_Products.class);
+
+        // Add a real-time listener to check the shop data
+        shopRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot shopSnapshot) {
+                // Check if the shop data exists
+                if (shopSnapshot.exists()) {
+                    Boolean isSellerAccount = shopSnapshot.child("sellerAccount").getValue(Boolean.class);
+
+                    if (Boolean.TRUE.equals(isSellerAccount)) {
+                        // If the shop exists and is a seller account, proceed to seller profile
+                        Intent intent = new Intent(getActivity(), Main_Shop_Seller_Products.class);
+                        startActivity(intent);
+                    } else {
+                        // If the shop data exists but is not marked as sellerAccount, redirect to setup
+                        Toast.makeText(getActivity(), "Shop setup incomplete. Redirecting to setup.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), Profile_My_Shop_Start.class);
+                        startActivity(intent);
+                    }
                 } else {
-                    // Navigate to shop setup
-                    intent = new Intent(getActivity(), Profile_My_Shop_Start.class);
+                    // If the shop data does not exist, redirect to setup
+                    Toast.makeText(getActivity(), "No shop data found. Redirecting to shop setup.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), Profile_My_Shop_Start.class);
+                    startActivity(intent);
                 }
-                startActivity(intent);
-            } else {
-                Toast.makeText(getActivity(), "Error checking shop data", Toast.LENGTH_SHORT).show();
             }
-        }).addOnFailureListener(e -> {
-            Toast.makeText(getActivity(), "Failed to connect to database: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "Failed to connect to database: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
         });
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

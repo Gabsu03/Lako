@@ -167,9 +167,10 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
         productsRecyclerView.setAdapter(productAdapter);
     }
 
-
     public void edit_button_shop_seller(View view) {
-        startActivity(new Intent(Main_Shop_Seller_Products.this, Main_Shop_Seller_Edit.class));
+        Intent intent = new Intent(Main_Shop_Seller_Products.this, Main_Shop_Seller_Edit.class);
+        // Add a request code to track this activity
+        startActivityForResult(intent, 1001);
     }
 
     public void orders(View view) {
@@ -194,6 +195,11 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == 1001 && resultCode == RESULT_OK) {
+            // Reload shop data to reflect edits made in Main_Shop_Seller_Edit
+            loadShopData();
+        }
+
         if (resultCode == RESULT_OK) {
             boolean productDeleted = data.getBooleanExtra("productDeleted", false);
             if (productDeleted) {
@@ -202,3 +208,4 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
         }
     }
 }
+

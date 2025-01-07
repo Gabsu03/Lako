@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,8 @@ public class Main_Shop_Seller_Edit extends AppCompatActivity {
     private DatabaseReference shopsRef;
     private StorageReference storageReference;
 
+    private EditText editTextNameOfShop, editTextDescriptionOfSellerShop;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,19 +61,46 @@ public class Main_Shop_Seller_Edit extends AppCompatActivity {
         profileImageView = findViewById(R.id.profile_picture_shop);
         uploadButton = findViewById(R.id.upload_photoo_btn);
         saveButton = findViewById(R.id.save_btn_profile_seller);
+        editTextNameOfShop = findViewById(R.id.name_of_shopppp);
+        editTextDescriptionOfSellerShop = findViewById(R.id.description_of_seller_shopppp);
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         shopsRef = firebaseDatabase.getReference("shops");
 
-        // Load existing profile image
+        // Load existing profile image and details
         loadProfileImage();
+        loadProfileDetails();
 
         // Set up upload button to allow gallery or camera selection
         uploadButton.setOnClickListener(v -> openGalleryOrCamera());
     }
 
-    // Load existing profile image from Firebase using Glide
+    private void loadProfileDetails() {
+        String userId = firebaseAuth.getCurrentUser().getUid();
+
+        // Load seller name
+        shopsRef.child(userId).child("name").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String shopName = task.getResult().getValue(String.class);
+                if (shopName != null) {
+                    editTextNameOfShop.setText(shopName);
+                }
+            }
+        });
+
+        // Load seller description
+        shopsRef.child(userId).child("description").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String description = task.getResult().getValue(String.class);
+                if (description != null) {
+                    editTextDescriptionOfSellerShop.setText(description);
+                }
+            }
+        });
+    }
+
     private void loadProfileImage() {
         String userId = firebaseAuth.getCurrentUser().getUid();
         shopsRef.child(userId).child("profileImageUrl").get().addOnCompleteListener(task -> {
@@ -91,7 +121,6 @@ public class Main_Shop_Seller_Edit extends AppCompatActivity {
         });
     }
 
-    // Open gallery or camera for selecting an image
     private void openGalleryOrCamera() {
         CharSequence options[] = new CharSequence[]{"Take Photo", "Choose from Gallery", "Cancel"};
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
@@ -124,8 +153,6 @@ public class Main_Shop_Seller_Edit extends AppCompatActivity {
         }
     }
 
-    // Upload the profile picture to Firebase Storage and save URL in the database
-    // Upload the profile picture to Firebase Storage and save URL in the database
     private void uploadProfilePicture() {
         if (imageUri != null) {
             String userId = firebaseAuth.getCurrentUser().getUid();
@@ -137,11 +164,10 @@ public class Main_Shop_Seller_Edit extends AppCompatActivity {
                     // Save image URL in Firebase Database
                     shopsRef.child(userId).child("profileImageUrl").setValue(imageUrl).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            // Update the ImageView with the new image using Glide
                             Glide.with(Main_Shop_Seller_Edit.this)
                                     .load(imageUrl)
-                                    .placeholder(R.drawable.image_upload)  // Placeholder image
-                                    .error(R.drawable.image_upload)  // Error image
+                                    .placeholder(R.drawable.image_upload)
+                                    .error(R.drawable.image_upload)
                                     .centerCrop()
                                     .into(profileImageView);
                             Toast.makeText(Main_Shop_Seller_Edit.this, "Profile picture updated!", Toast.LENGTH_SHORT).show();
@@ -156,27 +182,35 @@ public class Main_Shop_Seller_Edit extends AppCompatActivity {
         }
     }
 
-    // Save the profile picture information and proceed
     public void save_button_edit_profile_seller(View view) {
         String userId = firebaseAuth.getCurrentUser().getUid();
+        String updatedName = editTextNameOfShop.getText().toString();
+        String updatedDescription = editTextDescriptionOfSellerShop.getText().toString();
+
+        // Save name and description
+        shopsRef.child(userId).child("name").setValue(updatedName);
+        shopsRef.child(userId).child("description").setValue(updatedDescription);
+
         shopsRef.child(userId).child("profileImageUrl").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 String profileImageUrl = task.getResult().getValue(String.class);
 
-                // Navigate to the loading screen first
+                // Send result back indicating profile updated
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("profileUpdated", true);
+                setResult(RESULT_OK, resultIntent);
+
+                // Navigate to loading screen
                 Intent intent = new Intent(Main_Shop_Seller_Edit.this, Main_Shop_Seller_Edit_Profile_Loading_Screen.class);
                 startActivity(intent);
 
-                // After loading, send the updated profile image URL to Main_Shop_Seller_Products
-                new Handler().postDelayed(() -> {
-                    Intent nextIntent = new Intent(Main_Shop_Seller_Edit.this, Main_Shop_Seller_Products.class);
-                    nextIntent.putExtra("profileImageUrl", profileImageUrl);
-                    startActivity(nextIntent);
-                }, 2000); // Delay before navigating
+                // Navigate back to products screen after loading
+                new Handler().postDelayed(() -> finish(), 2000);
             } else {
                 Toast.makeText(Main_Shop_Seller_Edit.this, "Error loading profile image URL", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }
 

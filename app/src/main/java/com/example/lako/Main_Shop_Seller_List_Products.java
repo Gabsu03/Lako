@@ -118,7 +118,12 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         // Get the current user's ID (sellerId)
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        String sellerId = currentUser != null ? currentUser.getUid() : null;
+        if (currentUser == null) {
+            Toast.makeText(this, "You need to log in before adding products.", Toast.LENGTH_SHORT).show();
+            categoryProgressBar.setVisibility(View.GONE);
+            return;
+        }
+        String sellerId = currentUser.getUid();
 
         // Prepare product data to save
         Map<String, Object> productData = new HashMap<>();
@@ -129,11 +134,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         productData.put("specification", productSpecification);
         productData.put("tags", productTags);
         productData.put("stock", productStock);
-
-        // Ensure that sellerId is added to the product data
-        if (sellerId != null) {
-            productData.put("sellerId", sellerId);
-        }
+        productData.put("sellerId", sellerId); // Add sellerId to product data
 
         // If the product has an image, upload it and save the URL
         if (productImageUri != null) {
@@ -191,6 +192,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
                     });
         }
     }
+
 
 
     public void my_shop_list_product_back_btn(View view) {

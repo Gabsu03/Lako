@@ -166,6 +166,11 @@ public class Main_Shop_Seller_Products extends AppCompatActivity {
         productsRecyclerView.setLayoutManager(gridLayoutManager);
         productsRecyclerView.setAdapter(productAdapter);
     }
+    public void sellerMessage(View view) {
+        Intent intent = new Intent(Main_Shop_Seller_Products.this, SellerChatHistory.class);
+        startActivity(intent);
+    }
+
 
     public void edit_button_shop_seller(View view) {
         Intent intent = new Intent(Main_Shop_Seller_Products.this, Main_Shop_Seller_Edit.class);

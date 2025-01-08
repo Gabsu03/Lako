@@ -194,6 +194,7 @@
         android:layout_height="50dp"
         android:background="@drawable/reset_email_btn"
         android:drawableStart="@drawable/chat_icon"
+        android:onClick="sellerMessage"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"

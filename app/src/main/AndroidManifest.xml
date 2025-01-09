@@ -20,6 +20,9 @@
         android:theme="@style/Theme.Lako"
         tools:targetApi="31">
         <activity
+            android:name=".User_View_Checkout"
+            android:exported="false" />
+        <activity
             android:name=".User_View_Product_Cart"
             android:exported="false" />
         <activity

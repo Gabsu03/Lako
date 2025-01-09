@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class User_View_Product_Cart extends AppCompatActivity {
 
     private ImageView imageView;
@@ -144,11 +146,13 @@ public class User_View_Product_Cart extends AppCompatActivity {
             editQuantity.setText(String.valueOf(++quantity));
         });
 
-        // Add to Cart Button Logic
+
         addToCartButton.setOnClickListener(v -> {
             int quantity = Integer.parseInt(editQuantity.getText().toString());
-            proceedToPayment(productId, quantity);
+            addToCart(productId, quantity); // Call the newly created method
         });
+
+
 
         // Set up the wishlist button click listener
         wishButton.setOnClickListener(v -> {
@@ -250,10 +254,6 @@ public class User_View_Product_Cart extends AppCompatActivity {
     }
 
     private void proceedToPayment(String productId, int quantity) {
-        Intent paymentIntent = new Intent(this, ADD_TO_CART.class);
-        paymentIntent.putExtra("product_id", productId);
-        paymentIntent.putExtra("quantity", quantity);
-        startActivity(paymentIntent);
     }
 
 
@@ -328,6 +328,35 @@ public class User_View_Product_Cart extends AppCompatActivity {
                     }
                 });
     }
+
+    private void addToCart(String productId, int quantity) {
+        String userId = getCurrentUserId(); // Fetch the current user's ID
+        if (userId == null) {
+            Toast.makeText(this, "Please log in to add items to your cart.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("carts").child(userId);
+
+        // Create a HashMap for cart item details
+        HashMap<String, Object> cartItem = new HashMap<>();
+        cartItem.put("productId", productId);
+        cartItem.put("quantity", quantity);
+        cartItem.put("price", productPrice); // Assuming productPrice is already fetched and stored
+        cartItem.put("image", productImageUrl); // Assuming productImageUrl is already fetched and stored
+        cartItem.put("name", nameTextView.getText().toString()); // Product name from the TextView
+
+        // Add or update the item in the cart
+        cartRef.child(productId).setValue(cartItem)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Added to Cart!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Failed to add to cart. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     // Get current user ID
     private String getCurrentUserId() {

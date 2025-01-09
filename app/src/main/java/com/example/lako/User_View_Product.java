@@ -58,8 +58,6 @@ public class User_View_Product extends AppCompatActivity {
         });
 
 
-
-
         // Initialize product views
         imageView = findViewById(R.id.image_product_display);
         nameTextView = findViewById(R.id.name_product_display_user);

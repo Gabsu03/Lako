@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,15 @@ public class User_View_Product_Cart extends AppCompatActivity {
     private Button wishButton;  // Add this for wishlist button
     private boolean isWishlisted = false;  // Track the state of the wishlist button
 
+    // Additional views for product quantity and add to cart functionality
+    private EditText editQuantity;
+    private Button buttonDecrease, buttonIncrease;
+
+    private TextView addToCartButton;
+
+    private String productId, productImageUrl, productPrice;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +67,6 @@ public class User_View_Product_Cart extends AppCompatActivity {
             startActivity(intent);
         });
 
-
-
-
         // Initialize product views
         imageView = findViewById(R.id.image_product_display);
         nameTextView = findViewById(R.id.name_product_display_user);
@@ -75,9 +82,14 @@ public class User_View_Product_Cart extends AppCompatActivity {
         // Initialize wishlist button
         wishButton = findViewById(R.id.wish_product_display_user);  // Your wishlist button
 
-        // Get product ID from the intent
-        String productId = getIntent().getStringExtra("product_id");
+        // Initialize quantity buttons and add to cart button
+        editQuantity = findViewById(R.id.edit_quantity);
+        buttonDecrease = findViewById(R.id.button_decrease);
+        buttonIncrease = findViewById(R.id.button_increase);
+        addToCartButton = findViewById(R.id.add_to_cartt);
 
+        // Get product ID from the intent
+        productId = getIntent().getStringExtra("product_id");
 
         if (productId != null) {
             // Fetch product details
@@ -119,11 +131,24 @@ public class User_View_Product_Cart extends AppCompatActivity {
             Toast.makeText(this, "Product ID not found.", Toast.LENGTH_SHORT).show();
         }
 
+        // Quantity Buttons Logic
+        buttonDecrease.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(editQuantity.getText().toString());
+            if (quantity > 1) {
+                editQuantity.setText(String.valueOf(--quantity));
+            }
+        });
 
-        if (productId != null) {
-            fetchProductDetails(productId);
-            checkIfProductInWishlist(productId);  // Check if the product is in the wishlist
-        }
+        buttonIncrease.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(editQuantity.getText().toString());
+            editQuantity.setText(String.valueOf(++quantity));
+        });
+
+        // Add to Cart Button Logic
+        addToCartButton.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(editQuantity.getText().toString());
+            proceedToPayment(productId, quantity);
+        });
 
         // Set up the wishlist button click listener
         wishButton.setOnClickListener(v -> {
@@ -149,36 +174,52 @@ public class User_View_Product_Cart extends AppCompatActivity {
         productRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Productt product = snapshot.getValue(Productt.class);
-                if (product != null) {
-                    nameTextView.setText(product.getName());
-                    priceTextView.setText("₱" + product.getPrice());
-                    descriptionTextView.setText(product.getDescription());
-                    specificationTextView.setText(product.getSpecification());
+                if (snapshot.exists()) {
+                    Productt product = snapshot.getValue(Productt.class);
+                    if (product != null) {
+                        bindProductDetails(product);
 
-                    Glide.with(User_View_Product_Cart.this)
-                            .load(product.getImage())
-                            .placeholder(R.drawable.image_upload)
-                            .into(imageView);
+                        // Bind to cart-specific views
+                        ImageView imageProductCart = findViewById(R.id.image_product_cart);
+                        TextView priceCart = findViewById(R.id.price_cart);
 
-                    String sellerId = product.getSellerId();
-                    if (sellerId != null) {
-                        fetchSellerDetails(sellerId);
+                        Glide.with(User_View_Product_Cart.this)
+                                .load(product.getImage()) // Use productImageUrl here if needed
+                                .placeholder(R.drawable.image_upload)
+                                .into(imageProductCart);
+
+                        priceCart.setText("₱" + product.getPrice()); // Use productPrice here if needed
                     }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error fetching product: " + error.getMessage());
+                Log.e("FirebaseError", "Failed to fetch product details: " + error.getMessage());
             }
         });
     }
 
+
+    private void bindProductDetails(Productt product) {
+        nameTextView.setText(product.getName());
+        priceTextView.setText("₱" + product.getPrice());
+        descriptionTextView.setText(product.getDescription());
+        specificationTextView.setText(product.getSpecification());
+
+        Glide.with(User_View_Product_Cart.this)
+                .load(product.getImage())
+                .placeholder(R.drawable.image_upload)
+                .into(imageView);
+
+        productPrice = product.getPrice(); // Store product price
+        productImageUrl = product.getImage(); // Store product image URL
+    }
+
+
     private void fetchSellerDetails(String sellerId) {
         DatabaseReference sellerRef = FirebaseDatabase.getInstance().getReference("shops").child(sellerId);
 
-        // Use addValueEventListener for real-time updates
         sellerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -189,16 +230,12 @@ public class User_View_Product_Cart extends AppCompatActivity {
                     seller.setLocation(snapshot.child("shopLocation").getValue(String.class));
                     seller.setProfileImage(snapshot.child("profileImageUrl").getValue(String.class));
 
-                    // Update UI with seller details
-                    sellerNameTextView.setText(seller.getName());  // Ensure this is setting the seller name properly
+                    sellerNameTextView.setText(seller.getName());
                     sellerLocationTextView.setText(seller.getLocation());
 
-                    // Load updated profile image using Glide
                     Glide.with(User_View_Product_Cart.this)
                             .load(seller.getProfileImage())
-                            .placeholder(R.drawable.image_upload)  // Placeholder image
-                            .error(R.drawable.image_upload)  // Error image
-                            .centerCrop()
+                            .placeholder(R.drawable.image_upload)
                             .into(sellerProfileImageView);
                 } else {
                     Log.e("Firebase", "Seller not found for ID: " + sellerId);
@@ -210,6 +247,13 @@ public class User_View_Product_Cart extends AppCompatActivity {
                 Log.e("Firebase", "Error fetching seller: " + error.getMessage());
             }
         });
+    }
+
+    private void proceedToPayment(String productId, int quantity) {
+        Intent paymentIntent = new Intent(this, ADD_TO_CART.class);
+        paymentIntent.putExtra("product_id", productId);
+        paymentIntent.putExtra("quantity", quantity);
+        startActivity(paymentIntent);
     }
 
 
@@ -290,5 +334,10 @@ public class User_View_Product_Cart extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return user != null ? user.getUid() : null;  // Return null if no user is logged in
 
+    }
+
+    public void cancel_cart_btn(android.view.View view) {
+        // Navigate back to the previous screen
+        finish();
     }
 }

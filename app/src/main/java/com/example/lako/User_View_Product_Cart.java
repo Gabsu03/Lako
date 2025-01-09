@@ -16,7 +16,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
-import com.example.lako.util.Product;
 import com.example.lako.util.Productt;
 import com.example.lako.util.Seller;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -28,7 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class User_View_Product extends AppCompatActivity {
+public class User_View_Product_Cart extends AppCompatActivity {
+
     private ImageView imageView;
     private TextView nameTextView, priceTextView, descriptionTextView, specificationTextView;
     private TextView sellerNameTextView, sellerLocationTextView;
@@ -40,7 +40,7 @@ public class User_View_Product extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_user_view_product);
+        setContentView(R.layout.activity_user_view_product_cart);
 
         // Button back click listener
         Button backButton = findViewById(R.id.view_product_back_btn);
@@ -66,23 +66,6 @@ public class User_View_Product extends AppCompatActivity {
         priceTextView = findViewById(R.id.price_product_display_user);
         descriptionTextView = findViewById(R.id.description_product_display_user);
         specificationTextView = findViewById(R.id.specification_product_display_user);
-        Button addToCartButton = findViewById(R.id.add_to_cart_btn);
-
-
-        // Add click listener to the button
-        addToCartButton.setOnClickListener(v -> {
-            Intent intent = new Intent(User_View_Product.this, User_View_Product_Cart.class);
-
-            // Pass necessary data, like product ID, to the next activity
-            String productId = getIntent().getStringExtra("product_id");
-            if (productId != null) {
-                intent.putExtra("product_id", productId);
-            }
-
-            // Start the User_View_Product_Cart activity
-            startActivity(intent);
-        });
-
 
         // Initialize seller views
         sellerNameTextView = findViewById(R.id.seller_name_display_user);
@@ -114,11 +97,11 @@ public class User_View_Product extends AppCompatActivity {
                             // Set up the button to navigate to the seller's profile
                             visitProfileBtn.setOnClickListener(v -> {
                                 if (sellerId != null && !sellerId.isEmpty()) {
-                                    Intent intent = new Intent(User_View_Product.this, Seller_View_Profile.class);
+                                    Intent intent = new Intent(User_View_Product_Cart.this, Seller_View_Profile.class);
                                     intent.putExtra("sellerId", sellerId); // Pass the sellerId to the next activity
                                     startActivity(intent);
                                 } else {
-                                    Toast.makeText(User_View_Product.this, "Seller details not available.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(User_View_Product_Cart.this, "Seller details not available.", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -149,13 +132,13 @@ public class User_View_Product extends AppCompatActivity {
                 wishButton.setBackgroundResource(R.drawable.wishlist_filled);  // Change to filled star
                 isWishlisted = true;
                 addToWishlist(productId);  // Add the product to wishlist in Firebase
-                Toast.makeText(User_View_Product.this, "Added to Wishlist!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(User_View_Product_Cart.this, "Added to Wishlist!", Toast.LENGTH_SHORT).show();
             } else {
                 // If already wishlisted, unmark it
                 wishButton.setBackgroundResource(R.drawable.wishlist);  // Change to unfilled star
                 isWishlisted = false;
                 removeFromWishlist(productId);  // Remove the product from wishlist in Firebase
-                Toast.makeText(User_View_Product.this, "Removed from Wishlist!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(User_View_Product_Cart.this, "Removed from Wishlist!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -173,7 +156,7 @@ public class User_View_Product extends AppCompatActivity {
                     descriptionTextView.setText(product.getDescription());
                     specificationTextView.setText(product.getSpecification());
 
-                    Glide.with(User_View_Product.this)
+                    Glide.with(User_View_Product_Cart.this)
                             .load(product.getImage())
                             .placeholder(R.drawable.image_upload)
                             .into(imageView);
@@ -211,7 +194,7 @@ public class User_View_Product extends AppCompatActivity {
                     sellerLocationTextView.setText(seller.getLocation());
 
                     // Load updated profile image using Glide
-                    Glide.with(User_View_Product.this)
+                    Glide.with(User_View_Product_Cart.this)
                             .load(seller.getProfileImage())
                             .placeholder(R.drawable.image_upload)  // Placeholder image
                             .error(R.drawable.image_upload)  // Error image
@@ -306,10 +289,6 @@ public class User_View_Product extends AppCompatActivity {
     private String getCurrentUserId() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return user != null ? user.getUid() : null;  // Return null if no user is logged in
+
     }
-
 }
-
-
-
-

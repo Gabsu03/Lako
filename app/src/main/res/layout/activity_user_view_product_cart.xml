@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".User_View_Product">
+    tools:context=".User_View_Product_Cart">
 
     <ImageView
         android:id="@+id/imageView11"
@@ -329,7 +329,7 @@
         app:layout_constraintStart_toStartOf="@+id/imageView57"
         app:layout_constraintTop_toTopOf="@+id/imageView57"
         app:layout_constraintVertical_bias="0.5" />
-    
+
 
     <Button
         android:id="@+id/add_to_cart_btn"
@@ -381,5 +381,156 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="OnClick" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transaprent_white"
+        android:elevation="7dp"/>
+
+    <ImageView
+        android:id="@+id/imageView61"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@drawable/bg_cart"
+        android:elevation="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_to_cart_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView41"
+        android:layout_width="111dp"
+        android:layout_height="95dp"
+        android:background="@drawable/image_cart_bg"
+        android:elevation="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView61"
+        app:layout_constraintVertical_bias="0.339" />
+
+    <ImageView
+        android:id="@+id/image_product_cart"
+        android:layout_width="80dp"
+        android:layout_height="95dp"
+        android:elevation="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView41"
+        app:layout_constraintEnd_toEndOf="@+id/imageView41"
+        app:layout_constraintStart_toStartOf="@+id/imageView41"
+        app:layout_constraintTop_toTopOf="@+id/imageView41" />
+
+    <TextView
+        android:id="@+id/price_cart"
+        android:layout_width="200dp"
+        android:layout_height="26dp"
+        android:fontFamily="@font/jost_medium"
+        android:textAlignment="textStart"
+        android:textColor="@color/C35314"
+        android:textSize="18dp"
+        android:elevation="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView41"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toEndOf="@+id/imageView41"
+        app:layout_constraintTop_toTopOf="@+id/imageView41"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <!-- Quantity Selector -->
+    <LinearLayout
+        android:id="@+id/quantity_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_brown"
+        android:gravity="center"
+        android:elevation="11dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView41"
+        app:layout_constraintEnd_toEndOf="@+id/price_cart"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toEndOf="@+id/imageView41"
+        app:layout_constraintTop_toBottomOf="@+id/price_cart">
+
+        <Button
+            android:id="@+id/button_decrease"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/cart_shape_minus"
+            android:text="-"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:id="@+id/edit_quantity"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:background="@drawable/cart_shape_amount"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLines="1"
+            android:text="1"
+            android:textColor="@color/darkbrown" />
+
+        <Button
+            android:id="@+id/button_increase"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/cart_shape_minus"
+            android:text="+"
+            android:textColor="@color/darkbrown" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/imageView71"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/cart_btn"
+        android:elevation="20dp"
+        android:text="Add to Cart"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/add_to_cart_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.574"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quantity_selector"
+        app:layout_constraintVertical_bias="0.202" />
+
+    <TextView
+        android:id="@+id/add_to_cartt"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:elevation="20dp"
+        android:fontFamily="@font/koho_bold"
+        android:text="Add to Cart"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView71"
+        app:layout_constraintEnd_toEndOf="@+id/imageView71"
+        app:layout_constraintStart_toStartOf="@+id/imageView71"
+        app:layout_constraintTop_toTopOf="@+id/imageView71" />
+
+    <TextView
+        android:id="@+id/cancel_cart_btn"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:elevation="11dp"
+        android:fontFamily="@font/jost_regular"
+        android:onClick="cancel_cart_btn"
+        android:text="Cancel"
+        android:textAlignment="center"
+        android:textColor="@color/darkbrown"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView61"
+        app:layout_constraintHorizontal_bias="0.941"
+        app:layout_constraintStart_toStartOf="@+id/imageView61"
+        app:layout_constraintTop_toTopOf="@+id/imageView61"
+        app:layout_constraintVertical_bias="0.091"
+        tools:ignore="OnClick" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

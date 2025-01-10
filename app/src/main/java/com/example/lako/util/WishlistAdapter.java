@@ -47,33 +47,66 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
     public void onBindViewHolder(@NonNull WishlistViewHolder holder, int position) {
         Productt product = productList.get(position);
 
+        // Set product name and price
         holder.productNameTextView.setText(product.getName());
         holder.productPriceTextView.setText("₱" + product.getPrice());
 
+        // Set product image
         Glide.with(context)
                 .load(product.getImage())
                 .placeholder(R.drawable.image_upload)
                 .into(holder.productImageView);
+
+        // Fetch and display seller name
+        fetchSellerName(product.getSellerId(), holder.productNameShopTextView);
     }
+
+    private void fetchSellerName(String sellerId, TextView shopNameTextView) {
+        DatabaseReference sellerRef = FirebaseDatabase.getInstance().getReference("sellers").child(sellerId);
+        sellerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String sellerName = snapshot.child("name").getValue(String.class);
+                    if (sellerName != null) {
+                        shopNameTextView.setText(sellerName);
+                    } else {
+                        shopNameTextView.setText("Unknown Seller");
+                    }
+                } else {
+                    shopNameTextView.setText("Unknown Seller");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                shopNameTextView.setText("Unknown Seller");
+            }
+        });
+    }
+
 
     @Override
     public int getItemCount() {
         return productList.size();
     }
 
-    public class WishlistViewHolder extends RecyclerView.ViewHolder {
-        TextView productNameTextView, productPriceTextView;
-        ImageView productImageView;
 
-        public WishlistViewHolder(View itemView) {
-            super(itemView);
-            productNameTextView = itemView.findViewById(R.id.name_product_wishlist);
-            productPriceTextView = itemView.findViewById(R.id.product_price_wishlist);
-            productImageView = itemView.findViewById(R.id.picture_product);
+        public class WishlistViewHolder extends RecyclerView.ViewHolder {
+            TextView productNameTextView, productPriceTextView, productNameShopTextView;
+            ImageView productImageView;
+
+            public WishlistViewHolder(View itemView) {
+                super(itemView);
+                productNameTextView = itemView.findViewById(R.id.name_product_wishlist);
+                productPriceTextView = itemView.findViewById(R.id.product_price_wishlist);
+                productImageView = itemView.findViewById(R.id.picture_product);
+                productNameShopTextView = itemView.findViewById(R.id.wishlist_name_shop); // Correct ID
+            }
         }
-    }
 
-    public void loadWishlistItems() {
+
+        public void loadWishlistItems() {
         // Get the current user's UID
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference wishlistRef = FirebaseDatabase.getInstance().getReference("wishlists").child(userId);

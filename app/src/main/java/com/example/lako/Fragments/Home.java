@@ -2,9 +2,11 @@ package com.example.lako.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +15,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lako.ADD_TO_CART;
+import com.example.lako.About_Us;
+import com.example.lako.Logo_Page_Activity2;
 import com.example.lako.R;
 import com.example.lako.User_View_Product;
 import com.example.lako.util.Product;
@@ -33,6 +38,7 @@ public class Home extends Fragment {
     private ProductAdapter productAdapter;
     private List<Product> productList;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,9 +48,20 @@ public class Home extends Fragment {
         productRecyclerView = view.findViewById(R.id.user_products_display_recycler_view);
         productRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
         // Set GridLayoutManager with 2 columns
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         productRecyclerView.setLayoutManager(gridLayoutManager);
+
+        // Find the cart button
+        Button cartButton = view.findViewById(R.id.cart_btn); // Declare the button only once
+        cartButton.setOnClickListener(v -> {
+            Log.d("HomeFragment", "Cart button clicked.");
+            Intent intent = new Intent(getActivity(), ADD_TO_CART.class);
+            startActivity(intent);
+        });
+
+
 
 
         // Initialize Product List and Adapter
@@ -87,5 +104,6 @@ public class Home extends Fragment {
                 // Handle errors
             }
         });
+
     }
 }

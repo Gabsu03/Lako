@@ -218,12 +218,20 @@ public class User_View_Product_Cart extends AppCompatActivity {
 
         productPrice = product.getPrice(); // Store product price
         productImageUrl = product.getImage(); // Store product image URL
+
+        String sellerId = product.getSellerId(); // Get the sellerId from the product
+        if (sellerId != null && !sellerId.isEmpty()) {
+            fetchSellerDetails(sellerId); // Fetch and display seller details
+        } else {
+            Log.e("Error", "Seller ID is null or empty.");
+        }
     }
+
+
 
 
     private void fetchSellerDetails(String sellerId) {
         DatabaseReference sellerRef = FirebaseDatabase.getInstance().getReference("shops").child(sellerId);
-
         sellerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -338,24 +346,44 @@ public class User_View_Product_Cart extends AppCompatActivity {
 
         DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("carts").child(userId);
 
-        // Create a HashMap for cart item details
-        HashMap<String, Object> cartItem = new HashMap<>();
-        cartItem.put("productId", productId);
-        cartItem.put("quantity", quantity);
-        cartItem.put("price", productPrice); // Assuming productPrice is already fetched and stored
-        cartItem.put("image", productImageUrl); // Assuming productImageUrl is already fetched and stored
-        cartItem.put("name", nameTextView.getText().toString()); // Product name from the TextView
+        // Fetch product details to get the sellerId
+        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products").child(productId);
+        productRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Productt product = snapshot.getValue(Productt.class);
+                    if (product != null) {
+                        // Create a HashMap for cart item details
+                        HashMap<String, Object> cartItem = new HashMap<>();
+                        cartItem.put("productId", productId);
+                        cartItem.put("quantity", quantity);
+                        cartItem.put("price", product.getPrice());
+                        cartItem.put("image", product.getImage());
+                        cartItem.put("name", product.getName());
+                        cartItem.put("sellerId", product.getSellerId());
 
-        // Add or update the item in the cart
-        cartRef.child(productId).setValue(cartItem)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(this, "Added to Cart!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Failed to add to cart. Please try again.", Toast.LENGTH_SHORT).show();
+                        // Add or update the item in the cart
+                        cartRef.child(productId).setValue(cartItem)
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(User_View_Product_Cart.this, "Added to Cart!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(User_View_Product_Cart.this, "Failed to add to cart. Please try again.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                     }
-                });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(User_View_Product_Cart.this, "Failed to fetch product details.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
 
 
     // Get current user ID

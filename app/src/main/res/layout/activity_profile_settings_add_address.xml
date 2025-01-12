@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="409dp"
-        android:layout_height="200dp"
+        android:layout_height="190dp"
         android:background="@drawable/lako_header"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="2dp"
@@ -20,22 +20,21 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="97dp"
+        android:layout_height="90dp"
         android:background="@color/darkbrown"
         tools:ignore="MissingConstraints"/>
 
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="370dp"
+        android:layout_width="360dp"
         android:layout_height="35dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/bar"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:layout_constraintVertical_bias="0.015" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <TextView
         android:id="@+id/textView19"
@@ -65,18 +64,6 @@
         app:layout_constraintVertical_bias="0.538" />
 
 
-    <ImageView
-        android:id="@+id/imageView22"
-        android:layout_width="370dp"
-        android:layout_height="540dp"
-        android:background="@drawable/bar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="3" />
-
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="48dp"
@@ -85,12 +72,12 @@
         android:text="Name"
         android:textAlignment="textStart"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.077"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.012"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/address_name_text"
+        app:layout_constraintHorizontal_bias="0.007"
+        app:layout_constraintStart_toStartOf="@+id/address_name_text"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.036"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -100,12 +87,12 @@
         android:fontFamily="@font/jost_semibold"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.048">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.075">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameInput"
@@ -125,12 +112,12 @@
         android:text="Label"
         android:textAlignment="textStart"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.077"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.173"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/address_name_text"
+        app:layout_constraintHorizontal_bias="0.007"
+        app:layout_constraintStart_toStartOf="@+id/address_name_text"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.191"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -140,12 +127,12 @@
         android:fontFamily="@font/jost_medium"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.228">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19"
+        app:layout_constraintVertical_bias="0.26">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/labelInput"
@@ -165,12 +152,12 @@
         android:fontFamily="@font/jost_medium"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.4">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_label_text"
+        app:layout_constraintVertical_bias="0.042">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneInput"
@@ -183,18 +170,19 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/textView59"
         android:layout_width="114dp"
         android:layout_height="25dp"
         android:fontFamily="@font/jost_semibold"
         android:text="Phone Number"
         android:textAlignment="textStart"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.097"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.321"
+        app:layout_constraintBottom_toTopOf="@+id/address_phone_text"
+        app:layout_constraintEnd_toEndOf="@+id/address_label_text"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/address_label_text"
+        app:layout_constraintTop_toBottomOf="@+id/address_label_text"
+        app:layout_constraintVertical_bias="0.8"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -205,12 +193,12 @@
         android:text="Region"
         android:textAlignment="textStart"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.078"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.474"
+        app:layout_constraintBottom_toTopOf="@+id/address_region_text"
+        app:layout_constraintEnd_toEndOf="@+id/address_phone_text"
+        app:layout_constraintHorizontal_bias="0.007"
+        app:layout_constraintStart_toStartOf="@+id/address_phone_text"
+        app:layout_constraintTop_toBottomOf="@+id/address_phone_text"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -220,12 +208,12 @@
         android:fontFamily="@font/jost_medium"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.562">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_phone_text"
+        app:layout_constraintVertical_bias="0.068">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/regionInput"
@@ -240,6 +228,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/textView61"
         android:layout_width="90dp"
         android:layout_height="20dp"
         android:fontFamily="@font/jost_semibold"
@@ -247,26 +236,27 @@
         android:textAlignment="textStart"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/address_street_number_text"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.703"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toBottomOf="@+id/address_region_text"
-        app:layout_constraintVertical_bias="0.727"
+        app:layout_constraintEnd_toEndOf="@+id/address_region_text"
+        app:layout_constraintHorizontal_bias="0.746"
+        app:layout_constraintStart_toStartOf="@+id/textView60"
+        app:layout_constraintTop_toTopOf="@+id/address_region_text"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:id="@+id/textView60"
         android:layout_width="110dp"
         android:layout_height="20dp"
         android:fontFamily="@font/jost_semibold"
         android:text="House Number"
         android:textAlignment="textStart"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.623"
+        app:layout_constraintBottom_toBottomOf="@+id/textView61"
+        app:layout_constraintEnd_toEndOf="@+id/address_region_text"
+        app:layout_constraintHorizontal_bias="0.007"
+        app:layout_constraintStart_toStartOf="@+id/address_region_text"
+        app:layout_constraintTop_toTopOf="@+id/textView61"
+        app:layout_constraintVertical_bias="0.006"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -276,12 +266,12 @@
         android:fontFamily="@font/jost_medium"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.113"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.72">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView60"
+        app:layout_constraintTop_toBottomOf="@+id/address_region_text"
+        app:layout_constraintVertical_bias="0.101">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/houseNumberInput"
@@ -300,12 +290,12 @@
         android:fontFamily="@font/jost_medium"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.891"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.72">
+        app:layout_constraintBottom_toBottomOf="@+id/address_house_number_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintStart_toEndOf="@+id/address_house_number_text"
+        app:layout_constraintTop_toTopOf="@+id/address_house_number_text"
+        app:layout_constraintVertical_bias="0.736">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/streetInput"
@@ -318,18 +308,19 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/textView62"
         android:layout_width="28dp"
         android:layout_height="20dp"
         android:fontFamily="@font/jost_semibold"
         android:text="City"
         android:textAlignment="textStart"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.073"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.767"
+        app:layout_constraintBottom_toTopOf="@+id/address_City_text"
+        app:layout_constraintEnd_toStartOf="@+id/textView63"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/address_house_number_text"
+        app:layout_constraintTop_toBottomOf="@+id/address_house_number_text"
+        app:layout_constraintVertical_bias="0.3"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -339,12 +330,12 @@
         android:fontFamily="@font/jost_medium"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.113"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.884">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/address_Zipcode_text"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView62"
+        app:layout_constraintTop_toBottomOf="@+id/address_house_number_text"
+        app:layout_constraintVertical_bias="0.285">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/cityInput"
@@ -357,18 +348,19 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/textView63"
         android:layout_width="70dp"
         android:layout_height="20dp"
         android:fontFamily="@font/jost_semibold"
         android:text="Zip Code"
         android:textAlignment="textStart"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.656"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.767"
+        app:layout_constraintBottom_toTopOf="@+id/address_Zipcode_text"
+        app:layout_constraintEnd_toEndOf="@+id/textView61"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView61"
+        app:layout_constraintTop_toBottomOf="@+id/address_street_number_text"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -378,12 +370,12 @@
         android:fontFamily="@font/jost_medium"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/C35314"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.891"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toTopOf="@+id/imageView22"
-        app:layout_constraintVertical_bias="0.884">
+        app:layout_constraintBottom_toBottomOf="@+id/address_City_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.835"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/address_City_text"
+        app:layout_constraintVertical_bias="0.6">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/zipcodeInput"
@@ -397,18 +389,18 @@
 
     <Button
         android:id="@+id/address_save_btn"
-        android:layout_width="160dp"
-        android:layout_height="48dp"
+        android:layout_width="100dp"
+        android:layout_height="37dp"
         android:background="@drawable/reset_email_btn"
         android:fontFamily="@font/koho_bold"
         android:text="Save"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-        app:layout_constraintEnd_toEndOf="@+id/imageView22"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:layout_constraintTop_toBottomOf="@+id/address_region_text"
-        app:layout_constraintVertical_bias="0.906" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_Zipcode_text"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ProgressBar
         android:layout_width="30dp"

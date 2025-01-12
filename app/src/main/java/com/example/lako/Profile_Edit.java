@@ -98,6 +98,9 @@ public class Profile_Edit extends AppCompatActivity {
         if (user != null) {
             String userId = user.getUid();
 
+            emailEditText.setText(user.getEmail());
+
+
             mDatabase.child(userId).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful() && task.getResult().exists()) {
                     DataSnapshot dataSnapshot = task.getResult();

@@ -115,7 +115,7 @@ public class Profile_Edit extends AppCompatActivity {
                     usernameEditText.setText(username);
                     updateDisplayName(firstName, lastName, username);
                 } else {
-                    Toast.makeText(Profile_Edit.this, "Error loading profile data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Profile_Edit.this, "Lagyan ng impormasyon.", Toast.LENGTH_SHORT).show();
                 }
             });
         } else {

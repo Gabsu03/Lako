@@ -48,7 +48,7 @@ public class Profile_Settings_Address extends AppCompatActivity {
             return;
         }
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("Address");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Address-User").child(user.getUid()).child("Address");
 
         loadAddresses();
     }

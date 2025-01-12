@@ -65,8 +65,12 @@ public class Profile_User extends Fragment {
                     String lastName = dataSnapshot.child("lastName").getValue(String.class);
                     String profileImageUrl = dataSnapshot.child("profileImage").getValue(String.class); // Get the profile image URL
 
-                    // Set the user's name in the TextView
-                    nameInput.setText(firstName + " " + lastName);
+                    // Set the user's name in the TextView or EditText (assuming you have a TextView to show the name)
+                    if (firstName != null && lastName != null) {
+                        nameInput.setText(firstName + " " + lastName); // Display the full name
+                    } else {
+                        nameInput.setText("Username7");
+                    }
 
                     // If the profile image URL exists, load the image using Glide
                     if (profileImageUrl != null && !profileImageUrl.isEmpty()) {

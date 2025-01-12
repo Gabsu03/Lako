@@ -33,7 +33,7 @@ public class Profile_Settings_Add_MFA extends AppCompatActivity {
         savedEmailDisplay = findViewById(R.id.saved_email_display);
 
         // Initialize Firebase Database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("users").child("user_id");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Multi-Factor").child("user_id");
 
         // Load existing email from Firebase
         databaseReference.child("secondaryEmail").get().addOnCompleteListener(task -> {

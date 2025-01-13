@@ -42,20 +42,62 @@ public class User_View_Product extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_user_view_product);
 
-        // Button back click listener
         Button backButton = findViewById(R.id.view_product_back_btn);
         backButton.setOnClickListener(v -> {
-            // Finish activity and go back to Home fragment
-            finish();
+            // Retrieve productId if it's available from the Intent
+            String productId = getIntent().getStringExtra("product_id");
+
+            if (productId != null) {
+                finish();
+            } else {
+                finish();
+            }
         });
+
 
         Button visitProfileBtn = findViewById(R.id.visit_profile_btn);
         visitProfileBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, Seller_View_Profile.class);
-            String sellerId = "SELLER_ID_FROM_PRODUCT"; // Replace with actual seller ID
-            intent.putExtra("sellerId", sellerId);
-            startActivity(intent);
+            String productId = getIntent().getStringExtra("product_id");
+
+            Log.d("UserViewProduct", "Product ID: " + productId);
+
+            if (productId != null) {
+                DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products").child(productId);
+                productRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            Log.d("UserViewProduct", "Product Data: " + snapshot.getValue());
+
+                            String sellerId = snapshot.child("sellerId").getValue(String.class);
+
+                            Log.d("UserViewProduct", "Seller ID: " + sellerId);
+
+                            if (sellerId != null) {
+                                Intent intent = new Intent(User_View_Product.this, Seller_View_Profile.class);
+                                intent.putExtra("sellerId", sellerId);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(User_View_Product.this, "Seller ID not found", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(User_View_Product.this, "Product not found", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Log the error if the Firebase query fails
+                        Log.e("UserViewProduct", "Failed to fetch product details: " + error.getMessage());
+                        Toast.makeText(User_View_Product.this, "Failed to fetch product details", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Log.e("UserViewProduct", "Product ID is null");
+                Toast.makeText(User_View_Product.this, "Product ID not found", Toast.LENGTH_SHORT).show();
+            }
         });
+
 
 
         // Initialize product views

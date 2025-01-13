@@ -1,6 +1,9 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,8 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.lako.util.Product;
+import com.example.lako.util.ProductAdapter;
+import com.example.lako.util.Productt;
+import com.example.lako.util.ProducttAdapter;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,10 +28,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Seller_View_Profile extends AppCompatActivity {
 
     private TextView nameTextView, locationTextView, descriptionTextView;
     private ShapeableImageView profilePictureShop;
+    private RecyclerView productsRecyclerView;
+    private ProducttAdapter productAdapter;
+    private List<Product> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +46,28 @@ public class Seller_View_Profile extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_seller_view_profile);
 
+
         // Initialize views
         profilePictureShop = findViewById(R.id.view_profile_seller_shop);
         nameTextView = findViewById(R.id.view_profile_name_of_seller_shop);
         locationTextView = findViewById(R.id.View_profile_name_of_place);
         descriptionTextView = findViewById(R.id.view_profile_description_of_shop);
+        productsRecyclerView = findViewById(R.id.user_view_seller_products_recycler_view);
+
+        // Initialize product list
+        productList = new ArrayList<>();
 
         // Get sellerId from Intent
         String sellerId = getIntent().getStringExtra("sellerId");
         if (sellerId != null) {
             loadSellerDetails(sellerId);
+            loadProducts(sellerId);
+            setupRecyclerView();
         } else {
             Toast.makeText(this, "Seller ID not found.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void loadSellerDetails(String sellerId) {
         DatabaseReference shopRef = FirebaseDatabase.getInstance().getReference("shops").child(sellerId);
@@ -82,4 +106,67 @@ public class Seller_View_Profile extends AppCompatActivity {
             }
         });
     }
+
+
+    private void loadProducts(String sellerId) {
+        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products");
+
+        productRef.orderByChild("sellerId").equalTo(sellerId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        productList.clear();
+                        for (DataSnapshot productSnapshot : snapshot.getChildren()) {
+                            String name = productSnapshot.child("name").getValue(String.class);
+                            String price = productSnapshot.child("price").getValue(String.class);
+                            String image = productSnapshot.child("image").getValue(String.class);
+                            String description = productSnapshot.child("description").getValue(String.class);
+                            String specification = productSnapshot.child("specification").getValue(String.class);
+                            String productId = productSnapshot.getKey();
+
+                            if (name == null) name = "No Name";
+                            if (price == null) price = "No Price";
+                            if (image == null) image = "";
+                            if (description == null) description = "No Description";
+                            if (specification == null) specification = "No Specification";
+
+                            Product product = new Product(productId, name, price, image, description, specification);
+                            productList.add(product);
+                        }
+                        productAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(Seller_View_Profile.this, "Failed to load products.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void setupRecyclerView() {
+        productAdapter = new ProducttAdapter(this, productList, null);
+
+        // Set up the RecyclerView with a GridLayoutManager
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        productsRecyclerView.setLayoutManager(gridLayoutManager);
+        productsRecyclerView.setAdapter(productAdapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Create intent to navigate back to User_View_Product
+        Intent intent = new Intent(Seller_View_Profile.this, User_View_Product.class);
+
+        // Retrieve the productId from the intent, assuming it was passed when navigating to this activity
+        String productId = getIntent().getStringExtra("product_id");
+        if (productId != null) {
+            intent.putExtra("product_id", productId);  // Pass it back to the previous activity
+        }
+
+        // Start the activity and finish the current one
+        startActivity(intent);
+        finish();
+    }
+
+
 }

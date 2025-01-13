@@ -36,10 +36,6 @@ public class User_View_Product_Cart extends AppCompatActivity {
     private TextView nameTextView, priceTextView, descriptionTextView, specificationTextView;
     private TextView sellerNameTextView, sellerLocationTextView;
     private ShapeableImageView sellerProfileImageView;
-    private Button wishButton;  // Add this for wishlist button
-    private boolean isWishlisted = false;  // Track the state of the wishlist button
-
-    // Additional views for product quantity and add to cart functionality
     private EditText editQuantity;
     private Button buttonDecrease, buttonIncrease;
 
@@ -80,9 +76,6 @@ public class User_View_Product_Cart extends AppCompatActivity {
         sellerNameTextView = findViewById(R.id.seller_name_display_user);
         sellerLocationTextView = findViewById(R.id.seller_location_display_user);
         sellerProfileImageView = findViewById(R.id.profile_picture_seller_display_user);
-
-        // Initialize wishlist button
-        wishButton = findViewById(R.id.wish_product_display_user);  // Your wishlist button
 
         // Initialize quantity buttons and add to cart button
         editQuantity = findViewById(R.id.edit_quantity);
@@ -152,24 +145,6 @@ public class User_View_Product_Cart extends AppCompatActivity {
             addToCart(productId, quantity); // Call the newly created method
         });
 
-
-
-        // Set up the wishlist button click listener
-        wishButton.setOnClickListener(v -> {
-            if (!isWishlisted) {
-                // Mark as wishlisted
-                wishButton.setBackgroundResource(R.drawable.wishlist_filled);  // Change to filled star
-                isWishlisted = true;
-                addToWishlist(productId);  // Add the product to wishlist in Firebase
-                Toast.makeText(User_View_Product_Cart.this, "Added to Wishlist!", Toast.LENGTH_SHORT).show();
-            } else {
-                // If already wishlisted, unmark it
-                wishButton.setBackgroundResource(R.drawable.wishlist);  // Change to unfilled star
-                isWishlisted = false;
-                removeFromWishlist(productId);  // Remove the product from wishlist in Firebase
-                Toast.makeText(User_View_Product_Cart.this, "Removed from Wishlist!", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void fetchProductDetails(String productId) {
@@ -264,78 +239,6 @@ public class User_View_Product_Cart extends AppCompatActivity {
     private void proceedToPayment(String productId, int quantity) {
     }
 
-
-    // Check if the product is already in the wishlist
-    private void checkIfProductInWishlist(String productId) {
-        DatabaseReference wishlistRef = FirebaseDatabase.getInstance().getReference("wishlists")
-                .child(getCurrentUserId()).child(productId);
-        wishlistRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    // Product is already in the wishlist
-                    wishButton.setBackgroundResource(R.drawable.wishlist_filled);  // Set filled star
-                    isWishlisted = true;
-                } else {
-                    // Product is not in the wishlist
-                    wishButton.setBackgroundResource(R.drawable.wishlist);  // Set unfilled star
-                    isWishlisted = false;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error checking wishlist: " + error.getMessage());
-            }
-        });
-    }
-
-    private void addToWishlist(String productId) {
-        DatabaseReference wishlistRef = FirebaseDatabase.getInstance().getReference("wishlists")
-                .child(getCurrentUserId());
-        DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products").child(productId);
-
-        productRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Productt product = snapshot.getValue(Productt.class);
-                    if (product != null) {
-                        // Store the product in the user's wishlist
-                        wishlistRef.child(productId).setValue(product)
-                                .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        // Broadcast to update the WishList fragment
-                                        Intent intent = new Intent("com.yourapp.UPDATE_WISHLIST");
-                                        sendBroadcast(intent);  // Notify all registered receivers
-                                    }
-                                });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error fetching product: " + error.getMessage());
-            }
-        });
-    }
-
-    private void removeFromWishlist(String productId) {
-        DatabaseReference wishlistRef = FirebaseDatabase.getInstance().getReference("wishlists")
-                .child(getCurrentUserId());
-        wishlistRef.child(productId).removeValue()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d("Firebase", "Product removed from wishlist");
-                        // Broadcast to update the WishList fragment
-                        Intent intent = new Intent("com.yourapp.UPDATE_WISHLIST");
-                        sendBroadcast(intent);
-                    } else {
-                        Log.e("Firebase", "Failed to remove product from wishlist");
-                    }
-                });
-    }
 
     private void addToCart(String productId, int quantity) {
         String userId = getCurrentUserId(); // Fetch the current user's ID

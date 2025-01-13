@@ -3,6 +3,7 @@ package com.example.lako;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,8 @@ public class ADD_TO_CART extends AppCompatActivity {
     private CarttAdapter cartAdapter;
     private List<CartItem> cartItems;
     private DatabaseReference cartRef;
+    private TextView totalAmountCart; // TextView for total price
+    private CheckBox selectAllCheckbox; // Checkbox to select all items
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +47,18 @@ public class ADD_TO_CART extends AppCompatActivity {
 
         shoppingCartRecyclerView = findViewById(R.id.shopping_cart);
         shoppingCartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        totalAmountCart = findViewById(R.id.total_amount_cart); // Link the TextView for total price
+        selectAllCheckbox = findViewById(R.id.select_all_product); // Link the select all checkbox
 
         cartItems = new ArrayList<>();
-        cartAdapter = new CarttAdapter(this, cartItems);
+        cartAdapter = new CarttAdapter(this, cartItems, this::updateTotalPrice); // Pass the listener
         shoppingCartRecyclerView.setAdapter(cartAdapter);
+
+        // Handle the "Select All" checkbox logic
+        selectAllCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            cartAdapter.selectAllItems(isChecked); // Select or deselect all items in the adapter
+            updateTotalPrice(cartAdapter.calculateTotalPrice()); // Update total price
+        });
 
         loadCartItems();
     }
@@ -66,14 +77,11 @@ public class ADD_TO_CART extends AppCompatActivity {
                 cartItems.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     CartItem item = dataSnapshot.getValue(CartItem.class);
-                    if (item != null && item.getSellerId() != null) { // Ensure sellerId is not null
+                    if (item != null) {
                         cartItems.add(item);
                     }
                 }
-                if (cartItems.isEmpty()) {
-                    Toast.makeText(ADD_TO_CART.this, "Your cart is empty.", Toast.LENGTH_SHORT).show();
-                }
-                cartAdapter.notifyDataSetChanged(); // Update RecyclerView
+                cartAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -84,6 +92,10 @@ public class ADD_TO_CART extends AppCompatActivity {
     }
 
 
+    // Update the total price when selection changes
+    private void updateTotalPrice(double totalPrice) {
+        totalAmountCart.setText("₱" + totalPrice);
+    }
 
     public void shopping_cart_back_btn(View view) {
         finish();
@@ -93,3 +105,5 @@ public class ADD_TO_CART extends AppCompatActivity {
         return FirebaseAuth.getInstance().getUid();
     }
 }
+
+

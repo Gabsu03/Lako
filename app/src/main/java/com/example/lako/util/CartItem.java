@@ -19,55 +19,39 @@ public class CartItem {
         this.sellerId = sellerId;  // Initialize sellerId
     }
 
-    // Getters and Setters
-    public String getProductId() {
-        return productId;
+    // Getter for sellerId
+    public String getSellerId() {
+        return sellerId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    // Setter for sellerId
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    // Other getters and setters
+    public String getProductId() {
+        return productId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getImage() {
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public int getQuantity() {
         return quantity;
     }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getSellerId() {  // Getter for sellerId
-        return sellerId;
-    }
-
-    public void setSellerId(String sellerId) {  // Setter for sellerId
-        this.sellerId = sellerId;
-    }
 }
+
+
 
 
 

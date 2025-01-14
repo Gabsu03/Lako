@@ -44,4 +44,123 @@
         app:layout_constraintTop_toTopOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.833"
         tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detail_order_product_recycleview"
+        android:layout_width="370dp"
+        android:layout_height="120dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.039"
+        tools:listitem="@layout/detail_order_product_item" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detail_order_address_recycleview"
+        android:layout_width="370dp"
+        android:layout_height="170dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_order_product_recycleview"
+        app:layout_constraintVertical_bias="0.039"
+        tools:listitem="@layout/detail_order_address_item" />
+
+    <ImageView
+        android:id="@+id/imageView85"
+        android:layout_width="370dp"
+        android:layout_height="190dp"
+        android:background="@drawable/order_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_order_address_recycleview"
+        app:layout_constraintVertical_bias="0.102" />
+
+    <TextView
+        android:id="@+id/textView68"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/koho_bold"
+        android:text="Courier"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView85"
+        app:layout_constraintEnd_toEndOf="@+id/imageView85"
+        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintStart_toStartOf="@+id/imageView85"
+        app:layout_constraintTop_toTopOf="@+id/imageView85"
+        app:layout_constraintVertical_bias="0.082" />
+
+    <EditText
+        android:id="@+id/courier"
+        android:layout_width="318dp"
+        android:layout_height="33dp"
+        android:background="@drawable/email_reset"
+        android:fontFamily="@font/jost_medium"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView85"
+        app:layout_constraintEnd_toEndOf="@+id/imageView85"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="@+id/imageView85"
+        app:layout_constraintTop_toTopOf="@+id/imageView85"
+        app:layout_constraintVertical_bias="0.273" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/koho_bold"
+        android:text="Tracking Number"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView85"
+        app:layout_constraintEnd_toEndOf="@+id/imageView85"
+        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintStart_toStartOf="@+id/imageView85"
+        app:layout_constraintTop_toTopOf="@+id/imageView85"
+        app:layout_constraintVertical_bias="0.511" />
+
+    <EditText
+        android:id="@+id/tracking_number"
+        android:layout_width="318dp"
+        android:layout_height="33dp"
+        android:background="@drawable/email_reset"
+        android:fontFamily="@font/jost_medium"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView85"
+        app:layout_constraintEnd_toEndOf="@+id/imageView85"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="@+id/imageView85"
+        app:layout_constraintTop_toTopOf="@+id/imageView85"
+        app:layout_constraintVertical_bias="0.77" />
+
+    <Button
+        android:id="@+id/done_order_detail"
+        android:layout_width="120dp"
+        android:layout_height="31dp"
+        android:background="@drawable/btn"
+        android:fontFamily="@font/koho_medium"
+        android:text="Done"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView85"
+        app:layout_constraintVertical_bias="0.187" />
 </androidx.constraintlayout.widget.ConstraintLayout>

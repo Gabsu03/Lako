@@ -1,6 +1,5 @@
 package com.example.lako.util;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,10 @@ import com.example.lako.R;
 import java.util.List;
 
 public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder> {
-    private Context context;
-    private List<CheckCartItem> checkoutItems;
+    private final Context context;
+    private final List<CartItem> checkoutItems;
 
-    public CheckoutAdapter(Context context, List<CheckCartItem> checkoutItems) {
+    public CheckoutAdapter(Context context, List<CartItem> checkoutItems) {
         this.context = context;
         this.checkoutItems = checkoutItems;
     }
@@ -34,27 +33,27 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
 
     @Override
     public void onBindViewHolder(@NonNull CheckoutViewHolder holder, int position) {
-        CheckCartItem item = checkoutItems.get(position);
+        CartItem item = checkoutItems.get(position);
 
-        holder.nameProductCheckout.setText(item.getName());
-        holder.nameSellerCheckout.setText(item.getSellerName());
+        holder.nameProductCheckout.setText(item.getName() != null ? item.getName() : "No Name");
+        holder.nameSellerCheckout.setText(item.getSellerId() != null ? item.getSellerId() : "No Seller");
+
         Glide.with(context)
-                .load(item.getImage())
+                .load(item.getImage() != null ? item.getImage() : R.drawable.image_upload)
                 .placeholder(R.drawable.image_upload)
                 .into(holder.pictureProductCheckout);
 
-        // Update the quantity and price in the respective views
         int totalQuantity = item.getQuantity();
-        double unitPrice = Double.parseDouble(item.getPrice()); // Assuming price is a String
+        double unitPrice = Double.parseDouble(item.getPrice());
         double totalPrice = totalQuantity * unitPrice;
 
         holder.quantityCheckout.setText("Qty: " + totalQuantity);
-        holder.priceCheckout.setText("₱" + totalPrice);
+        holder.priceCheckout.setText(String.format("₱%.2f", totalPrice));
     }
 
     @Override
     public int getItemCount() {
-        return checkoutItems.size();
+        return checkoutItems != null ? checkoutItems.size() : 0;
     }
 
     public static class CheckoutViewHolder extends RecyclerView.ViewHolder {
@@ -71,6 +70,3 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
         }
     }
 }
-
-
-

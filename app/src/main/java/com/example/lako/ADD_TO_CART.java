@@ -10,16 +10,11 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lako.Fragments.Home;
-import com.example.lako.util.CartAdapter;
-import com.example.lako.util.CartItem;
 import com.example.lako.util.CarttAdapter;
+import com.example.lako.util.CartItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,8 +31,8 @@ public class ADD_TO_CART extends AppCompatActivity {
     private CarttAdapter cartAdapter;
     private List<CartItem> cartItems;
     private DatabaseReference cartRef;
-    private TextView totalAmountCart; // TextView for total price
-    private CheckBox selectAllCheckbox; // Checkbox to select all items
+    private TextView totalAmountCart;
+    private CheckBox selectAllCheckbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +42,19 @@ public class ADD_TO_CART extends AppCompatActivity {
 
         shoppingCartRecyclerView = findViewById(R.id.shopping_cart);
         shoppingCartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        totalAmountCart = findViewById(R.id.total_amount_cart); // Link the TextView for total price
-        selectAllCheckbox = findViewById(R.id.select_all_product); // Link the select all checkbox
+        totalAmountCart = findViewById(R.id.total_amount_cart);
+        selectAllCheckbox = findViewById(R.id.select_all_product);
 
         cartItems = new ArrayList<>();
-        cartAdapter = new CarttAdapter(this, cartItems, this::updateTotalPrice); // Pass the listener
+        cartAdapter = new CarttAdapter(this, cartItems, this::updateTotalPrice);
         shoppingCartRecyclerView.setAdapter(cartAdapter);
 
-        // Handle the "Select All" checkbox logic
         selectAllCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            cartAdapter.selectAllItems(isChecked); // Select or deselect all items in the adapter
-            updateTotalPrice(cartAdapter.calculateTotalPrice()); // Update total price
+            cartAdapter.selectAllItems(isChecked);
+            updateTotalPrice(cartAdapter.calculateTotalPrice());
         });
+
+        findViewById(R.id.checkout_cart).setOnClickListener(v -> proceedToCheckout());
 
         loadCartItems();
     }
@@ -91,10 +87,20 @@ public class ADD_TO_CART extends AppCompatActivity {
         });
     }
 
-
-    // Update the total price when selection changes
     private void updateTotalPrice(double totalPrice) {
         totalAmountCart.setText("₱" + totalPrice);
+    }
+
+    private void proceedToCheckout() {
+        if (cartItems.isEmpty()) {
+            Toast.makeText(this, "No items in the cart to checkout.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(ADD_TO_CART.this, User_View_Checkout.class);
+        intent.putExtra("checkoutItems", new ArrayList<>(cartItems)); // Check this line
+        intent.putExtra("totalPrice", cartAdapter.calculateTotalPrice());
+        startActivity(intent);
     }
 
     public void shopping_cart_back_btn(View view) {
@@ -105,5 +111,3 @@ public class ADD_TO_CART extends AppCompatActivity {
         return FirebaseAuth.getInstance().getUid();
     }
 }
-
-

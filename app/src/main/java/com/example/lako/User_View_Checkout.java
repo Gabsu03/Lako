@@ -5,13 +5,10 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lako.util.CheckCartItem;
+import com.example.lako.util.CartItem;
 import com.example.lako.util.CheckoutAdapter;
 
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ public class User_View_Checkout extends AppCompatActivity {
 
     private RecyclerView checkoutRecyclerView;
     private CheckoutAdapter checkoutAdapter;
-    private ArrayList<CheckCartItem> checkoutItems;
+    private ArrayList<CartItem> checkoutItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +28,13 @@ public class User_View_Checkout extends AppCompatActivity {
         checkoutRecyclerView = findViewById(R.id.list_of_orders_recycleview);
         checkoutRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Fetch data from the Intent
+        // Fetch data from Intent
         checkoutItems = getIntent().getParcelableArrayListExtra("checkoutItems");
-
-        if (checkoutItems != null) {
+        if (checkoutItems == null || checkoutItems.isEmpty()) {
+            Toast.makeText(this, "No items to display.", Toast.LENGTH_SHORT).show();
+        } else {
             checkoutAdapter = new CheckoutAdapter(this, checkoutItems);
             checkoutRecyclerView.setAdapter(checkoutAdapter);
-        } else {
-            Toast.makeText(this, "No items to display.", Toast.LENGTH_SHORT).show();
         }
     }
 }

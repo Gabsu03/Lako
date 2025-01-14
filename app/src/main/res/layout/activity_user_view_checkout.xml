@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.75" />
 
-    <ImageView
+    <TextView
         android:id="@+id/address_display"
         android:layout_width="376dp"
         android:layout_height="137dp"

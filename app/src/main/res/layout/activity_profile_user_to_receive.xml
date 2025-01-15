@@ -182,7 +182,4 @@
         app:layout_constraintVertical_bias="0.306"
         tools:listitem="@layout/purchase_to_receive_item" />
 
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

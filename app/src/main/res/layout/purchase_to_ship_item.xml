@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="8dp"
+    android:layout_height="200dp">
+
+    <ImageView
+        android:id="@+id/imageView86"
+        android:layout_width="370dp"
+        android:layout_height="26dp"
+        android:background="@drawable/bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageView
+        android:id="@+id/imageView87"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:background="@drawable/shopp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView86"
+        app:layout_constraintEnd_toEndOf="@+id/imageView86"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="@+id/imageView86"
+        app:layout_constraintTop_toTopOf="@+id/imageView86"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <TextView
+        android:id="@+id/name_seller_purchase"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/koho_medium"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView86"
+        app:layout_constraintEnd_toEndOf="@+id/imageView86"
+        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintStart_toEndOf="@+id/imageView87"
+        app:layout_constraintTop_toTopOf="@+id/imageView86"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/imageView88"
+        android:layout_width="370dp"
+        android:layout_height="86dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView86"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView86"
+        app:layout_constraintTop_toBottomOf="@+id/imageView86"
+        app:layout_constraintVertical_bias="0.208" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/picture_product_to_ship"
+        android:layout_width="67dp"
+        android:layout_height="59dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView88"
+        app:layout_constraintEnd_toEndOf="@+id/imageView88"
+        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintStart_toStartOf="@+id/imageView88"
+        app:layout_constraintTop_toTopOf="@+id/imageView88"
+        app:layout_constraintVertical_bias="0.518"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/name_product_to_ship"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/koho_medium"
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView88"
+        app:layout_constraintEnd_toEndOf="@+id/imageView88"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintStart_toEndOf="@+id/picture_product_to_ship"
+        app:layout_constraintTop_toTopOf="@+id/imageView88"
+        app:layout_constraintVertical_bias="0.145" />
+
+    <TextView
+        android:id="@+id/quantity_product_to_ship"
+        android:layout_width="40dp"
+        android:layout_height="15dp"
+        android:fontFamily="@font/jost_regular"
+        android:text="Quantity:"
+        android:textAlignment="textStart"
+        android:textColor="@color/grey"
+        android:textSize="9dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView88"
+        app:layout_constraintEnd_toEndOf="@+id/imageView88"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toEndOf="@+id/picture_product_to_ship"
+        app:layout_constraintTop_toBottomOf="@+id/name_product_to_ship"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/quantity_amount_product_to_ship"
+        android:layout_width="40dp"
+        android:layout_height="15dp"
+        android:fontFamily="@font/jost_regular"
+        android:textAlignment="textStart"
+        android:textColor="@color/grey"
+        android:textSize="9dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView88"
+        app:layout_constraintEnd_toEndOf="@+id/imageView88"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/quantity_product_to_ship"
+        app:layout_constraintTop_toBottomOf="@+id/name_product_to_ship"
+        app:layout_constraintVertical_bias="0.096" />
+
+    <TextView
+        android:id="@+id/price_product_to_ship"
+        android:layout_width="200dp"
+        android:layout_height="17dp"
+        android:fontFamily="@font/jost_medium"
+        android:textAlignment="textStart"
+        android:textColor="@color/C35314"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView88"
+        app:layout_constraintEnd_toEndOf="@+id/imageView88"
+        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintStart_toEndOf="@+id/picture_product_to_ship"
+        app:layout_constraintTop_toBottomOf="@+id/quantity_amount_product_to_ship"
+        app:layout_constraintVertical_bias="0.35" />
+
+    <ImageView
+        android:id="@+id/imageView89"
+        android:layout_width="370dp"
+        android:layout_height="28dp"
+        android:background="@drawable/bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView88"
+        app:layout_constraintStart_toStartOf="@+id/imageView88"
+        app:layout_constraintTop_toBottomOf="@+id/imageView88"
+        app:layout_constraintVertical_bias="0.448" />
+
+    <ImageView
+        android:id="@+id/imageView90"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/box"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView89"
+        app:layout_constraintEnd_toEndOf="@+id/imageView89"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="@+id/imageView89"
+        app:layout_constraintTop_toTopOf="@+id/imageView89"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="17dp"
+        android:fontFamily="@font/koho_medium"
+        android:text="Seller is preparing your order."
+        android:textAlignment="textStart"
+        android:textColor="@color/darkbrown"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView89"
+        app:layout_constraintEnd_toEndOf="@+id/imageView89"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toEndOf="@+id/imageView90"
+        app:layout_constraintTop_toTopOf="@+id/imageView89"
+        app:layout_constraintVertical_bias="0.636" />
+</androidx.constraintlayout.widget.ConstraintLayout>

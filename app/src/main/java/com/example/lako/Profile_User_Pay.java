@@ -1,6 +1,8 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -62,7 +64,6 @@ public class Profile_User_Pay extends AppCompatActivity {
                         CartItem item = itemSnapshot.getValue(CartItem.class);
                         if (item != null) {
                             purchaseList.add(item);
-                            System.out.println("DEBUG: Loaded Item - " + item.getName() + " | Seller: " + item.getSellerName());
                         }
                     }
                 }
@@ -74,5 +75,50 @@ public class Profile_User_Pay extends AppCompatActivity {
                 Toast.makeText(Profile_User_Pay.this, "Failed to load orders.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void cancel_order_to_pay(View view) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Toast.makeText(this, "Please log in to cancel an order.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        purchaseRef = FirebaseDatabase.getInstance().getReference("Orders").child(user.getUid());
+        purchaseRef.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(Profile_User_Pay.this, "Order canceled successfully.", Toast.LENGTH_SHORT).show();
+                purchaseList.clear();
+                purchaseAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(Profile_User_Pay.this, "Failed to cancel the order.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Override the hardware back button press
+    @Override
+    public void onBackPressed() {
+        // Return to MainActivity, where the Profile_User fragment is part of BottomNavigationView
+        Intent intent = new Intent(Profile_User_Pay.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Clear all activities above it in the stack
+        startActivity(intent);
+        finish();
+    }
+
+    public void All_btn(View view) {
+        startActivity(new Intent(Profile_User_Pay.this, Profile_Settings_Purchase.class));
+    }
+
+    public void To_Ship(View view) {
+        startActivity(new Intent(Profile_User_Pay.this, Profile_User_Ship.class));
+    }
+
+    public void To_Receive(View view) {
+        startActivity(new Intent(Profile_User_Pay.this, Profile_User_To_Receive.class));
+    }
+
+    public void Received(View view) {
+        startActivity(new Intent(Profile_User_Pay.this, Profile_User_Received.class));
     }
 }

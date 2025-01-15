@@ -3,6 +3,7 @@ package com.example.lako;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class ADD_TO_CART extends AppCompatActivity {
     private DatabaseReference cartRef;
     private TextView totalAmountCart;
     private CheckBox selectAllCheckbox;
+    private Button checkoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class ADD_TO_CART extends AppCompatActivity {
         shoppingCartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         totalAmountCart = findViewById(R.id.total_amount_cart);
         selectAllCheckbox = findViewById(R.id.select_all_product);
+        checkoutButton = findViewById(R.id.checkout_cart);
 
         cartItems = new ArrayList<>();
         cartAdapter = new CarttAdapter(this, cartItems, this::updateTotalPrice);
@@ -54,7 +57,7 @@ public class ADD_TO_CART extends AppCompatActivity {
             updateTotalPrice(cartAdapter.calculateTotalPrice());
         });
 
-        findViewById(R.id.checkout_cart).setOnClickListener(v -> proceedToCheckout());
+        checkoutButton.setOnClickListener(v -> proceedToCheckout());
 
         loadCartItems();
     }
@@ -92,13 +95,14 @@ public class ADD_TO_CART extends AppCompatActivity {
     }
 
     private void proceedToCheckout() {
-        if (cartItems.isEmpty()) {
-            Toast.makeText(this, "No items in the cart to checkout.", Toast.LENGTH_SHORT).show();
+        List<CartItem> selectedItems = cartAdapter.getSelectedItems();
+        if (selectedItems.isEmpty()) {
+            Toast.makeText(this, "Please select items to checkout.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Intent intent = new Intent(ADD_TO_CART.this, User_View_Checkout.class);
-        intent.putExtra("checkoutItems", new ArrayList<>(cartItems)); // Check this line
+        intent.putExtra("checkoutItems", new ArrayList<>(selectedItems));
         intent.putExtra("totalPrice", cartAdapter.calculateTotalPrice());
         startActivity(intent);
     }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.lako.R;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder> {
@@ -21,7 +22,7 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
 
     public CheckoutAdapter(Context context, List<CartItem> checkoutItems) {
         this.context = context;
-        this.checkoutItems = checkoutItems;
+        this.checkoutItems = checkoutItems != null ? checkoutItems : Collections.emptyList(); // Ensure non-null list
     }
 
     @NonNull
@@ -34,6 +35,7 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
     @Override
     public void onBindViewHolder(@NonNull CheckoutViewHolder holder, int position) {
         CartItem item = checkoutItems.get(position);
+        if (item == null) return; // Prevent NullPointerException
 
         holder.nameProductCheckout.setText(item.getName() != null ? item.getName() : "No Name");
         holder.nameSellerCheckout.setText(item.getSellerId() != null ? item.getSellerId() : "No Seller");
@@ -44,7 +46,14 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
                 .into(holder.pictureProductCheckout);
 
         int totalQuantity = item.getQuantity();
-        double unitPrice = Double.parseDouble(item.getPrice());
+        double unitPrice = 0.0;
+
+        try {
+            unitPrice = Double.parseDouble(item.getPrice()); // Safeguard against invalid price format
+        } catch (NumberFormatException e) {
+            unitPrice = 0.0; // Default to zero if parsing fails
+        }
+
         double totalPrice = totalQuantity * unitPrice;
 
         holder.quantityCheckout.setText("Qty: " + totalQuantity);
@@ -53,7 +62,7 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
 
     @Override
     public int getItemCount() {
-        return checkoutItems != null ? checkoutItems.size() : 0;
+        return checkoutItems.size();
     }
 
     public static class CheckoutViewHolder extends RecyclerView.ViewHolder {

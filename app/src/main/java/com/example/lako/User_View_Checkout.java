@@ -1,6 +1,8 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +37,9 @@ public class User_View_Checkout extends AppCompatActivity {
     private CheckoutAdapter checkoutAdapter;
     private DatabaseReference databaseReference;
     private List<Profile_Settings_Add_Address.Address> addressList = new ArrayList<>();
-    private ArrayList<CartItem> checkoutItems;
+    private ArrayList<CartItem> checkoutItems = new ArrayList<>();
     private TextView totalAmountTextView;
+    private Button checkoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +50,14 @@ public class User_View_Checkout extends AppCompatActivity {
         checkoutRecyclerView = findViewById(R.id.list_of_orders_recycleview);
         checkoutRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         totalAmountTextView = findViewById(R.id.total_amount_checkout);
+        checkoutButton = findViewById(R.id.checkout_btn);
 
-        // Fetch data from Intent
-        checkoutItems = getIntent().getParcelableArrayListExtra("checkoutItems");
-        if (checkoutItems == null || checkoutItems.isEmpty()) {
+        ArrayList<CartItem> receivedItems = getIntent().getParcelableArrayListExtra("checkoutItems");
+        if (receivedItems != null) {
+            checkoutItems.addAll(receivedItems);
+        }
+
+        if (checkoutItems.isEmpty()) {
             Toast.makeText(this, "No items to display.", Toast.LENGTH_SHORT).show();
         } else {
             checkoutAdapter = new CheckoutAdapter(this, checkoutItems);
@@ -72,22 +79,33 @@ public class User_View_Checkout extends AppCompatActivity {
         }
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Address-User").child(user.getUid()).child("Address");
-
         loadAddresses();
+
+        checkoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(User_View_Checkout.this, User_View_Loading_Screen.class);
+            intent.putParcelableArrayListExtra("checkoutItems", checkoutItems);
+            startActivity(intent);
+            checkoutItems.clear();
+            checkoutAdapter.notifyDataSetChanged();
+            finish();
+        });
     }
 
-    // Calculate and display the total amount, grouped by seller and including shipping fee
-    private void calculateTotalAmountBySeller() {
-        // Map to store total amount by seller
-        Map<String, Double> sellerTotalMap = new HashMap<>();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        checkoutItems.clear();
+        if (checkoutAdapter != null) {
+            checkoutAdapter.notifyDataSetChanged();
+        }
+    }
 
-        // Calculate total for each seller
+    private void calculateTotalAmountBySeller() {
+        Map<String, Double> sellerTotalMap = new HashMap<>();
         for (CartItem item : checkoutItems) {
             try {
                 double price = Double.parseDouble(item.getPrice());
                 double itemTotal = price * item.getQuantity();
-
-                // Add to the respective seller's total
                 String sellerId = item.getSellerId();
                 sellerTotalMap.put(sellerId, sellerTotalMap.getOrDefault(sellerId, 0.0) + itemTotal);
             } catch (NumberFormatException e) {
@@ -95,59 +113,42 @@ public class User_View_Checkout extends AppCompatActivity {
             }
         }
 
-        // Now, add shipping fees and calculate the final total for each seller
         double grandTotal = 0.0;
         for (Map.Entry<String, Double> entry : sellerTotalMap.entrySet()) {
             String sellerId = entry.getKey();
             double sellerTotal = entry.getValue();
-
-            // Add a specific shipping fee for each seller
-            double shippingFee = getShippingFeeForSeller(sellerId); // You can customize this logic
+            double shippingFee = getShippingFeeForSeller(sellerId);
             sellerTotal += shippingFee;
-
-            // Update the grand total
             grandTotal += sellerTotal;
-
-            // Display seller total with shipping fee
-            // Assuming you have a way to display seller-specific totals (e.g., in a RecyclerView or a separate UI element)
-            // For now, just log the seller total
-            System.out.println("Seller " + sellerId + " Total: " + String.format("₱%.2f", sellerTotal));
         }
 
-        // Update the total amount TextView with the grand total
         totalAmountTextView.setText(String.format("₱%.2f", grandTotal));
     }
 
-    // Method to get the shipping fee for a given seller
     private double getShippingFeeForSeller(String sellerId) {
-        // You can customize this to return different fees for different sellers
-        // For example, if the sellerId is "seller1", return a specific fee, etc.
         if (sellerId.equals("seller1")) {
-            return 45.0; // Example: 45 pesos for seller1
+            return 45.0;
         } else if (sellerId.equals("seller2")) {
-            return 50.0; // Example: 50 pesos for seller2
+            return 50.0;
         } else {
-            return 45.0; // Default shipping fee
+            return 45.0;
         }
     }
 
-    // Load addresses from Firebase
     private void loadAddresses() {
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Profile_Settings_Add_Address.Address address = snapshot.getValue(Profile_Settings_Add_Address.Address.class);
                 if (address != null) {
-                    address.id = snapshot.getKey(); // Set the Firebase key as ID
+                    address.id = snapshot.getKey();
                     addressList.add(address);
                     addressAdapter.notifyItemInserted(addressList.size() - 1);
                 }
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // Handle changes if needed
-            }
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
@@ -162,9 +163,7 @@ public class User_View_Checkout extends AppCompatActivity {
             }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // Optional: Handle move events if needed
-            }
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

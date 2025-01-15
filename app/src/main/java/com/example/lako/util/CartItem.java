@@ -10,16 +10,18 @@ public class CartItem implements Parcelable {
     private String price;
     private int quantity;
     private String sellerId;
+    private String sellerName;
 
     public CartItem() {}
 
-    public CartItem(String productId, String name, String image, String price, int quantity, String sellerId) {
+    public CartItem(String productId, String name, String image, String price, int quantity, String sellerId, String sellerName) {
         this.productId = productId;
         this.name = name;
         this.image = image;
         this.price = price;
         this.quantity = quantity;
         this.sellerId = sellerId;
+        this.sellerName = sellerName;
     }
 
     // Parcelable implementation
@@ -30,6 +32,7 @@ public class CartItem implements Parcelable {
         price = in.readString();
         quantity = in.readInt();
         sellerId = in.readString();
+        sellerName = in.readString();
     }
 
     public static final Creator<CartItem> CREATOR = new Creator<CartItem>() {
@@ -92,6 +95,14 @@ public class CartItem implements Parcelable {
         this.sellerId = sellerId;
     }
 
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -105,5 +116,6 @@ public class CartItem implements Parcelable {
         dest.writeString(price);
         dest.writeInt(quantity);
         dest.writeString(sellerId);
+        dest.writeString(sellerName);
     }
 }

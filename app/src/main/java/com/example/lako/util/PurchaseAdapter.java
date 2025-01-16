@@ -17,8 +17,11 @@ import com.bumptech.glide.Glide;
 import com.example.lako.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -26,10 +29,13 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
 
     private final Context context;
     private final List<CartItem> purchaseList;
+    private final DatabaseReference purchaseRef;
 
     public PurchaseAdapter(Context context, List<CartItem> purchaseList) {
         this.context = context;
         this.purchaseList = purchaseList;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        this.purchaseRef = FirebaseDatabase.getInstance().getReference("Orders").child(user.getUid());
     }
 
     @NonNull
@@ -44,31 +50,30 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
         CartItem item = purchaseList.get(position);
 
         holder.productName.setText(item.getName() != null ? item.getName() : "No Name");
-        holder.sellerName.setText(item.getSellerId() != null && !item.getSellerId().isEmpty() ? "Shop: " + item.getSellerId() : "Unknown Seller");
+        holder.sellerName.setText(item.getSellerId() != null ? "Shop: " + item.getSellerId() : "Unknown Seller");
         holder.quantity.setText("Qty: " + item.getQuantity());
 
         double price = 0.0;
         try {
             price = Double.parseDouble(item.getPrice());
         } catch (NumberFormatException e) {
-            price = 0.0; // Default to zero if price is invalid
+            price = 0.0;
         }
 
         holder.price.setText(String.format("₱%.2f", price));
 
         Glide.with(context)
-                .load(item.getImage() != null && !item.getImage().isEmpty() ? item.getImage() : R.drawable.image_upload)
+                .load(item.getImage() != null ? item.getImage() : R.drawable.image_upload)
                 .placeholder(R.drawable.image_upload)
                 .into(holder.productImage);
 
-
-        // Handle Cancel Order Button Click with Confirmation Dialog
+        // Cancel button logic
         holder.cancelOrderButton.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Cancel Order")
                     .setMessage("Are you sure you want to cancel this order?")
-                    .setPositiveButton("Yes", (dialog, which) -> cancelOrder(item, position)) // Call the cancelOrder method if confirmed
-                    .setNegativeButton("No", null) // Do nothing on "No"
+                    .setPositiveButton("Yes", (dialog, which) -> cancelOrder(item, position))
+                    .setNegativeButton("No", null)
                     .show();
         });
     }
@@ -80,37 +85,54 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
             return;
         }
 
-        // Firebase References
-        DatabaseReference orderRef = FirebaseDatabase.getInstance()
+        // Extract the orderId from the item object
+        String orderId = item.getOrderId();
+        if (orderId == null) {
+            Toast.makeText(context, "Order ID is missing.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Reference to the specific item within the order
+        DatabaseReference itemRef = FirebaseDatabase.getInstance()
                 .getReference("Orders")
                 .child(user.getUid())
-                .child(item.getProductId());
-        DatabaseReference buyerOrderRef = FirebaseDatabase.getInstance()
-                .getReference("BuyerOrders")
-                .child(item.getSellerId())
-                .child(user.getUid())
-                .child(item.getProductId());
+                .child(orderId)
+                .child("items")
+                .child(String.valueOf(position)); // Assuming position matches the key structure
 
-        // Start the removal process
-        orderRef.removeValue().addOnCompleteListener(task -> {
+        // Remove the specific item from the database
+        itemRef.removeValue().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                // Remove from buyer's order list
-                buyerOrderRef.removeValue().addOnCompleteListener(buyerTask -> {
-                    if (buyerTask.isSuccessful()) {
-                        // Update the UI after successful removal
-                        Toast.makeText(context, "Order permanently removed.", Toast.LENGTH_SHORT).show();
-                        purchaseList.remove(position);
-                        notifyItemRemoved(position); // Notify RecyclerView of item removal
-                    } else {
-                        Toast.makeText(context, "Failed to remove buyer's order.", Toast.LENGTH_SHORT).show();
+                // Update the UI after successful removal
+                Toast.makeText(context, "Item removed successfully.", Toast.LENGTH_SHORT).show();
+
+                // Remove the item locally and notify the adapter
+                purchaseList.remove(position);
+                notifyItemRemoved(position);
+
+                // If the `items` node is empty after removal, delete the `orderId` node
+                DatabaseReference orderRef = FirebaseDatabase.getInstance()
+                        .getReference("Orders")
+                        .child(user.getUid())
+                        .child(orderId);
+                orderRef.child("items").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (!snapshot.exists()) {
+                            orderRef.removeValue(); // Remove the orderId node if no items are left
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(context, "Failed to check remaining items.", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
-                Toast.makeText(context, "Failed to remove the order.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Failed to remove item.", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 
 
     @Override

@@ -43,10 +43,10 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
         Profile_Settings_Add_Address.Address address = addressList.get(position);
 
-        holder.name.setText(address.name);
-        holder.label.setText(address.label);
-        holder.phone.setText(address.phone);
-        holder.fullAddress.setText(address.houseNumber + ", " + address.street + ", " + address.city + ", " + address.region);
+        holder.name.setText(address.getName());
+        holder.label.setText(address.getLabel());
+        holder.phone.setText(address.getPhone());
+        holder.fullAddress.setText(address.getHouseNumber() + ", " + address.getStreet() + ", " + address.getCity() + ", " + address.getRegion());
 
         // Handle delete button click
         holder.deleteButton.setOnClickListener(v -> deleteAddress(position, address, v));

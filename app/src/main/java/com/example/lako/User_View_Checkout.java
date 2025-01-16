@@ -31,14 +31,11 @@ import java.util.Map;
 
 public class User_View_Checkout extends AppCompatActivity {
 
-    private RecyclerView checkoutAddressRecyclerView;
     private RecyclerView checkoutRecyclerView;
-    private AddressAdapter addressAdapter;
     private CheckoutAdapter checkoutAdapter;
     private DatabaseReference databaseReference;
-    private List<Profile_Settings_Add_Address.Address> addressList = new ArrayList<>();
     private ArrayList<CartItem> checkoutItems = new ArrayList<>();
-    private TextView totalAmountTextView;
+    private TextView totalAmountTextView, labelTextView, nameTextView, phoneTextView, fullAddressTextView;
     private Button checkoutButton;
 
     @Override
@@ -50,9 +47,11 @@ public class User_View_Checkout extends AppCompatActivity {
         checkoutRecyclerView = findViewById(R.id.list_of_orders_recycleview);
         checkoutRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         totalAmountTextView = findViewById(R.id.total_amount_checkout);
+        labelTextView = findViewById(R.id.labelTextView_checkout);
+        nameTextView = findViewById(R.id.nameTextView_checkout);
+        phoneTextView = findViewById(R.id.phoneTextView_checkout);
+        fullAddressTextView = findViewById(R.id.fullAddressTextView_checkout);
         checkoutButton = findViewById(R.id.checkout_btn);
-
-
 
         ArrayList<CartItem> receivedItems = getIntent().getParcelableArrayListExtra("checkoutItems");
         if (receivedItems != null) {
@@ -62,40 +61,41 @@ public class User_View_Checkout extends AppCompatActivity {
         if (checkoutItems.isEmpty()) {
             Toast.makeText(this, "No items to display.", Toast.LENGTH_SHORT).show();
         } else {
+            fetchSellerNames();
             checkoutAdapter = new CheckoutAdapter(this, checkoutItems);
             checkoutRecyclerView.setAdapter(checkoutAdapter);
             calculateTotalAmountBySeller();
         }
 
+        loadUserAddress();
 
         // Back button click listener
         findViewById(R.id.back_btn).setOnClickListener(v -> finish());
-    }
-
-    // Override the system back button
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Address-User").child(user.getUid()).child("Address");
-        loadAddresses();
 
         checkoutButton.setOnClickListener(v -> {
-            Intent intent = new Intent(User_View_Checkout.this, User_View_Loading_Screen.class);
-            intent.putParcelableArrayListExtra("checkoutItems", checkoutItems);
-            startActivity(intent);
-            checkoutItems.clear();
-            checkoutAdapter.notifyDataSetChanged();
-            finish();
+            DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
+            String orderId = ordersRef.push().getKey();
+            if (orderId != null) {
+                Map<String, Object> orderDetails = new HashMap<>();
+                orderDetails.put("status", "Pending");
+
+                Map<String, Object> items = new HashMap<>();
+                for (CartItem item : checkoutItems) {
+                    items.put(item.getProductId(), item);
+                }
+                orderDetails.put("items", items);
+
+                ordersRef.child(orderId).setValue(orderDetails).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Order placed successfully.", Toast.LENGTH_SHORT).show();
+                        checkoutItems.clear();
+                        checkoutAdapter.notifyDataSetChanged();
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Failed to place order.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         });
     }
 
@@ -143,40 +143,60 @@ public class User_View_Checkout extends AppCompatActivity {
         }
     }
 
-    private void loadAddresses() {
-        databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Profile_Settings_Add_Address.Address address = snapshot.getValue(Profile_Settings_Add_Address.Address.class);
-                if (address != null) {
-                    address.id = snapshot.getKey();
-                    addressList.add(address);
-                    addressAdapter.notifyItemInserted(addressList.size() - 1);
-                }
-            }
+    private void loadUserAddress() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        DatabaseReference addressRef = FirebaseDatabase.getInstance().getReference("Address-User").child(user.getUid()).child("Address");
+        addressRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                Profile_Settings_Add_Address.Address removedAddress = snapshot.getValue(Profile_Settings_Add_Address.Address.class);
-                if (removedAddress != null) {
-                    int index = addressList.indexOf(removedAddress);
-                    if (index != -1) {
-                        addressList.remove(index);
-                        addressAdapter.notifyItemRemoved(index);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot addressSnapshot : snapshot.getChildren()) {
+                        Profile_Settings_Add_Address.Address address = addressSnapshot.getValue(Profile_Settings_Add_Address.Address.class);
+                        if (address != null) {
+                            labelTextView.setText(address.getLabel());
+                            nameTextView.setText(address.getName());
+                            phoneTextView.setText(address.getPhone());
+                            fullAddressTextView.setText(String.format("%s, %s, %s", address.getHouseNumber(), address.getStreet(), address.getCity()));
+                            break; // Use the first address found
+                        }
                     }
+                } else {
+                    Toast.makeText(User_View_Checkout.this, "No address found. Please add an address.", Toast.LENGTH_SHORT).show();
                 }
             }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(User_View_Checkout.this, "Failed to load addresses: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(User_View_Checkout.this, "Failed to load address: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void fetchSellerNames() {
+        for (CartItem item : checkoutItems) {
+            DatabaseReference sellerRef = FirebaseDatabase.getInstance().getReference("Sellers").child(item.getSellerId());
+            sellerRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String sellerName = snapshot.child("name").getValue(String.class);
+                        if (sellerName != null) {
+                            item.setSellerName(sellerName);
+                            checkoutAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(User_View_Checkout.this, "Failed to fetch seller name", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

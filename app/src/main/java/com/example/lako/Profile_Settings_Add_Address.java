@@ -97,15 +97,20 @@ public class Profile_Settings_Add_Address extends AppCompatActivity {
         }
     }
 
-    // Address model class
     public static class Address {
-        public String name, label, phone, region, houseNumber, street, city;
-        public String id;
+        private String name;
+        private String label;
+        private String phone;
+        private String region;
+        private String houseNumber;
+        private String street;
+        private String city;
+        public String id; // Optional, for storing a Firebase-generated key if needed
 
-        public Address() {
-            // Default constructor required for calls to DataSnapshot.getValue(Address.class)
-        }
+        // Default constructor required for Firebase
+        public Address() {}
 
+        // Constructor for initializing the fields
         public Address(String name, String label, String phone, String region, String houseNumber, String street, String city) {
             this.name = name;
             this.label = label;
@@ -115,5 +120,64 @@ public class Profile_Settings_Add_Address extends AppCompatActivity {
             this.street = street;
             this.city = city;
         }
+
+        // Getters for all fields
+        public String getName() {
+            return name;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public String getHouseNumber() {
+            return houseNumber;
+        }
+
+        public String getStreet() {
+            return street;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        // Optional: Setter methods, if you need to modify the fields after object creation
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setLabel(String label) {
+            this.label = label;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public void setHouseNumber(String houseNumber) {
+            this.houseNumber = houseNumber;
+        }
+
+        public void setStreet(String street) {
+            this.street = street;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
     }
+
 }

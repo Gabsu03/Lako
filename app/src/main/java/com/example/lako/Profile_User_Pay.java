@@ -50,7 +50,7 @@ public class Profile_User_Pay extends AppCompatActivity {
     private void loadUserPurchases() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-            Toast.makeText(this, "Please log in to view your orders.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Profile_User_Pay.this, "Please log in to view your orders.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -60,9 +60,11 @@ public class Profile_User_Pay extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 purchaseList.clear();
                 for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
+                    String orderId = orderSnapshot.getKey(); // Get the orderId
                     for (DataSnapshot itemSnapshot : orderSnapshot.child("items").getChildren()) {
                         CartItem item = itemSnapshot.getValue(CartItem.class);
                         if (item != null) {
+                            item.setOrderId(orderId); // Set the orderId for reference
                             purchaseList.add(item);
                         }
                     }
@@ -76,6 +78,7 @@ public class Profile_User_Pay extends AppCompatActivity {
             }
         });
     }
+
 
     public void cancel_order_to_pay(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

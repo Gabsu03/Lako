@@ -85,6 +85,7 @@
         android:layout_height="25dp"
         android:background="@drawable/btn"
         android:fontFamily="@font/koho_medium"
+        android:onClick="shipButton"
         android:text="Ship"
         android:textAlignment="center"
         android:textColor="@color/white"

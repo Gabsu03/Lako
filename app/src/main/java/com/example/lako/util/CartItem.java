@@ -5,23 +5,26 @@ import android.os.Parcelable;
 
 public class CartItem implements Parcelable {
     private String productId;
+    private String orderId;
+    private String userId;
     private String name;
     private String image;
     private String price;
     private int quantity;
     private String sellerId;
     private String sellerName;
+    private String shopName;
 
     public CartItem() {}
 
-    public CartItem(String productId, String name, String image, String price, int quantity, String sellerId, String sellerName) {
+    public CartItem(String productId, String orderId, String name, String image, String price, int quantity, String sellerId) {
         this.productId = productId;
+        this.orderId = orderId;
         this.name = name;
         this.image = image;
         this.price = price;
         this.quantity = quantity;
         this.sellerId = sellerId;
-        this.sellerName = sellerName;
     }
 
     // Parcelable implementation
@@ -50,9 +53,14 @@ public class CartItem implements Parcelable {
     public String getProductId() {
         return productId;
     }
-
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+    public String getShopName() {
+        return shopName;
+    }
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public String getName() {
@@ -101,6 +109,19 @@ public class CartItem implements Parcelable {
 
     public void setSellerName(String sellerName) {
         this.sellerName = sellerName;
+    }
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override

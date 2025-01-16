@@ -73,21 +73,61 @@ public class User_View_Checkout extends AppCompatActivity {
         findViewById(R.id.back_btn).setOnClickListener(v -> finish());
 
         checkoutButton.setOnClickListener(v -> {
+            if (checkoutItems.isEmpty()) {
+                Toast.makeText(this, "No items to checkout.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user == null) {
+                Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
-            String orderId = ordersRef.push().getKey();
+
+            String buyerId = user.getUid();
+            String orderId = ordersRef.child(buyerId).push().getKey(); // Unique order ID
+
             if (orderId != null) {
-                Map<String, Object> orderDetails = new HashMap<>();
-                orderDetails.put("status", "Pending");
+                Map<String, Object> orderData = new HashMap<>();
+                Map<String, Object> itemsData = new HashMap<>();
 
-                Map<String, Object> items = new HashMap<>();
-                for (CartItem item : checkoutItems) {
-                    items.put(item.getProductId(), item);
+                // Add items to the order
+                for (int i = 0; i < checkoutItems.size(); i++) {
+                    itemsData.put(String.valueOf(i), checkoutItems.get(i));
                 }
-                orderDetails.put("items", items);
 
-                ordersRef.child(orderId).setValue(orderDetails).addOnCompleteListener(task -> {
+                // Create order data
+                orderData.put("datePlaced", System.currentTimeMillis());
+                orderData.put("status", "Pending");
+                orderData.put("userId", buyerId);
+                orderData.put("items", itemsData);
+
+                // Save order under the buyer's node
+                ordersRef.child(buyerId).child(orderId).setValue(orderData).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(this, "Order placed successfully.", Toast.LENGTH_SHORT).show();
+                        // Save order under the seller's node
+                        for (CartItem item : checkoutItems) {
+                            DatabaseReference sellerOrderRef = FirebaseDatabase.getInstance()
+                                    .getReference("SellerOrders")
+                                    .child(item.getSellerId())
+                                    .child(orderId);
+
+                            sellerOrderRef.setValue(orderData).addOnCompleteListener(sellerTask -> {
+                                if (sellerTask.isSuccessful()) {
+                                    Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(this, "Failed to save order for seller.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        // Navigate to a success screen
+                        Intent intent = new Intent(User_View_Checkout.this, User_View_Loading_Screen.class);
+                        startActivity(intent);
+
+                        // Clear the cart and adapter
                         checkoutItems.clear();
                         checkoutAdapter.notifyDataSetChanged();
                         finish();

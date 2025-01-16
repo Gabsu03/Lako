@@ -78,6 +78,16 @@ public class sign_up extends AppCompatActivity {
                     return;
                 }
 
+                if (!email.endsWith("@gmail.com")) {
+                    Toast.makeText(sign_up.this, "Only Gmail accounts are allowed", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (email.matches(".*\\.edu\\.ph$")) {
+                    Toast.makeText(sign_up.this, "Educational emails are not allowed", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(sign_up.this, "Password is Required", Toast.LENGTH_SHORT).show();
                     return;
@@ -98,12 +108,40 @@ public class sign_up extends AppCompatActivity {
                     return;
                 }
 
-                String passwordPattern = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).+";
-                Pattern pattern = Pattern.compile(passwordPattern);
-                Matcher matcher = pattern.matcher(password);
+                // Validate password against name and email
+                if (password.toLowerCase().contains(name.toLowerCase())) {
+                    Toast.makeText(sign_up.this, "Password must not contain your name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                if (!matcher.matches()) {
-                    Toast.makeText(sign_up.this, "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 numeric digit, and 1 special character", Toast.LENGTH_SHORT).show();
+                String emailPart = email.split("@")[0]; // Get the part before '@'
+                if (password.toLowerCase().contains(emailPart.toLowerCase())) {
+                    Toast.makeText(sign_up.this, "Password must not contain your email address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Validate password requirements
+                boolean hasUppercase = !password.equals(password.toLowerCase());
+                boolean hasLowercase = !password.equals(password.toUpperCase());
+                boolean hasDigit = password.matches(".*\\d.*");
+                boolean hasSpecial = password.matches(".*[!@#$%^&*(),.?\":{}|<>].*");
+
+                StringBuilder feedback = new StringBuilder("Password must contain:");
+                if (!hasUppercase) {
+                    feedback.append("\n- At least 1 uppercase letter");
+                }
+                if (!hasLowercase) {
+                    feedback.append("\n- At least 1 lowercase letter");
+                }
+                if (!hasDigit) {
+                    feedback.append("\n- At least 1 numeric digit");
+                }
+                if (!hasSpecial) {
+                    feedback.append("\n- At least 1 special character");
+                }
+
+                if (!hasUppercase || !hasLowercase || !hasDigit || !hasSpecial) {
+                    Toast.makeText(sign_up.this, feedback.toString(), Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -116,7 +154,6 @@ public class sign_up extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(sign_up.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
-
 
                             // Clear form data
                             clearFormData();
@@ -135,6 +172,7 @@ public class sign_up extends AppCompatActivity {
             }
         });
     }
+
     private void saveFormData() {
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

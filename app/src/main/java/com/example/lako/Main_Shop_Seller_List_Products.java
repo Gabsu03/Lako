@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,9 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
     private Uri productImageUri;
     private DatabaseReference productDatabase;
     private ProgressBar categoryProgressBar; // Declare ProgressBar
+    private Spinner productCategorySpinner;
+
+    private Map<String, String> categoryMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +68,27 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         productDescriptionEditText = findViewById(R.id.product_description);
         productPriceEditText = findViewById(R.id.product_price);
         productSpecificationEditText = findViewById(R.id.product_specification);
-        productTagsEditText = findViewById(R.id.product_tags);
         productStockEditText = findViewById(R.id.product_stock);
+        productCategorySpinner = findViewById(R.id.product_category_spinner); // Initialize spinner
+
+        // Initialize the category map
+        categoryMap.put("Clothing", "CLOTH_001");
+        categoryMap.put("Art", "ART_002");
+        categoryMap.put("Living", "LIVING_003");
+        categoryMap.put("Accessories", "ACC_004");
+
+        // Set up the product categories array
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.product_categories,
+                R.layout.spinner_dropdown_item // Custom layout for the selected item
+        );
+
+        // Set the custom dropdown layout
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        productCategorySpinner.setAdapter(adapter);
 
         // Initialize ProgressBar
         categoryProgressBar = findViewById(R.id.category_progress_bar);
@@ -96,8 +120,9 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         String productDescription = productDescriptionEditText.getText().toString().trim();
         String productPrice = productPriceEditText.getText().toString().trim();
         String productSpecification = productSpecificationEditText.getText().toString().trim();
-        String productTags = productTagsEditText.getText().toString().trim();
         String productStock = productStockEditText.getText().toString().trim();
+        String productCategory = productCategorySpinner.getSelectedItem().toString();
+        String categoryID = categoryMap.get(productCategory); // Get the category ID
 
         if (productName.isEmpty() || productPrice.isEmpty() || productStock.isEmpty()) {
             Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
@@ -132,8 +157,9 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         productData.put("description", productDescription);
         productData.put("price", productPrice);
         productData.put("specification", productSpecification);
-        productData.put("tags", productTags);
         productData.put("stock", productStock);
+        productData.put("category", productCategory); // Save category
+        productData.put("categoryID", categoryID); // Save category ID
         productData.put("sellerId", sellerId);
 
         // If the product has an image, upload it and save the URL
@@ -168,8 +194,15 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
     }
 
     private void saveProductDataToFirebase(String productId, String sellerId, Map<String, Object> productData) {
-        // Save product to the "products" node
+        // Save product to the "products" node (global list)
         productDatabase.child(productId).setValue(productData);
+
+        // Save product to the specific category node
+        String categoryID = (String) productData.get("categoryID");
+        if (categoryID != null) {
+            DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("categories").child(categoryID);
+            categoryRef.child(productId).setValue(productData);
+        }
 
         // Save product to the seller's "products" node
         DatabaseReference sellerProductsRef = FirebaseDatabase.getInstance().getReference("sellers").child(sellerId).child("products");
@@ -188,8 +221,6 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
                     categoryProgressBar.setVisibility(View.GONE);
                 });
     }
-
-
 
 
     public void my_shop_list_product_back_btn(View view) {

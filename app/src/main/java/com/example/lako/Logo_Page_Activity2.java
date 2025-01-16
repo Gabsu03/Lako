@@ -27,6 +27,15 @@ public class Logo_Page_Activity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_logo_page2);
+
+        // Check if the user is already authenticated
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            // User is authenticated, redirect to MainActivity
+            startActivity(new Intent(Logo_Page_Activity2.this, MainActivity.class));
+            finish(); // Close this activity to prevent returning to it
+        }
+
     }
 
     // Sign Up

@@ -13,6 +13,13 @@
     <string name="Upload_Image"><b><u>Upload Photo</u></b></string>
     <string name="change_password_text"><b><u>Ibalik sa Settings</u></b></string>
 
+    <string-array name="product_categories">
+        <item>Clothing</item>
+        <item>Art</item>
+        <item>Living</item>
+        <item>Accessories</item>
+    </string-array>
+
     <string name="darkbrown">#542910</string>
 
 

@@ -85,17 +85,21 @@ public class Profile_Settings extends AppCompatActivity {
         // Logout button
         ImageView logoutBtn = findViewById(R.id.logout);  // Your logout ImageView
         logoutBtn.setOnClickListener(v -> {
-            // Sign out the user from Firebase
+            // Sign out the user
             FirebaseAuth.getInstance().signOut();
 
-            // Show Toast message indicating logout success
+            // Show a toast message for successful logout
             Toast.makeText(Profile_Settings.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
 
-            // Redirect to Sign-In activity
-            Intent intent = new Intent(Profile_Settings.this, sign_in.class);
+            // Redirect to the Logo_Page_Activity2
+            Intent intent = new Intent(Profile_Settings.this, Logo_Page_Activity2.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+
+            // Finish Profile_Settings activity to prevent going back to it
             finish();
         });
+
 
 
         // Linked the "to pay" button to purchase

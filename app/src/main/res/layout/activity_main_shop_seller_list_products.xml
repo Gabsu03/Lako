@@ -145,7 +145,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15dp"
-        android:background="@drawable/email_reset"
+        android:background="@drawable/btn"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageView44"
         app:layout_constraintEnd_toEndOf="parent"
@@ -282,14 +282,13 @@
         android:id="@+id/imageView54"
         android:layout_width="370dp"
         android:layout_height="44dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="64dp"
         android:background="@drawable/bar"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView51"
-        app:layout_constraintVertical_bias="0.06" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView51" />
 
     <EditText
         android:id="@+id/product_price"
@@ -347,38 +346,6 @@
 
 
     <ImageView
-        android:id="@+id/imageView58"
-        android:layout_width="370dp"
-        android:layout_height="44dp"
-        android:background="@drawable/bar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView56"
-        app:layout_constraintVertical_bias="0.077" />
-
-    <EditText
-        android:id="@+id/product_tags"
-        android:layout_width="350dp"
-        android:layout_height="33dp"
-        android:background="@drawable/email_reset"
-        android:fontFamily="@font/koho_medium"
-        android:paddingLeft="10dp"
-        android:textAlignment="textStart"
-        android:textColor="@color/darkbrown"
-        android:textSize="15dp"
-        android:hint="Tags"
-        android:textColorHint="@color/white"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView58"
-        app:layout_constraintEnd_toEndOf="@+id/imageView58"
-        app:layout_constraintStart_toStartOf="@+id/imageView58"
-        app:layout_constraintTop_toTopOf="@+id/imageView58" />
-
-    <ImageView
         android:id="@+id/imageView10"
         android:layout_width="370dp"
         android:layout_height="44dp"
@@ -387,7 +354,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView58"
+        app:layout_constraintTop_toBottomOf="@+id/imageView56"
         app:layout_constraintVertical_bias="0.179" />
 
     <EditText
@@ -409,6 +376,19 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView10"
         app:layout_constraintStart_toStartOf="@+id/imageView10"
         app:layout_constraintTop_toTopOf="@+id/imageView10" />
+
+
+    <Spinner
+        android:id="@+id/product_category_spinner"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/product_categories"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toTopOf="@+id/imageView54"
+        app:layout_constraintEnd_toEndOf="@+id/imageView10"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView10"
+        app:layout_constraintTop_toBottomOf="@+id/imageView51" />
 
     <ProgressBar
         android:id="@+id/category_progress_bar"

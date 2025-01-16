@@ -1,60 +1,97 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lako.Fragments.Home;
 import com.example.lako.Fragments.Message;
 import com.example.lako.Fragments.Notifications;
 import com.example.lako.Fragments.Profile_User;
 import com.example.lako.Fragments.WishList;
+import com.example.lako.util.Product;
+import com.example.lako.util.ProductAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Accessories_Home extends AppCompatActivity {
+
+    private RecyclerView accessoriesRecyclerView;
+    private List<Product> accessoriesList;
+    private ProductAdapter accessoriesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_accessories_home);
+
+        // BottomNavigationView setup
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setSelectedItemId(R.id.nav_Home);
         bottomNav.setOnItemSelectedListener(navListener);
 
-        Fragment selectedFragment = new Home();
+        // Initialize RecyclerView
+        accessoriesRecyclerView = findViewById(R.id.accessories_recycleview);
+        accessoriesRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                selectedFragment).commit();
+        // Set up adapter and data
+        accessoriesList = new ArrayList<>();
+        accessoriesAdapter = new ProductAdapter(this, accessoriesList, new ProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Product product) {
+                Intent intent = new Intent(Accessories_Home.this, User_View_Product.class);
+                intent.putExtra("product_id", product.getId());
+                startActivity(intent);
+            }
+        });
+        accessoriesRecyclerView.setAdapter(accessoriesAdapter);
 
+        // Fetch data from Firebase
+        fetchAccessoriesFromFirebase();
     }
 
-    private NavigationBarView.OnItemSelectedListener navListener =
-            item -> {
-                int itemId = item.getItemId(); /* obtain the selected item ID from your source */
-                Fragment selectedFragment = null;
-
-                if (itemId == R.id.nav_Wishlist) {
-                    selectedFragment = new WishList();
-                } else if (itemId == R.id.nav_Notification) {
-                    selectedFragment = new Notifications();
-                } else if (itemId == R.id.nav_Home) {
-                    selectedFragment = new Home();
-                } else if (itemId == R.id.nav_Message) {
-                    selectedFragment = new Message();
-                } else if (itemId == R.id.nav_Profile) {
-                    selectedFragment = new Profile_User();
-
-                } else {
-                    selectedFragment = new Home();
+    private void fetchAccessoriesFromFirebase() {
+        DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("categories").child("ACC_004");
+        categoryRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                accessoriesList.clear();
+                for (DataSnapshot productSnapshot : snapshot.getChildren()) {
+                    Product product = productSnapshot.getValue(Product.class);
+                    if (product != null) {
+                        accessoriesList.add(product);
+                    }
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                return true;
-            };
+                accessoriesAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+            }
+        });
+    }
+
+
+    private NavigationBarView.OnItemSelectedListener navListener = item -> {
+        // Handle bottom navigation selection
+        return true;
+    };
 }

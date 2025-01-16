@@ -1,5 +1,6 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -16,12 +17,25 @@ import com.example.lako.Fragments.Profile_User;
 import com.example.lako.Fragments.WishList;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if the user is authenticated
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            // If no user is logged in, redirect to the Logo_Page_Activity2
+            Intent intent = new Intent(MainActivity.this, Logo_Page_Activity2.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+            return; // Prevent further execution
+        }
 
         setContentView(R.layout.activity_main);
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lako.ADD_TO_CART;
 import com.example.lako.About_Us;
+import com.example.lako.Accessories_Home;
 import com.example.lako.Logo_Page_Activity2;
 import com.example.lako.R;
 import com.example.lako.User_View_Product;
@@ -29,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Home extends Fragment {
@@ -52,6 +55,20 @@ public class Home extends Fragment {
         // Set GridLayoutManager with 2 columns
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         productRecyclerView.setLayoutManager(gridLayoutManager);
+
+        // Find and set OnClickListener for Accessories TextView
+        TextView accessoriesTextView = view.findViewById(R.id.accessories);
+        accessoriesTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Accessories_Home.class);
+            startActivity(intent);
+        });
+
+        // Find and set OnClickListener for Accessories TextView
+        TextView ArtTextView = view.findViewById(R.id.accessories);
+        accessoriesTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Accessories_Home.class);
+            startActivity(intent);
+        });
 
         // Find the cart button
         Button cartButton = view.findViewById(R.id.cart_btn); // Declare the button only once
@@ -85,25 +102,30 @@ public class Home extends Fragment {
     }
 
     private void fetchProductsFromFirebase() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("products");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference productDatabase = FirebaseDatabase.getInstance().getReference("products");
+        productDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 productList.clear();
                 for (DataSnapshot productSnapshot : snapshot.getChildren()) {
                     Product product = productSnapshot.getValue(Product.class);
                     if (product != null) {
+                        // Set the product ID using the snapshot key
+                        product.setId(productSnapshot.getKey());
                         productList.add(product);
                     }
                 }
+                // Shuffle the product list to display random products
+                Collections.shuffle(productList);
                 productAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle errors
+                // Handle error
             }
         });
-
     }
+
+
 }

@@ -85,32 +85,32 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
             return;
         }
 
-        // Extract the orderId from the item object
         String orderId = item.getOrderId();
-        if (orderId == null) {
-            Toast.makeText(context, "Order ID is missing.", Toast.LENGTH_SHORT).show();
+        String firebaseKey = item.getFirebaseKey();
+
+        if (orderId == null || firebaseKey == null) {
+            Toast.makeText(context, "Failed to identify the item for deletion.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Reference to the specific item within the order
+        // Reference to the specific item in the database
         DatabaseReference itemRef = FirebaseDatabase.getInstance()
                 .getReference("Orders")
                 .child(user.getUid())
                 .child(orderId)
                 .child("items")
-                .child(String.valueOf(position)); // Assuming position matches the key structure
+                .child(firebaseKey);
 
-        // Remove the specific item from the database
+        // Remove the specific item
         itemRef.removeValue().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                // Update the UI after successful removal
-                Toast.makeText(context, "Item removed successfully.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Order canceled successfully.", Toast.LENGTH_SHORT).show();
 
-                // Remove the item locally and notify the adapter
+                // Remove the item locally and update the UI
                 purchaseList.remove(position);
                 notifyItemRemoved(position);
 
-                // If the `items` node is empty after removal, delete the `orderId` node
+                // Check if the order has no more items and delete the order node
                 DatabaseReference orderRef = FirebaseDatabase.getInstance()
                         .getReference("Orders")
                         .child(user.getUid())
@@ -119,7 +119,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (!snapshot.exists()) {
-                            orderRef.removeValue(); // Remove the orderId node if no items are left
+                            orderRef.removeValue(); // Remove the entire order if empty
                         }
                     }
 
@@ -129,7 +129,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
                     }
                 });
             } else {
-                Toast.makeText(context, "Failed to remove item.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Failed to cancel the order.", Toast.LENGTH_SHORT).show();
             }
         });
     }

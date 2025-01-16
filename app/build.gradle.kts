@@ -59,6 +59,7 @@ dependencies {
 
     implementation (libs.glide)
 
+    implementation (libs.javax.mail.api)
 
 
 }

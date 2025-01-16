@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -60,8 +61,16 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
                 .placeholder(R.drawable.image_upload)
                 .into(holder.productImage);
 
-        // Handle Cancel Order Button Click
-        holder.cancelOrderButton.setOnClickListener(v -> cancelOrder(item, position));
+
+        // Handle Cancel Order Button Click with Confirmation Dialog
+        holder.cancelOrderButton.setOnClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Cancel Order")
+                    .setMessage("Are you sure you want to cancel this order?")
+                    .setPositiveButton("Yes", (dialog, which) -> cancelOrder(item, position)) // Call the cancelOrder method if confirmed
+                    .setNegativeButton("No", null) // Do nothing on "No"
+                    .show();
+        });
     }
 
     private void cancelOrder(CartItem item, int position) {
@@ -71,11 +80,16 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
             return;
         }
 
-        // Get references to remove the order
-        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference("Orders")
-                .child(user.getUid()).child(item.getProductId());
-        DatabaseReference buyerOrderRef = FirebaseDatabase.getInstance().getReference("BuyerOrders")
-                .child(item.getSellerId()).child(user.getUid()).child(item.getProductId());
+        // Firebase References
+        DatabaseReference orderRef = FirebaseDatabase.getInstance()
+                .getReference("Orders")
+                .child(user.getUid())
+                .child(item.getProductId());
+        DatabaseReference buyerOrderRef = FirebaseDatabase.getInstance()
+                .getReference("BuyerOrders")
+                .child(item.getSellerId())
+                .child(user.getUid())
+                .child(item.getProductId());
 
         // Start the removal process
         orderRef.removeValue().addOnCompleteListener(task -> {
@@ -96,6 +110,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
             }
         });
     }
+
 
 
     @Override

@@ -111,7 +111,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView24"
         app:layout_constraintVertical_bias="0.5" />
 
-    <ImageView
+    <Button
         android:id="@+id/MFA_drop"
         android:layout_width="16dp"
         android:layout_height="12dp"

@@ -3,6 +3,7 @@ package com.example.lako;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -162,22 +163,20 @@ public class Profile_Settings extends AppCompatActivity {
         startActivity(new Intent(Profile_Settings.this, Profile_Settings_Address.class));
     }
 
-    public void payments_settings(View view) {
-        startActivity(new Intent(Profile_Settings.this, Profile_Settings_Payment.class));
-    }
-
     public void change_password(View view) {
         Intent intent = new Intent(Profile_Settings.this, Profile_Settings_Change_Password.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
-    // Start Profile_Settings_MFA
     public void MFA_btn(View view) {
+        Log.d("Profile_Settings", "Navigating to Profile_Settings_MFA");
         Intent intent = new Intent(Profile_Settings.this, Profile_Settings_MFA.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+
+
 
     public void log_out(View view){
         startActivity(new Intent(Profile_Settings.this, sign_in.class));

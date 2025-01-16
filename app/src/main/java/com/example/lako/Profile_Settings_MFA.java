@@ -2,6 +2,7 @@ package com.example.lako;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -17,7 +18,6 @@ public class Profile_Settings_MFA extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_profile_settings_mfa);
     }
 
@@ -29,9 +29,11 @@ public class Profile_Settings_MFA extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // This method starts Profile_Settings_Add_MFA
     public void drop_down_mfa(View view) {
-        startActivity(new Intent(Profile_Settings_MFA.this, Profile_Settings_Add_MFA.class));
+        Log.d("Profile_Settings_MFA", "drop_down_mfa clicked");
+        Intent intent = new Intent(Profile_Settings_MFA.this, Profile_Settings_Add_MFA.class);
+        startActivity(intent);
     }
+
 }
 

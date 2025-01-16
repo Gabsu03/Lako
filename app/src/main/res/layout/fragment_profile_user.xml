@@ -176,7 +176,7 @@
     <TextView
         android:id="@+id/to_ship_text"
         android:layout_width="40dp"
-        android:layout_height="13dp"
+        android:layout_height="14dp"
         android:fontFamily="@font/jost_semibold"
         android:text="Ongoing"
         android:textAlignment="center"

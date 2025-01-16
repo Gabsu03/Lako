@@ -68,12 +68,6 @@ public class User_View_Checkout extends AppCompatActivity {
         }
 
 
-        checkoutAddressRecyclerView = findViewById(R.id.checkout_address_recycler_view);
-        checkoutAddressRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        addressAdapter = new AddressAdapter(addressList);
-        checkoutAddressRecyclerView.setAdapter(addressAdapter);
-
         // Back button click listener
         findViewById(R.id.back_btn).setOnClickListener(v -> finish());
     }

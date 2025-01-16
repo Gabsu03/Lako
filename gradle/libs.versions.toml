@@ -9,6 +9,7 @@ firebaseFirestore = "25.1.1"
 firebaseUiDatabase = "8.0.0"
 glide = "4.15.1"
 googleMaterial = "1.9.0"
+javaxMailApi = "1.6.2"
 junit = "4.13.2"
 junitVersion = "1.2.0"
 espressoCore = "3.6.0"
@@ -35,6 +36,7 @@ firebase-database-v2010 = { module = "com.google.firebase:firebase-database", ve
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
 firebase-ui-database = { module = "com.firebaseui:firebase-ui-database", version.ref = "firebaseUiDatabase" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+javax-mail-api = { module = "javax.mail:javax.mail-api", version.ref = "javaxMailApi" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

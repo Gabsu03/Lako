@@ -141,6 +141,7 @@
         android:textColor="@color/white"
         android:textSize="10dp"
         android:textStyle="bold"
+        android:onClick="cancel_order_to_pay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView88"
         app:layout_constraintHorizontal_bias="0.916"

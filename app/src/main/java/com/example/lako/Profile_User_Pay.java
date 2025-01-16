@@ -96,15 +96,12 @@ public class Profile_User_Pay extends AppCompatActivity {
         });
     }
 
-    // Override the hardware back button press
-    @Override
-    public void onBackPressed() {
-        // Return to MainActivity, where the Profile_User fragment is part of BottomNavigationView
-        Intent intent = new Intent(Profile_User_Pay.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Clear all activities above it in the stack
-        startActivity(intent);
-        finish();
+    public void pay_purchase_back(View view) {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent); // Notify MainActivity
+        finish(); // Close the activity
     }
+
 
     public void To_Ship(View view) {
         startActivity(new Intent(Profile_User_Pay.this, Profile_User_Ship.class));

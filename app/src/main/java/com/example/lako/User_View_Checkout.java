@@ -52,6 +52,8 @@ public class User_View_Checkout extends AppCompatActivity {
         totalAmountTextView = findViewById(R.id.total_amount_checkout);
         checkoutButton = findViewById(R.id.checkout_btn);
 
+
+
         ArrayList<CartItem> receivedItems = getIntent().getParcelableArrayListExtra("checkoutItems");
         if (receivedItems != null) {
             checkoutItems.addAll(receivedItems);
@@ -65,11 +67,23 @@ public class User_View_Checkout extends AppCompatActivity {
             calculateTotalAmountBySeller();
         }
 
+
         checkoutAddressRecyclerView = findViewById(R.id.checkout_address_recycler_view);
         checkoutAddressRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         addressAdapter = new AddressAdapter(addressList);
         checkoutAddressRecyclerView.setAdapter(addressAdapter);
+
+        // Back button click listener
+        findViewById(R.id.back_btn).setOnClickListener(v -> finish());
+    }
+
+    // Override the system back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {

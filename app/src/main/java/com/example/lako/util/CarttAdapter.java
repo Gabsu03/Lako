@@ -48,8 +48,8 @@ public class CarttAdapter extends RecyclerView.Adapter<CarttAdapter.CartViewHold
         CartItem item = cartItems.get(position);
 
         holder.cartNameOfProduct.setText(item.getName());
-        holder.cartPriceOfProduct.setText("₱" + item.getPrice());
-        holder.quantityProduct.setText(item.getQuantity() + "x"); // Display quantity
+        holder.cartPriceOfProduct.setText("₱" + item.getPrice() + " (each)");
+        holder.quantityProduct.setText(item.getQuantity() + "x");
         Glide.with(context)
                 .load(item.getImage())
                 .placeholder(R.drawable.image_upload)

@@ -2,6 +2,7 @@ package com.example.lako;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class Seller_View_Profile extends AppCompatActivity {
         setContentView(R.layout.activity_seller_view_profile);
 
 
+
         // Initialize views
         profilePictureShop = findViewById(R.id.view_profile_seller_shop);
         nameTextView = findViewById(R.id.view_profile_name_of_seller_shop);
@@ -57,8 +59,13 @@ public class Seller_View_Profile extends AppCompatActivity {
         // Initialize product list
         productList = new ArrayList<>();
 
-        // Get sellerId from Intent
+        // Debugging logs
+        String productId = getIntent().getStringExtra("product_id");
         String sellerId = getIntent().getStringExtra("sellerId");
+
+        Log.d("Seller_View_Profile", "Received product_id: " + productId);
+        Log.d("Seller_View_Profile", "Received sellerId: " + sellerId);
+
         if (sellerId != null) {
             loadSellerDetails(sellerId);
             loadProducts(sellerId);
@@ -67,6 +74,8 @@ public class Seller_View_Profile extends AppCompatActivity {
             Toast.makeText(this, "Seller ID not found.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 
     private void loadSellerDetails(String sellerId) {
@@ -143,6 +152,7 @@ public class Seller_View_Profile extends AppCompatActivity {
                 });
     }
 
+
     private void setupRecyclerView() {
         productAdapter = new ProducttAdapter(this, productList, null);
 
@@ -152,21 +162,27 @@ public class Seller_View_Profile extends AppCompatActivity {
         productsRecyclerView.setAdapter(productAdapter);
     }
 
+    public void back_view_profile_seller_btn(View view) {
+        onBackPressed();
+    }
+
     @Override
     public void onBackPressed() {
-        // Create intent to navigate back to User_View_Product
         Intent intent = new Intent(Seller_View_Profile.this, User_View_Product.class);
 
-        // Retrieve the productId from the intent, assuming it was passed when navigating to this activity
+        // Retrieve and pass productId if available
         String productId = getIntent().getStringExtra("product_id");
         if (productId != null) {
-            intent.putExtra("product_id", productId);  // Pass it back to the previous activity
+            intent.putExtra("product_id", productId);
+        } else {
+            Log.w("SellerViewProfile", "Product ID not found when navigating back.");
         }
 
-        // Start the activity and finish the current one
         startActivity(intent);
         finish();
     }
+
+
 
 
 }

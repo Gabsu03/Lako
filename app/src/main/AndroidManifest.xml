@@ -13,7 +13,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_app"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -78,9 +78,6 @@
             android:exported="false" />
         <activity
             android:name=".User_Cart"
-            android:exported="false" />
-        <activity
-            android:name=".Profile_Settings_Change_Password_two"
             android:exported="false" />
         <activity
             android:name=".Profile_Settings_Change_Password"
@@ -174,9 +171,6 @@
             android:exported="false" />
         <activity
             android:name=".Profile_User_Pay"
-            android:exported="false" />
-        <activity
-            android:name=".Profile_Settings_Purchase"
             android:exported="false" />
         <activity
             android:name=".Profile_Settings_Add_MFA"

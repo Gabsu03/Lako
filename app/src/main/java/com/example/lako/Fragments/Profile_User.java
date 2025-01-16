@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +20,8 @@ import com.bumptech.glide.Glide;
 import com.example.lako.Main_Shop_Seller_Products;
 import com.example.lako.Profile_My_Shop_Start;
 import com.example.lako.Profile_Settings;
-import com.example.lako.Profile_Settings_Purchase;
 import com.example.lako.Profile_User_Pay;
-import com.example.lako.Profile_User_Received;
 import com.example.lako.Profile_User_Ship;
-import com.example.lako.sign_in;
 import com.example.lako.Profile_User_To_Receive;
 import com.example.lako.R;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -36,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Random;
 
 public class Profile_User extends Fragment {
 
@@ -54,36 +52,40 @@ public class Profile_User extends Fragment {
         nameInput = view.findViewById(R.id.nameInput);
         profileImageView = view.findViewById(R.id.UploadImage); // The ImageView to display the profile picture
 
-        // Fetch user data from Firebase
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
-            userRef.get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    DataSnapshot dataSnapshot = task.getResult();
-                    String firstName = dataSnapshot.child("firstName").getValue(String.class);
-                    String lastName = dataSnapshot.child("lastName").getValue(String.class);
-                    String profileImageUrl = dataSnapshot.child("profileImage").getValue(String.class); // Get the profile image URL
 
-                    // Set the user's name in the TextView or EditText (assuming you have a TextView to show the name)
-                    if (firstName != null && lastName != null) {
-                        nameInput.setText(firstName + " " + lastName); // Display the full name
-                    } else {
-                        nameInput.setText("Username7");
-                    }
+            // Add a real-time listener
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String username = dataSnapshot.child("username").getValue(String.class);
+                    String profileImageUrl = dataSnapshot.child("profileImage").getValue(String.class);
 
-                    // If the profile image URL exists, load the image using Glide
+                    // Update username
+                    nameInput.setText(username != null ? username : "Username");
+
+                    // Update profile image
                     if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
-                        Glide.with(getActivity())
-                                .load(profileImageUrl) // Load the image URL
-                                .placeholder(R.drawable.image_upload) // Placeholder image if loading
-                                .error(R.drawable.image_upload) // Error image if loading fails
-                                .centerCrop() // This ensures the image scales properly within the shape
-                                .into(profileImageView); // Set the image into ShapeableImageView
+                        Glide.with(requireActivity())
+                                .load(profileImageUrl)
+                                .placeholder(R.drawable.image_upload)
+                                .error(R.drawable.image_upload)
+                                .centerCrop()
+                                .into(profileImageView);
+                    } else {
+                        profileImageView.setImageResource(R.drawable.image_upload);
                     }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(getActivity(), "Failed to load user data.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
+
 
         // Settings dropdown click listener
         settingsDrop.setOnClickListener(v -> {
@@ -104,12 +106,30 @@ public class Profile_User extends Fragment {
         return view;
     }
 
+    // Helper method to generate a default username
+    private String generateDefaultUsername() {
+        String consonants = "BCDFGHJKLMNPQRSTVWXYZ"; // String containing consonants
+        StringBuilder usernameBuilder = new StringBuilder();
+        Random random = new Random();
+
+        // Generate 6 random consonants
+        for (int i = 0; i < 6; i++) {
+            char randomConsonant = consonants.charAt(random.nextInt(consonants.length()));
+            usernameBuilder.append(randomConsonant);
+        }
+
+        // Add a single random digit (0-9)
+        int randomDigit = random.nextInt(10);
+        usernameBuilder.append(randomDigit);
+
+        return usernameBuilder.toString();
+    }
+
+
     private void setupPurchaseButtons(View view) {
-        view.findViewById(R.id.imageView4).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_Settings_Purchase.class)));
         view.findViewById(R.id.to_pay).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_Pay.class)));
         view.findViewById(R.id.to_ship).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_Ship.class)));
         view.findViewById(R.id.to_receive).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_To_Receive.class)));
-        view.findViewById(R.id.to_review).setOnClickListener(v -> startActivity(new Intent(getActivity(), Profile_User_Received.class)));
     }
 
     private void navigateToShop(FirebaseUser currentUser) {

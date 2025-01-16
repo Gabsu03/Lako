@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lako.ChatActivity;
+import com.example.lako.Chat_bot;
 import com.example.lako.R;
 import com.example.lako.adapters.ChatRoomAdapter;
 import com.example.lako.models.ChatRoom;
@@ -38,6 +40,14 @@ public class Message extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
+
+        // Initialize chat_a_bot button
+        Button chatButton = view.findViewById(R.id.chat_a_bot);
+        chatButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Chat_bot.class);
+            startActivity(intent);
+        });
+
 
         recyclerView = view.findViewById(R.id.messageRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

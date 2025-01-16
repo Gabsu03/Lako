@@ -110,12 +110,12 @@
     <TextView
         android:id="@+id/textView67"
         android:layout_width="42dp"
-        android:layout_height="13dp"
+        android:layout_height="14dp"
         android:fontFamily="@font/jost_medium"
         android:text="Quantity:"
         android:textAlignment="textStart"
         android:textColor="@color/grey"
-        android:textSize="10dp"
+        android:textSize="11dp"
         app:layout_constraintBottom_toTopOf="@+id/cart_price_of_product"
         app:layout_constraintEnd_toEndOf="@+id/imageView73"
         app:layout_constraintHorizontal_bias="0.055"
@@ -126,11 +126,11 @@
     <TextView
         android:id="@+id/quantity_product"
         android:layout_width="70dp"
-        android:layout_height="13dp"
+        android:layout_height="14dp"
         android:fontFamily="@font/jost_regular"
         android:textAlignment="textStart"
         android:textColor="@color/grey"
-        android:textSize="10dp"
+        android:textSize="11dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView67"
         app:layout_constraintEnd_toEndOf="@+id/imageView73"
         app:layout_constraintHorizontal_bias="0.0"
@@ -140,7 +140,7 @@
 
     <TextView
         android:id="@+id/cart_price_of_product"
-        android:layout_width="70dp"
+        android:layout_width="140dp"
         android:layout_height="30dp"
         android:fontFamily="@font/jost_medium"
         android:textAlignment="textStart"
@@ -160,7 +160,7 @@
         android:background="@drawable/trasshh"
         app:layout_constraintBottom_toBottomOf="@+id/imageView73"
         app:layout_constraintEnd_toEndOf="@+id/imageView73"
-        app:layout_constraintHorizontal_bias="0.811"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toEndOf="@+id/cart_price_of_product"
         app:layout_constraintTop_toTopOf="@+id/imageView73"
         app:layout_constraintVertical_bias="0.833" />

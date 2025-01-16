@@ -134,7 +134,7 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
         productData.put("specification", productSpecification);
         productData.put("tags", productTags);
         productData.put("stock", productStock);
-        productData.put("sellerId", sellerId); // Add sellerId to product data
+        productData.put("sellerId", sellerId);
 
         // If the product has an image, upload it and save the URL
         if (productImageUri != null) {
@@ -142,56 +142,53 @@ public class Main_Shop_Seller_List_Products extends AppCompatActivity {
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("product_images").child(productId + ".jpg");
             storageReference.putFile(productImageUri)
                     .addOnSuccessListener(taskSnapshot -> {
-                        // Get the download URL of the uploaded image
                         storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
                             String imageUrl = uri.toString();
                             productData.put("image", imageUrl); // Store image URL in product data
 
-                            // Save product data to Firebase Realtime Database
-                            productDatabase.child(productId).setValue(productData)
-                                    .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
-                                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
-
-                                        // Navigate to the Main_Shop_Seller_Products and clear back stack
-                                        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class)
-                                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                        finish(); // Ensure the current activity is removed from the back stack
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
-                                    });
+                            // Save product data to Firebase
+                            saveProductDataToFirebase(productId, sellerId, productData);
                         }).addOnFailureListener(e -> {
                             Toast.makeText(this, "Failed to get image URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
+                            categoryProgressBar.setVisibility(View.GONE);
                         });
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
+                        categoryProgressBar.setVisibility(View.GONE);
                     });
         } else {
-            // If no image is selected, store null for the image
             productData.put("image", null);
 
-            // Save product data to Firebase Realtime Database without image
-            productDatabase.child(productId).setValue(productData)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
-                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
+            productData.put("id", productId);
 
-                        // Navigate to the Main_Shop_Seller_Products and clear back stack
-                        startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class)
-                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                        finish(); // Ensure the current activity is removed from the back stack
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        categoryProgressBar.setVisibility(View.GONE); // Hide ProgressBar
-                    });
+            // Save product data to Firebase without image
+            saveProductDataToFirebase(productId, sellerId, productData);
         }
     }
+
+    private void saveProductDataToFirebase(String productId, String sellerId, Map<String, Object> productData) {
+        // Save product to the "products" node
+        productDatabase.child(productId).setValue(productData);
+
+        // Save product to the seller's "products" node
+        DatabaseReference sellerProductsRef = FirebaseDatabase.getInstance().getReference("sellers").child(sellerId).child("products");
+        sellerProductsRef.child(productId).setValue(productData)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Product added successfully!", Toast.LENGTH_SHORT).show();
+                    categoryProgressBar.setVisibility(View.GONE);
+
+                    // Navigate to the Main_Shop_Seller_Products and clear back stack
+                    startActivity(new Intent(Main_Shop_Seller_List_Products.this, Main_Shop_Seller_Products.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    finish(); // Ensure the current activity is removed from the back stack
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    categoryProgressBar.setVisibility(View.GONE);
+                });
+    }
+
 
 
 

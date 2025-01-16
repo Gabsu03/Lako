@@ -2,6 +2,7 @@ package com.example.lako;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,6 +31,8 @@ public class sign_up extends AppCompatActivity {
 
     FirebaseAuth eAuth;
 
+    private static final String PREFS_NAME = "SignUpPrefs";
+
     private String name, email, password, retype_pass;
 
     @SuppressLint("MissingInflatedId")
@@ -48,6 +51,9 @@ public class sign_up extends AppCompatActivity {
         termsCheckbox = findViewById(R.id.terms_checkbox);
 
         eAuth = FirebaseAuth.getInstance();
+
+        // Restore form data if exists
+        restoreFormData();
 
         buttonReg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,12 +107,19 @@ public class sign_up extends AppCompatActivity {
                     return;
                 }
 
+                // Save data to SharedPreferences before proceeding
+                saveFormData();
+
                 // Create Firebase account
                 eAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(sign_up.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+
+
+                            // Clear form data
+                            clearFormData();
 
                             // Redirect to Security Question class
                             Intent intent = new Intent(sign_up.this, Security_Question.class);
@@ -122,16 +135,60 @@ public class sign_up extends AppCompatActivity {
             }
         });
     }
+    private void saveFormData() {
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name", editTextname.getText().toString());
+        editor.putString("email", editTextemail.getText().toString());
+        editor.putString("password", editTextPassword.getText().toString());
+        editor.putString("retype_pass", editTextRetype_pass.getText().toString());
+        editor.putBoolean("termsChecked", termsCheckbox.isChecked());
+        editor.apply();
+    }
+
+    private void restoreFormData() {
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        if (preferences.contains("name")) {
+            editTextname.setText(preferences.getString("name", ""));
+            editTextemail.setText(preferences.getString("email", ""));
+            editTextPassword.setText(preferences.getString("password", ""));
+            editTextRetype_pass.setText(preferences.getString("retype_pass", ""));
+            termsCheckbox.setChecked(preferences.getBoolean("termsChecked", false));
+        }
+    }
+
+    private void clearFormData() {
+        editTextname.setText("");
+        editTextemail.setText("");
+        editTextPassword.setText("");
+        editTextRetype_pass.setText("");
+        termsCheckbox.setChecked(false);
+
+        // Clear SharedPreferences data
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        restoreFormData();
+    }
 
     public void Login(View view) {
+        clearFormData(); // Clear data before navigating to Login
         startActivity(new Intent(sign_up.this, sign_in.class));
     }
 
     public void terms(View view) {
+        saveFormData(); // Save data before navigating to Terms and Conditions
         startActivity(new Intent(sign_up.this, Terms_Conditions.class));
     }
 
-    public void  sign_up_back(View view) {
+    public void sign_up_back(View view) {
+        clearFormData(); // Clear data before navigating back
         startActivity(new Intent(sign_up.this, Logo_Page_Activity2.class));
     }
 }

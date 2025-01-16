@@ -59,44 +59,41 @@ public class User_View_Product extends AppCompatActivity {
         visitProfileBtn.setOnClickListener(v -> {
             String productId = getIntent().getStringExtra("product_id");
 
-            Log.d("UserViewProduct", "Product ID: " + productId);
-
             if (productId != null) {
+                // Fetch sellerId from the database using productId
                 DatabaseReference productRef = FirebaseDatabase.getInstance().getReference("products").child(productId);
                 productRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
-                            Log.d("UserViewProduct", "Product Data: " + snapshot.getValue());
-
                             String sellerId = snapshot.child("sellerId").getValue(String.class);
 
-                            Log.d("UserViewProduct", "Seller ID: " + sellerId);
-
                             if (sellerId != null) {
+                                // Pass productId and sellerId to the Seller_View_Profile activity
                                 Intent intent = new Intent(User_View_Product.this, Seller_View_Profile.class);
-                                intent.putExtra("sellerId", sellerId);
+                                intent.putExtra("product_id", productId);  // Add productId
+                                intent.putExtra("sellerId", sellerId);     // Add sellerId
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(User_View_Product.this, "Seller ID not found", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(User_View_Product.this, "Seller ID not found for product.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(User_View_Product.this, "Product not found", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(User_View_Product.this, "Product not found in database.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        // Log the error if the Firebase query fails
-                        Log.e("UserViewProduct", "Failed to fetch product details: " + error.getMessage());
-                        Toast.makeText(User_View_Product.this, "Failed to fetch product details", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(User_View_Product.this, "Failed to fetch product details.", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
-                Log.e("UserViewProduct", "Product ID is null");
-                Toast.makeText(User_View_Product.this, "Product ID not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(User_View_Product.this, "Product ID not found in intent.", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
 
 
 
@@ -186,13 +183,13 @@ public class User_View_Product extends AppCompatActivity {
         wishButton.setOnClickListener(v -> {
             if (!isWishlisted) {
                 // Mark as wishlisted
-                wishButton.setBackgroundResource(R.drawable.wishlist_filled);  // Change to filled star
+                wishButton.setBackgroundResource(R.drawable.heart_filled);  // Change to filled star
                 isWishlisted = true;
                 addToWishlist(productId);  // Add the product to wishlist in Firebase
                 Toast.makeText(User_View_Product.this, "Added to Wishlist!", Toast.LENGTH_SHORT).show();
             } else {
                 // If already wishlisted, unmark it
-                wishButton.setBackgroundResource(R.drawable.wishlist);  // Change to unfilled star
+                wishButton.setBackgroundResource(R.drawable.heart_not_filled);  // Change to unfilled star
                 isWishlisted = false;
                 removeFromWishlist(productId);  // Remove the product from wishlist in Firebase
                 Toast.makeText(User_View_Product.this, "Removed from Wishlist!", Toast.LENGTH_SHORT).show();
@@ -279,11 +276,11 @@ public class User_View_Product extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     // Product is already in the wishlist
-                    wishButton.setBackgroundResource(R.drawable.wishlist_filled);  // Set filled star
+                    wishButton.setBackgroundResource(R.drawable.heart_filled);  // Set filled star
                     isWishlisted = true;
                 } else {
                     // Product is not in the wishlist
-                    wishButton.setBackgroundResource(R.drawable.wishlist);  // Set unfilled star
+                    wishButton.setBackgroundResource(R.drawable.heart_not_filled);  // Set unfilled star
                     isWishlisted = false;
                 }
             }

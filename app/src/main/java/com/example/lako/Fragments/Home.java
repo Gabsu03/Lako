@@ -71,7 +71,7 @@ public class Home extends Fragment {
             public void onItemClick(Product product) {
                 // Handle product click and start User_View_Product activity
                 Intent intent = new Intent(getActivity(), User_View_Product.class);
-                intent.putExtra("product_id", product.getId());  // Pass product ID to the activity
+                intent.putExtra("product_id", product.getId());
                 startActivity(intent);
             }
         });

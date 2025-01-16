@@ -97,22 +97,6 @@
         app:layout_constraintTop_toBottomOf="@+id/nameInput"
         app:layout_constraintVertical_bias="0.50" />
 
-    <TextView
-        android:id="@+id/purchase_view_all"
-        android:layout_width="40dp"
-        android:layout_height="16dp"
-        android:fontFamily="@font/jost_regular"
-        android:text="View All"
-        android:textAlignment="center"
-        android:textColor="@color/darkbrown"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintHorizontal_bias="0.978"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/nameInput"
-        app:layout_constraintVertical_bias="0.50" />
-
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="370dp"
@@ -133,7 +117,7 @@
         android:background="@drawable/pay"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="@+id/imageView6"
         app:layout_constraintTop_toTopOf="@+id/imageView6"
         app:layout_constraintVertical_bias="0.244"
@@ -159,11 +143,11 @@
         android:id="@+id/to_ship"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/ship"
+        android:background="@drawable/ongoing"
         android:onClick="ship_btn"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toEndOf="@+id/to_pay"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
         app:layout_constraintVertical_bias="0.451"
@@ -174,7 +158,7 @@
         android:layout_width="40dp"
         android:layout_height="13dp"
         android:fontFamily="@font/jost_semibold"
-        android:text="To Ship"
+        android:text="Ongoing"
         android:textAlignment="center"
         android:textColor="@color/darkbrown"
         android:textSize="10dp"
@@ -193,7 +177,7 @@
         android:background="@drawable/receive"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toEndOf="@+id/to_ship"
         app:layout_constraintTop_toTopOf="@+id/imageView6"
         app:layout_constraintVertical_bias="0.3"
@@ -204,7 +188,7 @@
         android:layout_width="52dp"
         android:layout_height="13dp"
         android:fontFamily="@font/jost_semibold"
-        android:text="To Receive"
+        android:text="Complete"
         android:textAlignment="center"
         android:textColor="@color/darkbrown"
         android:textSize="10dp"
@@ -215,35 +199,6 @@
         app:layout_constraintTop_toTopOf="@+id/to_receive"
         app:layout_constraintVertical_bias="0.655" />
 
-    <Button
-        android:id="@+id/to_review"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:onClick="reviewed_btn"
-        android:background="@drawable/review"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-        app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintHorizontal_bias="0.422"
-        app:layout_constraintStart_toEndOf="@+id/to_receive"
-        app:layout_constraintTop_toTopOf="@+id/imageView6"
-        app:layout_constraintVertical_bias="0.3"
-        tools:ignore="OnClick" />
-
-    <TextView
-        android:id="@+id/to_review_text"
-        android:layout_width="52dp"
-        android:layout_height="13dp"
-        android:fontFamily="@font/jost_semibold"
-        android:text="To Review"
-        android:textAlignment="center"
-        android:textColor="@color/darkbrown"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-        app:layout_constraintEnd_toEndOf="@+id/to_review"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/to_review"
-        app:layout_constraintTop_toTopOf="@+id/to_review"
-        app:layout_constraintVertical_bias="0.655" />
 
     <ImageView
         android:id="@+id/imageView7"

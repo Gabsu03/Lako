@@ -31,14 +31,7 @@ public class Profile_User_Ship extends AppCompatActivity {
         startActivity(new Intent(Profile_User_Ship.this, Profile_User_Pay.class));
     }
 
-    public void All_btn(View view) {
-        startActivity(new Intent(Profile_User_Ship.this, Profile_Settings_Purchase.class));
-    }
     public void To_Receive(View view) {
         startActivity(new Intent(Profile_User_Ship.this, Profile_User_To_Receive.class));
-    }
-
-    public void Received(View view) {
-        startActivity(new Intent(Profile_User_Ship.this, Profile_User_Received.class));
     }
 }

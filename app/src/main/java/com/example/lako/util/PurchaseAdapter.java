@@ -71,28 +71,22 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
             return;
         }
 
+        // Get references to remove the order
         DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference("Orders")
-                .child(user.getUid()).child(item.getProductId()); // Remove specific order item
-
+                .child(user.getUid()).child(item.getProductId());
         DatabaseReference buyerOrderRef = FirebaseDatabase.getInstance().getReference("BuyerOrders")
-                .child(item.getSellerId()).child(user.getUid()).child(item.getProductId()); // Remove buyer's order
+                .child(item.getSellerId()).child(user.getUid()).child(item.getProductId());
 
-        DatabaseReference userOrderRef = FirebaseDatabase.getInstance().getReference("Orders").child(user.getUid()); // Remove from user's orders
-
+        // Start the removal process
         orderRef.removeValue().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                // Remove from buyer's order list
                 buyerOrderRef.removeValue().addOnCompleteListener(buyerTask -> {
                     if (buyerTask.isSuccessful()) {
-                        userOrderRef.removeValue().addOnCompleteListener(userTask -> {
-                            if (userTask.isSuccessful()) {
-                                Toast.makeText(context, "Order permanently removed.", Toast.LENGTH_SHORT).show();
-                                purchaseList.remove(position);
-                                notifyItemRemoved(position);
-                                notifyDataSetChanged();
-                            } else {
-                                Toast.makeText(context, "Failed to remove user's order.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        // Update the UI after successful removal
+                        Toast.makeText(context, "Order permanently removed.", Toast.LENGTH_SHORT).show();
+                        purchaseList.remove(position);
+                        notifyItemRemoved(position); // Notify RecyclerView of item removal
                     } else {
                         Toast.makeText(context, "Failed to remove buyer's order.", Toast.LENGTH_SHORT).show();
                     }
@@ -102,6 +96,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

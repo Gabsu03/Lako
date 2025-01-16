@@ -75,9 +75,17 @@ public class Chat_bot extends AppCompatActivity {
             Button questionButton = new Button(this);
             questionButton.setText(question);
             questionButton.setAllCaps(false);
-            questionButton.setBackgroundResource(R.drawable.suggested_button_bg); // Custom style
-            questionButton.setTextColor(getResources().getColor(android.R.color.black));
+            questionButton.setBackgroundResource(R.drawable.suggested_button_bg);
+            questionButton.setTextColor(getResources().getColor(android.R.color.white));
             questionButton.setPadding(20, 10, 20, 10);
+
+            // Set layout parameters with bottom margin
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 10, 0, 10); // Left, Top, Right, Bottom margin
+            questionButton.setLayoutParams(params);
 
             // Handle button click
             questionButton.setOnClickListener(v -> {
@@ -101,12 +109,16 @@ public class Chat_bot extends AppCompatActivity {
     }
 
     public void chat_bot_back(View view) {
-        // Navigate to MainActivity, which will ensure Profile_User fragment is shown
-        Intent intent = new Intent(Chat_bot.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Clear all activities above it in the stack
-        startActivity(intent);
-        finish();
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent); // Notify the parent activity
+        finish(); // Close the Chat_bot activity
     }
+
+
+
+
+
+
 
     private void addUserMessage(String message) {
         messageList.add(new Message_bot(message, true));

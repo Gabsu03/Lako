@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -20,8 +21,12 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Random;
 
 public class Profile_Settings extends AppCompatActivity {
 
@@ -45,29 +50,33 @@ public class Profile_Settings extends AppCompatActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
-            userRef.get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    DataSnapshot dataSnapshot = task.getResult();
-                    String firstName = dataSnapshot.child("firstName").getValue(String.class);
-                    String lastName = dataSnapshot.child("lastName").getValue(String.class);
-                    String profileImageUrl = dataSnapshot.child("profileImage").getValue(String.class); // Get profile image URL
 
-                    // Set the user's name in the TextView or EditText (assuming you have a TextView to show the name)
-                    if (firstName != null && lastName != null) {
-                        nameInput.setText(firstName + " " + lastName); // Display the full name
-                    } else {
-                        nameInput.setText("Username7");
-                    }
+            // Attach a ValueEventListener to listen for real-time updates
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String username = snapshot.child("username").getValue(String.class);
+                        String profileImageUrl = snapshot.child("profileImage").getValue(String.class);
 
-                    // If profile image URL exists, load it using Glide
-                    if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
-                        Glide.with(Profile_Settings.this)
-                                .load(profileImageUrl)  // Load the image URL from Firebase
-                                .placeholder(R.drawable.image_upload)  // Placeholder if the image is loading
-                                .error(R.drawable.image_upload)  // Error image if loading fails
-                                .centerCrop()  // Ensure image scales properly inside the circle
-                                .into(profileImageView);  // Set image into the ImageView
+                        // Update UI with new data
+                        nameInput.setText(username != null ? username : "Username");
+                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                            Glide.with(Profile_Settings.this)
+                                    .load(profileImageUrl)
+                                    .placeholder(R.drawable.image_upload)
+                                    .error(R.drawable.image_upload)
+                                    .centerCrop()
+                                    .into(profileImageView);
+                        } else {
+                            profileImageView.setImageResource(R.drawable.image_upload); // Default image
+                        }
                     }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(Profile_Settings.this, "Failed to load profile data", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -87,11 +96,6 @@ public class Profile_Settings extends AppCompatActivity {
             finish();
         });
 
-        // Find the ImageView for starting Profile_Settings_Purchase activity
-        ImageView imageView4 = findViewById(R.id.imageView4);
-        imageView4.setOnClickListener(v -> {
-            startActivity(new Intent(Profile_Settings.this, Profile_Settings_Purchase.class));
-        });
 
         // Linked the "to pay" button to purchase
         Button pay_btn = findViewById(R.id.to_pay);
@@ -111,12 +115,25 @@ public class Profile_Settings extends AppCompatActivity {
             startActivity(new Intent(Profile_Settings.this, Profile_User_To_Receive.class));
         });
 
-        // Linked the "to review" button to purchase
-        Button reviewed_btn = findViewById(R.id.to_review);
-        reviewed_btn.setOnClickListener(v -> {
-            startActivity(new Intent(Profile_Settings.this, Profile_User_Received.class));
-        });
+    }
 
+    // Helper method to generate a default username
+    private String generateDefaultUsername() {
+        String consonants = "BCDFGHJKLMNPQRSTVWXYZ"; // String containing consonants
+        StringBuilder usernameBuilder = new StringBuilder();
+        Random random = new Random();
+
+        // Generate 6 random consonants
+        for (int i = 0; i < 6; i++) {
+            char randomConsonant = consonants.charAt(random.nextInt(consonants.length()));
+            usernameBuilder.append(randomConsonant);
+        }
+
+        // Add a single random digit (0-9)
+        int randomDigit = random.nextInt(10);
+        usernameBuilder.append(randomDigit);
+
+        return usernameBuilder.toString();
     }
 
     // Handle the "up" arrow or back button

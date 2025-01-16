@@ -30,16 +30,8 @@ public class Profile_User_To_Receive extends AppCompatActivity {
     public void To_Pay(View view) {
         startActivity(new Intent(Profile_User_To_Receive.this, Profile_User_Pay.class));
     }
-
-    public void All_btn(View view) {
-        startActivity(new Intent(Profile_User_To_Receive.this, Profile_Settings_Purchase.class));
-    }
     public void To_Ship(View view) {
         startActivity(new Intent(Profile_User_To_Receive.this, Profile_User_Ship.class));
-    }
-
-    public void Received(View view) {
-        startActivity(new Intent(Profile_User_To_Receive.this, Profile_User_Received.class));
     }
 
 }

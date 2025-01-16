@@ -106,10 +106,6 @@ public class Profile_User_Pay extends AppCompatActivity {
         finish();
     }
 
-    public void All_btn(View view) {
-        startActivity(new Intent(Profile_User_Pay.this, Profile_Settings_Purchase.class));
-    }
-
     public void To_Ship(View view) {
         startActivity(new Intent(Profile_User_Pay.this, Profile_User_Ship.class));
     }
@@ -118,7 +114,4 @@ public class Profile_User_Pay extends AppCompatActivity {
         startActivity(new Intent(Profile_User_Pay.this, Profile_User_To_Receive.class));
     }
 
-    public void Received(View view) {
-        startActivity(new Intent(Profile_User_Pay.this, Profile_User_Received.class));
-    }
 }

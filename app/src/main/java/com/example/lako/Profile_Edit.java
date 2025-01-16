@@ -29,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Profile_Edit extends AppCompatActivity {
 
@@ -86,7 +87,16 @@ public class Profile_Edit extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
             String firstName = firstNameEditText.getText().toString().trim();
             String lastName = lastNameEditText.getText().toString().trim();
+            String username = usernameEditText.getText().toString().trim(); // Fetch username text
+
             saveButton.setEnabled(!firstName.isEmpty() && !lastName.isEmpty());
+
+            // Ensure username length does not exceed 10 characters
+            if (username.length() > 10) {
+                usernameEditText.setError("Username cannot exceed 10 characters.");
+            }
+
+            saveButton.setEnabled(!firstName.isEmpty() && !lastName.isEmpty() && username.length() <= 10);
         }
 
         @Override
@@ -99,7 +109,6 @@ public class Profile_Edit extends AppCompatActivity {
             String userId = user.getUid();
 
             emailEditText.setText(user.getEmail());
-
 
             mDatabase.child(userId).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful() && task.getResult().exists()) {
@@ -147,19 +156,24 @@ public class Profile_Edit extends AppCompatActivity {
     }
 
     private void saveProfileChanges() {
-        String firstName = firstNameEditText.getText().toString().trim();
-        String lastName = lastNameEditText.getText().toString().trim();
-        String username = usernameEditText.getText().toString().trim();
+        final String[] firstNameWrapper = {firstNameEditText.getText().toString().trim()};
+        final String[] lastNameWrapper = {lastNameEditText.getText().toString().trim()};
+        final String[] usernameWrapper = {usernameEditText.getText().toString().trim()};
 
-        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty()) {
+        if (firstNameWrapper[0].isEmpty() || lastNameWrapper[0].isEmpty() || usernameWrapper[0].isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (usernameWrapper[0].length() > 10) {
+            Toast.makeText(this, "Username cannot exceed 10 characters.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         progressBar.setVisibility(View.VISIBLE);
         saveButton.setEnabled(false);
 
-        mDatabase.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.orderByChild("username").equalTo(usernameWrapper[0]).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && !dataSnapshot.hasChild(mAuth.getCurrentUser().getUid())) {
@@ -167,7 +181,7 @@ public class Profile_Edit extends AppCompatActivity {
                     saveButton.setEnabled(true);
                     Toast.makeText(Profile_Edit.this, "Username already exists. Please choose a different username.", Toast.LENGTH_SHORT).show();
                 } else {
-                    saveOrUpdateUserProfile(firstName, lastName, username);
+                    saveOrUpdateUserProfile(firstNameWrapper[0], lastNameWrapper[0], usernameWrapper[0]);
                 }
             }
 
@@ -180,12 +194,32 @@ public class Profile_Edit extends AppCompatActivity {
         });
     }
 
+    private String generateDefaultUsername() {
+        String consonants = "BCDFGHJKLMNPQRSTVWXYZ";
+        StringBuilder usernameBuilder = new StringBuilder();
+        Random random = new Random();
+
+        // Generate 6 random consonants
+        for (int i = 0; i < 6; i++) {
+            char randomConsonant = consonants.charAt(random.nextInt(consonants.length()));
+            usernameBuilder.append(randomConsonant);
+        }
+
+        // Add a single random digit (0-9)
+        int randomDigit = random.nextInt(10);
+        usernameBuilder.append(randomDigit);
+
+        return usernameBuilder.toString();
+    }
+
+
     private void saveOrUpdateUserProfile(String firstName, String lastName, String username) {
         String userId = mAuth.getCurrentUser().getUid();
 
         if (imageUri != null) {
-            String imageName = firstName + "_" + lastName + ".jpg";
+            String imageName = userId + ".jpg";
             StorageReference fileReference = mStorage.child(imageName);
+
 
             fileReference.putFile(imageUri).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -236,3 +270,4 @@ public class Profile_Edit extends AppCompatActivity {
         });
     }
 }
+

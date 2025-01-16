@@ -2,27 +2,26 @@ package com.example.lako;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lako.util.AddressAdapter;
 import com.example.lako.util.CartItem;
 import com.example.lako.util.CheckoutAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,6 +84,7 @@ public class User_View_Checkout extends AppCompatActivity {
             }
 
             DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
+            DatabaseReference toPayRef = FirebaseDatabase.getInstance().getReference("ToPay");
 
             String buyerId = user.getUid();
             String orderId = ordersRef.child(buyerId).push().getKey(); // Unique order ID
@@ -94,34 +94,44 @@ public class User_View_Checkout extends AppCompatActivity {
                 Map<String, Object> itemsData = new HashMap<>();
 
                 // Add items to the order
-                for (int i = 0; i < checkoutItems.size(); i++) {
-                    itemsData.put(String.valueOf(i), checkoutItems.get(i));
+                for (CartItem item : checkoutItems) {
+                    Map<String, Object> itemDetails = new HashMap<>();
+                    itemDetails.put("productId", item.getProductId());
+                    itemDetails.put("sellerId", item.getSellerId());
+                    itemDetails.put("sellerName", item.getSellerName());
+                    itemDetails.put("productName", item.getName());
+                    itemDetails.put("price", item.getPrice());
+                    itemDetails.put("quantity", item.getQuantity());
+                    itemsData.put(item.getProductId(), itemDetails);
                 }
 
                 // Create order data
                 orderData.put("datePlaced", System.currentTimeMillis());
-                orderData.put("status", "Pending");
+                orderData.put("status", "To Pay");
                 orderData.put("userId", buyerId);
                 orderData.put("items", itemsData);
 
                 // Save order under the buyer's node
                 ordersRef.child(buyerId).child(orderId).setValue(orderData).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Save order under the seller's node
+                        // Save each item under the ToPay node
                         for (CartItem item : checkoutItems) {
-                            DatabaseReference sellerOrderRef = FirebaseDatabase.getInstance()
-                                    .getReference("SellerOrders")
-                                    .child(item.getSellerId())
-                                    .child(orderId);
-
-                            sellerOrderRef.setValue(orderData).addOnCompleteListener(sellerTask -> {
-                                if (sellerTask.isSuccessful()) {
-                                    Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(this, "Failed to save order for seller.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            String toPayId = toPayRef.push().getKey(); // Unique ToPay ID
+                            if (toPayId != null) {
+                                Map<String, Object> toPayData = new HashMap<>();
+                                toPayData.put("orderId", orderId);
+                                toPayData.put("buyerId", buyerId);
+                                toPayData.put("sellerId", item.getSellerId());
+                                toPayData.put("sellerName", item.getSellerName());
+                                toPayData.put("productId", item.getProductId());
+                                toPayData.put("productName", item.getName());
+                                toPayData.put("price", item.getPrice());
+                                toPayData.put("quantity", item.getQuantity());
+                                toPayRef.child(toPayId).setValue(toPayData);
+                            }
                         }
+
+                        Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
 
                         // Navigate to a success screen
                         Intent intent = new Intent(User_View_Checkout.this, User_View_Loading_Screen.class);
@@ -226,15 +236,15 @@ public class User_View_Checkout extends AppCompatActivity {
                     if (snapshot.exists()) {
                         String sellerName = snapshot.child("name").getValue(String.class);
                         if (sellerName != null) {
-                            item.setSellerName(sellerName);
-                            checkoutAdapter.notifyDataSetChanged();
+                            item.setSellerName(sellerName); // Populate the sellerName
+                            checkoutAdapter.notifyDataSetChanged(); // Notify adapter
                         }
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(User_View_Checkout.this, "Failed to fetch seller name", Toast.LENGTH_SHORT).show();
+                    Log.e("FirebaseError", "Failed to fetch seller name: " + error.getMessage());
                 }
             });
         }

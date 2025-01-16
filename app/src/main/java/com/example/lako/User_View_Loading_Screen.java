@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,11 +68,25 @@ public class User_View_Loading_Screen extends AppCompatActivity {
         databaseReference.push().setValue(orderData).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 new Handler().postDelayed(() -> {
-                    Intent intent = new Intent(User_View_Loading_Screen.this, Art_Home.class);
+                    Intent intent = new Intent(User_View_Loading_Screen.this, MainActivity.class);
+                    intent.putExtra("navigateTo", "homeFragment");
                     startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();
                 }, 2000);
+            } else {
+                Toast.makeText(this, "Order processing failed. Try again later.", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    // Method for handling "Return to Home" button click
+    public void go_back_to_home_btn(android.view.View view) {
+        Intent intent = new Intent(User_View_Loading_Screen.this, MainActivity.class);
+        intent.putExtra("navigateTo", "homeFragment");
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
+    }
 }
+

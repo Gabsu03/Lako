@@ -15,9 +15,11 @@ public class CartItem implements Parcelable {
     private String sellerName;
     private String shopName;
 
+    // Default constructor for Firebase
     public CartItem() {}
 
-    public CartItem(String productId, String orderId, String name, String image, String price, int quantity, String sellerId) {
+    // Constructor with all fields
+    public CartItem(String productId, String orderId, String name, String image, String price, int quantity, String sellerId, String sellerName, String shopName, String userId) {
         this.productId = productId;
         this.orderId = orderId;
         this.name = name;
@@ -25,17 +27,23 @@ public class CartItem implements Parcelable {
         this.price = price;
         this.quantity = quantity;
         this.sellerId = sellerId;
+        this.sellerName = sellerName;
+        this.shopName = shopName;
+        this.userId = userId;
     }
 
     // Parcelable implementation
     protected CartItem(Parcel in) {
         productId = in.readString();
+        orderId = in.readString();
+        userId = in.readString();
         name = in.readString();
         image = in.readString();
         price = in.readString();
         quantity = in.readInt();
         sellerId = in.readString();
         sellerName = in.readString();
+        shopName = in.readString();
     }
 
     public static final Creator<CartItem> CREATOR = new Creator<CartItem>() {
@@ -50,17 +58,29 @@ public class CartItem implements Parcelable {
         }
     };
 
+    // Getters and setters
     public String getProductId() {
         return productId;
     }
+
     public void setProductId(String productId) {
         this.productId = productId;
     }
-    public String getShopName() {
-        return shopName;
+
+    public String getOrderId() {
+        return orderId;
     }
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -110,18 +130,13 @@ public class CartItem implements Parcelable {
     public void setSellerName(String sellerName) {
         this.sellerName = sellerName;
     }
-    public String getOrderId() {
-        return orderId;
+
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-    public String getUserId() {
-        return userId;
-    }
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     @Override
@@ -132,11 +147,14 @@ public class CartItem implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(productId);
+        dest.writeString(orderId);
+        dest.writeString(userId);
         dest.writeString(name);
         dest.writeString(image);
         dest.writeString(price);
         dest.writeInt(quantity);
         dest.writeString(sellerId);
         dest.writeString(sellerName);
+        dest.writeString(shopName);
     }
 }

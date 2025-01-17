@@ -1,4 +1,4 @@
-package com.example.lako.adapters;
+package com.example.lako.util;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.lako.R;
-import com.example.lako.util.Productt;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

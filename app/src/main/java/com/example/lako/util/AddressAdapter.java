@@ -1,4 +1,4 @@
-package com.example.lako.adapters;
+package com.example.lako.util;
 
 import android.view.LayoutInflater;
 import android.view.View;

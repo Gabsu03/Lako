@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lako.R;
 import com.example.lako.util.Productt;
-import com.example.lako.adapters.WishlistAdapter;
+import com.example.lako.util.WishlistAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

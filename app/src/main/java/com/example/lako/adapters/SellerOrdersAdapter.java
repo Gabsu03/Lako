@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,11 +49,11 @@ public class SellerOrdersAdapter extends RecyclerView.Adapter<SellerOrdersAdapte
                 .placeholder(R.drawable.image_upload)
                 .into(holder.productImage);
 
-        // Set onClickListener for navigation
-        holder.itemView.setOnClickListener(v -> {
+        // Set onClickListener for the "Ship" button
+        holder.shipButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, Main_Shop_Seller_View_Order.class);
 
-            // Pass all item details
+            // Pass all item details to the next activity
             intent.putExtra("productId", item.getProductId());
             intent.putExtra("productName", item.getProductName());
             intent.putExtra("productImage", item.getProductImage());
@@ -71,6 +72,7 @@ public class SellerOrdersAdapter extends RecyclerView.Adapter<SellerOrdersAdapte
         });
     }
 
+
     @Override
     public int getItemCount() {
         return ordersList.size();
@@ -80,12 +82,14 @@ public class SellerOrdersAdapter extends RecyclerView.Adapter<SellerOrdersAdapte
         TextView productName, quantity, price;
         ImageView productImage;
 
+        Button shipButton;
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.name_product_list_order);
             quantity = itemView.findViewById(R.id.quantity_amount_product_list_order);
             price = itemView.findViewById(R.id.price_product_list_order);
             productImage = itemView.findViewById(R.id.picture_product_list_order);
+            shipButton = itemView.findViewById(R.id.ship_btn);
         }
     }
 }

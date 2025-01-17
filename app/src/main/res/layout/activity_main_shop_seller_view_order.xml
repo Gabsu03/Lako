@@ -113,7 +113,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/quantity_product_detail"
         app:layout_constraintTop_toBottomOf="@+id/name_product_detail"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.13" />
 
 
     <TextView
@@ -299,6 +299,7 @@
         android:textAlignment="textStart"
         android:textColor="@color/white"
         android:textSize="20dp"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@+id/imageView85"
         app:layout_constraintEnd_toEndOf="@+id/imageView85"
         app:layout_constraintHorizontal_bias="0.25"

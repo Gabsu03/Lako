@@ -2,19 +2,16 @@ package com.example.lako;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lako.util.CartItem;
 import com.example.lako.util.SellerCartItem;
-import com.example.lako.util.SellerOrdersAdapter; // Use the new adapter
+import com.example.lako.adapters.SellerOrdersAdapter; // Use the new adapter
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

@@ -1,10 +1,10 @@
-package com.example.lako.util;
+package com.example.lako.adapters;
+
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,14 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.lako.R;
+import com.example.lako.util.Productt;
+import com.google.android.material.imageview.ShapeableImageView;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class SellerProductsAdapter extends RecyclerView.Adapter<SellerProductsAdapter.ProductViewHolder> {
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductViewHolder> {
     private Context context;
-    private List<Productt> productList;
+    private ArrayList<Productt> productList;
 
-    public SellerProductsAdapter(Context context, List<Productt> productList) {
+    public ProductsAdapter(Context context, ArrayList<Productt> productList) {
         this.context = context;
         this.productList = productList;
     }
@@ -34,14 +36,9 @@ public class SellerProductsAdapter extends RecyclerView.Adapter<SellerProductsAd
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Productt product = productList.get(position);
-
-        holder.productNameTextView.setText(product.getName());
-        holder.productPriceTextView.setText("₱" + product.getPrice());
-
-        Glide.with(context)
-                .load(product.getImage())
-                .placeholder(R.drawable.image_upload)
-                .into(holder.productImageView);
+        holder.nameTextView.setText(product.getName());
+        holder.priceTextView.setText(product.getPrice());
+        Glide.with(context).load(product.getImage()).into(holder.productImageView);
     }
 
     @Override
@@ -50,15 +47,16 @@ public class SellerProductsAdapter extends RecyclerView.Adapter<SellerProductsAd
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView productNameTextView, productPriceTextView;
-        ImageView productImageView;
+        TextView nameTextView, priceTextView;
+        ShapeableImageView productImageView;
 
-        public ProductViewHolder(View itemView) {
+        public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            productNameTextView = itemView.findViewById(R.id.Name_of_products);
-            productPriceTextView = itemView.findViewById(R.id.product_price_add_item);
+            nameTextView = itemView.findViewById(R.id.Name_of_products);
+            priceTextView = itemView.findViewById(R.id.product_price_add_item);
             productImageView = itemView.findViewById(R.id.product_imageeee);
         }
     }
 }
+
 

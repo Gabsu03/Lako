@@ -17,13 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lako.ADD_TO_CART;
-import com.example.lako.About_Us;
 import com.example.lako.Accessories_Home;
-import com.example.lako.Logo_Page_Activity2;
 import com.example.lako.R;
 import com.example.lako.User_View_Product;
 import com.example.lako.util.Product;
-import com.example.lako.util.ProductAdapter;
+import com.example.lako.adapters.ProductAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

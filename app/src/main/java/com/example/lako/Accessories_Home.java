@@ -3,23 +3,13 @@ package com.example.lako;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lako.Fragments.Home;
-import com.example.lako.Fragments.Message;
-import com.example.lako.Fragments.Notifications;
-import com.example.lako.Fragments.Profile_User;
-import com.example.lako.Fragments.WishList;
 import com.example.lako.util.Product;
-import com.example.lako.util.ProductAdapter;
+import com.example.lako.adapters.ProductAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;

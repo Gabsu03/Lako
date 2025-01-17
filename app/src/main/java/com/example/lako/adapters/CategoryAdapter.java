@@ -1,4 +1,4 @@
-package com.example.lako.util;
+package com.example.lako.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lako.R;
+import com.example.lako.util.Category;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.lako.util;
+package com.example.lako.adapters;
 
 public class CheckoutAddressAdapter {
 }

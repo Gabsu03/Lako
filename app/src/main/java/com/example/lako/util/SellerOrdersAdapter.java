@@ -1,6 +1,7 @@
 package com.example.lako.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,64 +14,63 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.lako.Main_Shop_Seller_View_Order;
 import com.example.lako.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class SellerOrdersAdapter extends RecyclerView.Adapter<SellerOrdersAdapter.SellerOrderViewHolder> {
+public class SellerOrdersAdapter extends RecyclerView.Adapter<SellerOrdersAdapter.OrderViewHolder> {
 
     private final Context context;
-    private final List<CartItem> ordersList;
+    private final List<SellerCartItem> ordersList;
 
-    public SellerOrdersAdapter(Context context, List<CartItem> ordersList) {
+    public SellerOrdersAdapter(Context context, List<SellerCartItem> ordersList) {
         this.context = context;
         this.ordersList = ordersList;
     }
 
     @NonNull
     @Override
-    public SellerOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_orders_seller_item, parent, false);
-        return new SellerOrderViewHolder(view);
+        return new OrderViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SellerOrderViewHolder holder, int position) {
-        CartItem item = ordersList.get(position);
+    public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
+        SellerCartItem item = ordersList.get(position);
 
-        // Display product name
-        holder.productName.setText(item.getName() != null ? item.getName() : "No Name");
+        holder.productName.setText(item.getProductName());
+        holder.quantity.setText("Qty: " + item.getQuantity());
+        holder.price.setText("₱" + item.getPrice());
 
-        // Display quantity
-        holder.quantity.setText(String.valueOf(item.getQuantity()));
-
-        // Display price
-        holder.price.setText(String.format("₱%.2f", Double.parseDouble(item.getPrice())));
-
-        // Display image
         Glide.with(context)
-                .load(item.getImage() != null && !item.getImage().isEmpty() ? item.getImage() : R.drawable.image_upload)
+                .load(item.getProductImage())
                 .placeholder(R.drawable.image_upload)
                 .into(holder.productImage);
 
-        // Ship Button logic
-        holder.shipButton.setOnClickListener(v -> {
-            DatabaseReference orderRef = FirebaseDatabase.getInstance()
-                    .getReference("Orders")
-                    .child(item.getUserId())
-                    .child(item.getOrderId()); // Assuming `orderId` is a field in CartItem
+        // Set onClickListener for navigation
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, Main_Shop_Seller_View_Order.class);
 
-            orderRef.child("status").setValue("Shipped").addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Toast.makeText(context, "Order marked as shipped.", Toast.LENGTH_SHORT).show();
-                    ordersList.remove(position);
-                    notifyItemRemoved(position);
-                } else {
-                    Toast.makeText(context, "Failed to update status.", Toast.LENGTH_SHORT).show();
-                }
-            });
+            // Pass all item details
+            intent.putExtra("productId", item.getProductId());
+            intent.putExtra("productName", item.getProductName());
+            intent.putExtra("productImage", item.getProductImage());
+            intent.putExtra("price", item.getPrice());
+            intent.putExtra("quantity", item.getQuantity());
+            intent.putExtra("buyerId", item.getBuyerId());
+            intent.putExtra("status", item.getStatus());
+
+            // Pass address details
+            intent.putExtra("addressLabel", item.getAddressLabel());
+            intent.putExtra("addressName", item.getAddressName());
+            intent.putExtra("addressPhone", item.getAddressPhone());
+            intent.putExtra("fullAddress", item.getFullAddress());
+
+            context.startActivity(intent);
         });
     }
 
@@ -79,18 +79,20 @@ public class SellerOrdersAdapter extends RecyclerView.Adapter<SellerOrdersAdapte
         return ordersList.size();
     }
 
-    public static class SellerOrderViewHolder extends RecyclerView.ViewHolder {
+    public static class OrderViewHolder extends RecyclerView.ViewHolder {
         TextView productName, quantity, price;
         ImageView productImage;
-        Button shipButton;
 
-        public SellerOrderViewHolder(@NonNull View itemView) {
+        public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.name_product_list_order);
             quantity = itemView.findViewById(R.id.quantity_amount_product_list_order);
             price = itemView.findViewById(R.id.price_product_list_order);
             productImage = itemView.findViewById(R.id.picture_product_list_order);
-            shipButton = itemView.findViewById(R.id.ship_btn);
         }
     }
 }
+
+
+
+

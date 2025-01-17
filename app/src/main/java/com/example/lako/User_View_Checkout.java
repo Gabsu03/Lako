@@ -84,60 +84,54 @@ public class User_View_Checkout extends AppCompatActivity {
             }
 
             DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
-            DatabaseReference toPayRef = FirebaseDatabase.getInstance().getReference("ToPay");
+            DatabaseReference sellerOrdersRef = FirebaseDatabase.getInstance().getReference("SellerOrders");
 
             String buyerId = user.getUid();
-            String orderId = ordersRef.child(buyerId).push().getKey(); // Unique order ID
+            String orderId = ordersRef.child(buyerId).push().getKey(); // Generate unique order ID
 
             if (orderId != null) {
                 Map<String, Object> orderData = new HashMap<>();
                 Map<String, Object> itemsData = new HashMap<>();
+                Map<String, Object> addressData = new HashMap<>();
 
-                // Add items to the order
+                // Prepare address data
+                addressData.put("label", labelTextView.getText().toString());
+                addressData.put("name", nameTextView.getText().toString());
+                addressData.put("phone", phoneTextView.getText().toString());
+                addressData.put("fullAddress", fullAddressTextView.getText().toString());
+
+                Log.d("CheckoutDebug", "Address Data: " + addressData);
+
                 for (CartItem item : checkoutItems) {
                     Map<String, Object> itemDetails = new HashMap<>();
                     itemDetails.put("productId", item.getProductId());
-                    itemDetails.put("sellerId", item.getSellerId());
-                    itemDetails.put("sellerName", item.getSellerName());
                     itemDetails.put("productName", item.getName());
+                    itemDetails.put("productImage", item.getImage());
                     itemDetails.put("price", item.getPrice());
                     itemDetails.put("quantity", item.getQuantity());
-                    itemsData.put(item.getProductId(), itemDetails);
+                    itemDetails.put("sellerId", item.getSellerId());
+                    itemDetails.put("sellerName", item.getSellerName());
+                    itemDetails.put("buyerId", buyerId);
+                    itemDetails.put("status", "To Pay");
+                    itemDetails.put("address", addressData); // Add address to each seller's order
+
+                    // Add data to SellerOrders node
+                    sellerOrdersRef.child(item.getSellerId()).child(orderId).setValue(itemDetails);
                 }
 
-                // Create order data
+                // Create order data for buyer
                 orderData.put("datePlaced", System.currentTimeMillis());
                 orderData.put("status", "To Pay");
                 orderData.put("userId", buyerId);
                 orderData.put("items", itemsData);
+                orderData.put("address", addressData); // Add address to the order data
 
                 // Save order under the buyer's node
                 ordersRef.child(buyerId).child(orderId).setValue(orderData).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Save each item under the ToPay node
-                        for (CartItem item : checkoutItems) {
-                            String toPayId = toPayRef.push().getKey(); // Unique ToPay ID
-                            if (toPayId != null) {
-                                Map<String, Object> toPayData = new HashMap<>();
-                                toPayData.put("orderId", orderId);
-                                toPayData.put("buyerId", buyerId);
-                                toPayData.put("sellerId", item.getSellerId());
-                                toPayData.put("sellerName", item.getSellerName());
-                                toPayData.put("productId", item.getProductId());
-                                toPayData.put("productName", item.getName());
-                                toPayData.put("price", item.getPrice());
-                                toPayData.put("quantity", item.getQuantity());
-                                toPayRef.child(toPayId).setValue(toPayData);
-                            }
-                        }
-
                         Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
-
-                        // Navigate to a success screen
                         Intent intent = new Intent(User_View_Checkout.this, User_View_Loading_Screen.class);
                         startActivity(intent);
-
-                        // Clear the cart and adapter
                         checkoutItems.clear();
                         checkoutAdapter.notifyDataSetChanged();
                         finish();
@@ -147,9 +141,13 @@ public class User_View_Checkout extends AppCompatActivity {
                 });
             }
         });
+
+
+
+
     }
 
-    @Override
+        @Override
     protected void onDestroy() {
         super.onDestroy();
         checkoutItems.clear();
@@ -208,10 +206,13 @@ public class User_View_Checkout extends AppCompatActivity {
                     for (DataSnapshot addressSnapshot : snapshot.getChildren()) {
                         Profile_Settings_Add_Address.Address address = addressSnapshot.getValue(Profile_Settings_Add_Address.Address.class);
                         if (address != null) {
-                            labelTextView.setText(address.getLabel());
-                            nameTextView.setText(address.getName());
-                            phoneTextView.setText(address.getPhone());
-                            fullAddressTextView.setText(String.format("%s, %s, %s", address.getHouseNumber(), address.getStreet(), address.getCity()));
+                            labelTextView.setText(address.getLabel() != null ? address.getLabel() : "No Label");
+                            nameTextView.setText(address.getName() != null ? address.getName() : "No Name");
+                            phoneTextView.setText(address.getPhone() != null ? address.getPhone() : "No Phone");
+                            fullAddressTextView.setText(String.format("%s, %s, %s",
+                                    address.getHouseNumber() != null ? address.getHouseNumber() : "No House",
+                                    address.getStreet() != null ? address.getStreet() : "No Street",
+                                    address.getCity() != null ? address.getCity() : "No City"));
                             break; // Use the first address found
                         }
                     }
@@ -226,6 +227,7 @@ public class User_View_Checkout extends AppCompatActivity {
             }
         });
     }
+
 
     private void fetchSellerNames() {
         for (CartItem item : checkoutItems) {

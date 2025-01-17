@@ -49,25 +49,32 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
     public void onBindViewHolder(@NonNull PurchaseViewHolder holder, int position) {
         CartItem item = purchaseList.get(position);
 
+        // Bind product name
         holder.productName.setText(item.getName() != null ? item.getName() : "No Name");
-        holder.sellerName.setText(item.getSellerId() != null ? "Shop: " + item.getSellerId() : "Unknown Seller");
+
+        // Bind seller name
+        holder.sellerName.setText(item.getSellerName() != null ? "Shop: " + item.getSellerName() : "Unknown Seller");
+
+        // Bind product quantity
         holder.quantity.setText("Qty: " + item.getQuantity());
 
+        // Parse and bind price
         double price = 0.0;
         try {
             price = Double.parseDouble(item.getPrice());
         } catch (NumberFormatException e) {
             price = 0.0;
         }
-
         holder.price.setText(String.format("₱%.2f", price));
 
+        // Load product image using Glide
         Glide.with(context)
                 .load(item.getImage() != null ? item.getImage() : R.drawable.image_upload)
                 .placeholder(R.drawable.image_upload)
                 .into(holder.productImage);
 
-        // Cancel button logic
+
+    // Cancel button logic
         holder.cancelOrderButton.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Cancel Order")
@@ -77,6 +84,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
                     .show();
         });
     }
+
 
     private void cancelOrder(CartItem item, int position) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

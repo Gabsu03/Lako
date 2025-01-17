@@ -91,7 +91,7 @@ public class User_View_Checkout extends AppCompatActivity {
 
             if (orderId != null) {
                 Map<String, Object> orderData = new HashMap<>();
-                Map<String, Object> itemsData = new HashMap<>();
+                Map<String, Object> itemsData = new HashMap<>(); // Store all items under the "items" node
                 Map<String, Object> addressData = new HashMap<>();
 
                 // Prepare address data
@@ -115,6 +115,10 @@ public class User_View_Checkout extends AppCompatActivity {
                     itemDetails.put("status", "To Pay");
                     itemDetails.put("address", addressData); // Add address to each seller's order
 
+
+                    // Add each item under the items node
+                    itemsData.put(item.getProductId(), itemDetails);
+
                     // Add data to SellerOrders node
                     sellerOrdersRef.child(item.getSellerId()).child(orderId).setValue(itemDetails);
                 }
@@ -123,7 +127,7 @@ public class User_View_Checkout extends AppCompatActivity {
                 orderData.put("datePlaced", System.currentTimeMillis());
                 orderData.put("status", "To Pay");
                 orderData.put("userId", buyerId);
-                orderData.put("items", itemsData);
+                orderData.put("items", itemsData); // Attach the items map here
                 orderData.put("address", addressData); // Add address to the order data
 
                 // Save order under the buyer's node
@@ -141,6 +145,7 @@ public class User_View_Checkout extends AppCompatActivity {
                 });
             }
         });
+
 
 
 

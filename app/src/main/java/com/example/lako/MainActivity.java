@@ -3,11 +3,7 @@ package com.example.lako;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.lako.Fragments.Home;
@@ -34,32 +30,38 @@ public class MainActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-            return; // Prevent further execution
+            return;
         }
 
         setContentView(R.layout.activity_main);
 
-        // Setup the BottomNavigationView and default fragment
+        // Setup the BottomNavigationView
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setSelectedItemId(R.id.nav_Profile);  // Default to Profile_User when app opens
         bottomNav.setOnItemSelectedListener(navListener);
 
-        // Check if the showProfileUser flag is passed in the intent
-        if (getIntent().getBooleanExtra("showProfileUser", false)) {
-            // If true, display the Profile_User fragment immediately
-            Fragment selectedFragment = new Profile_User();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        // Check the intent for navigation
+        String navigateTo = getIntent().getStringExtra("navigate_to");
+        Fragment selectedFragment;
+
+        if ("HomeFragment".equals(navigateTo)) {
+            // Load HomeFragment when specified
+            selectedFragment = new Home();
+            bottomNav.setSelectedItemId(R.id.nav_Home);
         } else {
-            // Otherwise, load the default fragment (Profile_User)
-            Fragment selectedFragment = new Profile_User();  // Profile_User as default
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            // Default to HomeFragment
+            selectedFragment = new Home();
+            bottomNav.setSelectedItemId(R.id.nav_Home);
         }
+
+        // Load the selected fragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, selectedFragment)
+                .commit();
     }
 
-    private NavigationBarView.OnItemSelectedListener navListener = item -> {
+    private final NavigationBarView.OnItemSelectedListener navListener = item -> {
         Fragment selectedFragment = null;
 
-        // Handle navigation between bottom navigation items
         if (item.getItemId() == R.id.nav_Wishlist) {
             selectedFragment = new WishList();
         } else if (item.getItemId() == R.id.nav_Notification) {
@@ -69,13 +71,14 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.nav_Message) {
             selectedFragment = new Message();
         } else if (item.getItemId() == R.id.nav_Profile) {
-            selectedFragment = new Profile_User();  // Profile_User is the fragment here
+            selectedFragment = new Profile_User();
         }
 
-        // Replace the current fragment with the selected one
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        if (selectedFragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, selectedFragment)
+                    .commit();
+        }
         return true;
     };
 }
-
-

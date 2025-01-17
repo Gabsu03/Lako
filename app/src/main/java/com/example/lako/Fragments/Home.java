@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lako.ADD_TO_CART;
 import com.example.lako.Accessories_Home;
+import com.example.lako.Art_Home;
+import com.example.lako.Clothing_Home;
+import com.example.lako.Living_Home;
 import com.example.lako.R;
 import com.example.lako.User_View_Product;
 import com.example.lako.util.Product;
@@ -54,19 +57,46 @@ public class Home extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         productRecyclerView.setLayoutManager(gridLayoutManager);
 
-        // Find and set OnClickListener for Accessories TextView
+        // Set OnClickListener for Accessories
         TextView accessoriesTextView = view.findViewById(R.id.accessories);
         accessoriesTextView.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), Accessories_Home.class);
             startActivity(intent);
+            if (getActivity() != null) {
+                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
         });
 
-        // Find and set OnClickListener for Accessories TextView
-        TextView ArtTextView = view.findViewById(R.id.accessories);
-        accessoriesTextView.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), Accessories_Home.class);
+// Set OnClickListener for Art TextView
+        TextView artTextView = view.findViewById(R.id.art);
+        artTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Art_Home.class);
             startActivity(intent);
+            if (getActivity() != null) {
+                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
         });
+
+// Set OnClickListener for Living TextView
+        TextView livingTextView = view.findViewById(R.id.living);
+        livingTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Living_Home.class);
+            startActivity(intent);
+            if (getActivity() != null) {
+                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+// Set OnClickListener for Clothing TextView
+        TextView clothingTextView = view.findViewById(R.id.clothing);
+        clothingTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Clothing_Home.class);
+            startActivity(intent);
+            if (getActivity() != null) {
+                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
 
         // Find the cart button
         Button cartButton = view.findViewById(R.id.cart_btn); // Declare the button only once

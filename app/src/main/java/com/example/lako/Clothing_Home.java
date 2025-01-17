@@ -1,60 +1,115 @@
 package com.example.lako;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lako.Fragments.Home;
-import com.example.lako.Fragments.Message;
-import com.example.lako.Fragments.Notifications;
-import com.example.lako.Fragments.Profile_User;
-import com.example.lako.Fragments.WishList;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.example.lako.adapters.ProductAdapter;
+import com.example.lako.util.Product;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Clothing_Home extends AppCompatActivity {
+
+    private RecyclerView clothingRecyclerView;
+    private List<Product> clothingList;
+    private ProductAdapter clothingAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_clothing_home);
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setSelectedItemId(R.id.nav_Home);
-        bottomNav.setOnItemSelectedListener(navListener);
 
-        Fragment selectedFragment = new Home();
+        // Set OnClickListener for the Home button
+        Button homeFragmentButton = findViewById(R.id.home_fragment);
+        homeFragmentButton.setOnClickListener(v -> {
+            navigateToHomeFragment();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                selectedFragment).commit();
+        // Set OnClickListener for Living TextView
+        TextView livingTextView = findViewById(R.id.living_clothing);
+        livingTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(Clothing_Home.this, Living_Home.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
 
+        // Set OnClickListener for Accessories TextView
+        TextView accessoriesTextView = findViewById(R.id.accessories_clothing);
+        accessoriesTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(Clothing_Home.this, Accessories_Home.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
+
+        // Set OnClickListener for Art TextView
+        TextView artTextView = findViewById(R.id.art_clothing);
+        artTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(Clothing_Home.this, Art_Home.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
+
+        // Initialize RecyclerView
+        clothingRecyclerView = findViewById(R.id.clothing_recycleview);
+        clothingRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        // Set up adapter and data
+        clothingList = new ArrayList<>();
+        clothingAdapter = new ProductAdapter(this, clothingList, product -> {
+            Intent intent = new Intent(Clothing_Home.this, User_View_Product.class);
+            intent.putExtra("product_id", product.getId());
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
+        clothingRecyclerView.setAdapter(clothingAdapter);
+
+        // Fetch data from Firebase
+        fetchClothingFromFirebase();
     }
 
-    private NavigationBarView.OnItemSelectedListener navListener =
-            item -> {
-                int itemId = item.getItemId(); /* obtain the selected item ID from your source */
-                Fragment selectedFragment = null;
-
-                if (itemId == R.id.nav_Wishlist) {
-                    selectedFragment = new WishList();
-                } else if (itemId == R.id.nav_Notification) {
-                    selectedFragment = new Notifications();
-                } else if (itemId == R.id.nav_Home) {
-                    selectedFragment = new Home();
-                } else if (itemId == R.id.nav_Message) {
-                    selectedFragment = new Message();
-                } else if (itemId == R.id.nav_Profile) {
-                    selectedFragment = new Profile_User();
-
-                } else {
-                    selectedFragment = new Home();
+    private void fetchClothingFromFirebase() {
+        // Fetch data from the CLOTH_001 category
+        DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("categories").child("CLOTH_001");
+        categoryRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                clothingList.clear();
+                for (DataSnapshot productSnapshot : snapshot.getChildren()) {
+                    Product product = productSnapshot.getValue(Product.class);
+                    if (product != null) {
+                        clothingList.add(product); // Add product to list
+                    }
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                return true;
-            };
+                clothingAdapter.notifyDataSetChanged(); // Notify adapter about data changes
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+            }
+        });
+    }
+
+    private void navigateToHomeFragment() {
+        // Navigate back to the HomeFragment in MainActivity
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("navigate_to", "HomeFragment"); // Pass target fragment name
+        startActivity(intent);
+        overridePendingTransition(0, 0); // Smooth transition
+    }
 }
